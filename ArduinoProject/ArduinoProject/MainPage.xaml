@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:ArduinoProject"
+             x:Name="Terminal"
+             x:Class="ArduinoProject.MainPage"
+             Title="Main Page"
+             >
+
+
+    <Grid x:Name="GlobalGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" x:Name="ActionHold" />
+            <RowDefinition  Height="0.2*" x:Name="MenuHold"/>
+        </Grid.RowDefinitions>
+
+        <BoxView Color="AliceBlue" Grid.Row="0"/>
+        <BoxView Color="Gray" Grid.Row="1"/>
+
+        <Editor x:FieldModifier="public" IsEnabled="False"  x:Name="TextField" Text="Serial1"/>
+
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                
+                
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0" x:Name="grnBTN"  Clicked="Button_Clicked" Text="Green" BackgroundColor="Green" Margin="5" BorderWidth="3" BorderColor="Black"/>
+            <Button Grid.Column="1" x:Name="yellBTN"  Clicked="Button_Clicked" Text="Yellow" TextColor="Black" BackgroundColor="Yellow" Margin="5" BorderWidth="3" BorderColor="Black"/>
+            <Button Grid.Column="2" x:Name="redTN"  Clicked="Button_Clicked" Text="Red"  BackgroundColor="Red" Margin="5" BorderWidth="3" BorderColor="Black"/>
+            <Button Grid.Column="3" x:Name="offBTN" Clicked="Button_Clicked" Text="Off"  BackgroundColor="Gray" Margin="5" BorderWidth="3" BorderColor="Black"/>
+
+        </Grid>
+
+        
+
+
+
+    </Grid>
+    
+
+</ContentPage>
