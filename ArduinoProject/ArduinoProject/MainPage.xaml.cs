@@ -10,6 +10,8 @@ namespace ArduinoProject
 {
 	public partial class MainPage : ContentPage
 	{
+        public static int power = 0;
+        public const int change = 1;
 		public MainPage()
 		{
 
@@ -49,6 +51,32 @@ namespace ArduinoProject
                 Bluetooth.Send(0);
                 
             }
+        }
+
+        private void Power_Click(object sender, EventArgs e)
+        {
+            print("Power click");
+            var Button = sender as Button;
+            if(Button==PowerDown)
+            {
+                print("PWR "+power.ToString());
+                if ((power-change)>=0)
+                {
+                    power -= change;
+                }
+
+            }
+            if(Button==PowerUp)
+            {
+                print("PWR "+power.ToString());
+                if ((power+change)<=9)
+                {
+                    power += change;
+                }
+
+            }
+            PowerText.Text = power.ToString();
+            Bluetooth.Send(power);
         }
     }
 }

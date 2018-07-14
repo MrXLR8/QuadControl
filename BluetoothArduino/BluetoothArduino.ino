@@ -5,133 +5,174 @@ int green = 6;
 int yellow = 5;
 int red = 3;
 
-int buttonP = 9;
+int buttonP = 9;  
 int buttonM = 8;
 
-int brightness = 10;
-int change = 10;
+int motor=10;
+
+int power = 0;
+int change = 2;
 
 bool PressP;
 bool PressM;
 
-int gRxPin = 10;
-int gTxPin = 11;
+int gRxPin = 12;
+int gTxPin = 13;
 
 SoftwareSerial BTSerial(gRxPin, gTxPin);
 
 
 void setup() {
 
-	pinMode(green, OUTPUT);
-	pinMode(yellow, OUTPUT);
-	pinMode(red, OUTPUT);
+  pinMode(green, OUTPUT);
+  pinMode(yellow, OUTPUT);
+  pinMode(red, OUTPUT);
 
-	pinMode(buttonP, INPUT);
-	pinMode(buttonM, INPUT);
+  pinMode(buttonP, INPUT);
+  pinMode(buttonM, INPUT);
 
-	BTSerial.setTimeout(500);
-	BTSerial.begin(9600);
-	
-	Serial.begin(9600);
-	delay(250);
+  BTSerial.setTimeout(500);
+  BTSerial.begin(9600);
+  
+  Serial.begin(9600);
+  delay(250);
 
 }
 
 void loop()
 {
 
-		bluetoothM();
-	
+    //bluetoothM();
+    //powerchange();
+   powerset();
+   powersetusb();
 }
  int val;
+ int bt=0;
+ int calc = 0;
+ void powerset() 
+ {
+   bt = BTSerial.read();
+   
+   
+   if (bt != -1) 
+   {
+    Serial.println(bt);
+     bt -= 48;
+     
+     calc = bt * 28;
+     analogWrite(motor, calc);
+     Serial.print("Setting power: ");
+     Serial.println(calc);
+   }
+ }
+int usb=0;
+
+  void powersetusb() 
+ {
+   usb = Serial.read();
+   
+   
+   if (usb != -1) 
+   {
+    Serial.println(bt);
+     usb -= 48;
+     
+     calc = usb * 28;
+     analogWrite(motor, calc);
+     Serial.print("Setting USB power: ");
+     Serial.println(calc);
+   }
+ }
 void bluetoothM()
 {
 
-	val = BTSerial.read();
+  val = BTSerial.read();
 
-		if (val == -1) {
-			return;
-		}
-		Serial.println(val);
+    if (val == -1) {
+      return;
+    }
+    Serial.println(val);
 
-	
+  
 
-	// При символе "1" включаем светодиод
-	if (val == 49)
-	{
+  // пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ "1" пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+  if (val == 49)
+  {
 
-		digitalWrite(green, HIGH);
-		digitalWrite(yellow, LOW);
-		digitalWrite(red, LOW);
+    digitalWrite(green, HIGH);
+    digitalWrite(yellow, LOW);
+    digitalWrite(red, LOW);
 
-		BTSerial.write("Green is on!\n");
+    BTSerial.write("Green is on!\n");
 
-	}
-	if (val == 50)
-	{
-		digitalWrite(green, LOW);
-		digitalWrite(yellow, HIGH);
-		digitalWrite(red, LOW);
+  }
+  if (val == 50)
+  {
+    digitalWrite(green, LOW);
+    digitalWrite(yellow, HIGH);
+    digitalWrite(red, LOW);
 
-		BTSerial.write("Yellow is on!\n");
-	}
-	if (val == 51)
-	{
-		digitalWrite(green, LOW);
-		digitalWrite(yellow, LOW);
-		digitalWrite(red, HIGH);
+    BTSerial.write("Yellow is on!\n");
+  }
+  if (val == 51)
+  {
+    digitalWrite(green, LOW);
+    digitalWrite(yellow, LOW);
+    digitalWrite(red, HIGH);
 
-		BTSerial.write("Red is on!\n");
-	}
-	// При символе "0" выключаем светодиод
-	if (val == 48)
-	{
-		digitalWrite(green, LOW);
-		digitalWrite(yellow, LOW);
-		digitalWrite(red, LOW);
+    BTSerial.write("Red is on!\n");
+  }
+  // пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ "0" пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+  if (val == 48)
+  {
+    digitalWrite(green, LOW);
+    digitalWrite(yellow, LOW);
+    digitalWrite(red, LOW);
 
-		BTSerial.write("<OFF>>\n");
-	}
+    BTSerial.write("<OFF>>\n");
+  }
 
 }
-void  brightchange()
+void  powerchange()
 {
 
-	PressP = digitalRead(buttonP);
-	PressM = digitalRead(buttonM);
-	analogWrite(green, brightness);
+  PressP = digitalRead(buttonP);
+  PressM = digitalRead(buttonM);
 
-	if (PressP)
-	{
-		addLight();
-	}
-	if (PressM)
-	{
-		minusLight();
-	}
-
+  if (PressP)
+  {
+    addPower();
+  }
+  if (PressM)
+  {
+    decPower();
+  }
+  analogWrite(motor, power);
 }
 
 
-void addLight()
+void addPower()
 {
-	if ((brightness + change) <= 250)
-	{
-		Serial.print("Adding Bright. ");
-		Serial.println(brightness);
-		brightness += change;
-	}
-	else { Serial.println("Cant add Bright"); }
+  if ((power + change) <= 250)
+  {
+    Serial.print("Adding Power. ");
+    Serial.println(power);
+    power += change;
+    
+  }
+  else { Serial.println("Cant add Power"); }
 }
-void minusLight()
+void decPower()
 {
-	if ((brightness - change) >= 0)
-	{
-		Serial.print("Decreasing Bright. ");
-		Serial.println(brightness);
-		brightness -= change;
-	}
-	else { Serial.println("Cant decrease Bright"); }
+  if ((power - change) >= 0)
+  {
+    Serial.print("Decreasing Power. ");
+    Serial.println(power);
+    power -= change;
+  }
+  else { Serial.println("Cant decrease Power"); }
 }
+
 
 
