@@ -7,8 +7,8 @@
     <ProjectGuid>{C0401E73-41E1-4F47-936F-86A76D73DACB}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BluetoothTest.UWP</RootNamespace>
-    <AssemblyName>BluetoothTest.UWP</AssemblyName>
+    <RootNamespace>ArduinoProject.UWP</RootNamespace>
+    <AssemblyName>ArduinoProject.UWP</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.16299.0</TargetPlatformVersion>

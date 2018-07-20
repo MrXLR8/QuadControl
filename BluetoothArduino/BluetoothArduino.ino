@@ -5,10 +5,10 @@ int green = 6;
 int yellow = 5;
 int red = 3;
 
-int buttonP = 9;  
+int buttonP = 9;
 int buttonM = 8;
 
-int motor=10;
+int motor = 10;
 
 int power = 0;
 int change = 2;
@@ -24,155 +24,157 @@ SoftwareSerial BTSerial(gRxPin, gTxPin);
 
 void setup() {
 
-  pinMode(green, OUTPUT);
-  pinMode(yellow, OUTPUT);
-  pinMode(red, OUTPUT);
+	pinMode(green, OUTPUT);
+	pinMode(yellow, OUTPUT);
+	pinMode(red, OUTPUT);
 
-  pinMode(buttonP, INPUT);
-  pinMode(buttonM, INPUT);
+	pinMode(buttonP, INPUT);
+	pinMode(buttonM, INPUT);
 
-  BTSerial.setTimeout(500);
-  BTSerial.begin(9600);
-  
-  Serial.begin(9600);
-  delay(250);
+	BTSerial.setTimeout(500);
+	BTSerial.begin(9600);
+
+	Serial.begin(9600);
+	delay(250);
 
 }
 
 void loop()
 {
 
-    //bluetoothM();
-    //powerchange();
-   powerset();
-   powersetusb();
+	//bluetoothM();
+	//powerchange();
+	powerset();
+	powersetusb();
+	delay(1000);
 }
- int val;
- int bt=0;
- int calc = 0;
- void powerset() 
- {
-   bt = BTSerial.read();
-   
-   
-   if (bt != -1) 
-   {
-    Serial.println(bt);
-     bt -= 48;
-     
-     calc = bt * 28;
-     analogWrite(motor, calc);
-     Serial.print("Setting power: ");
-     Serial.println(calc);
-   }
- }
-int usb=0;
+int val;
+int bt = 0;
+int calc = 0;
+void powerset()
+{
+	bt = BTSerial.read();
 
-  void powersetusb() 
- {
-   usb = Serial.read();
-   
-   
-   if (usb != -1) 
-   {
-    Serial.println(bt);
-     usb -= 48;
-     
-     calc = usb * 28;
-     analogWrite(motor, calc);
-     Serial.print("Setting USB power: ");
-     Serial.println(calc);
-   }
- }
+	Serial.print("BT DATA: ");
+	Serial.println(bt);
+
+	if (bt != -1)
+	{
+		
+		bt -= 48;
+
+		calc = bt * 28;
+		analogWrite(motor, calc);
+		Serial.print("Setting power: ");
+		Serial.println(calc);
+	}
+}
+int usb = 0;
+
+void powersetusb()
+{
+	usb = Serial.read();
+
+
+	if (usb != -1)
+	{
+		Serial.println(bt);
+		usb -= 48;
+
+		calc = usb * 28;
+		analogWrite(motor, calc);
+		Serial.print("Setting USB power: ");
+		Serial.println(calc);
+	}
+}
 void bluetoothM()
 {
 
-  val = BTSerial.read();
+	val = BTSerial.read();
 
-    if (val == -1) {
-      return;
-    }
-    Serial.println(val);
+	if (val == -1) {
+		return;
+	}
+	Serial.println(val);
 
-  
 
-  // ��� ������� "1" �������� ���������
-  if (val == 49)
-  {
 
-    digitalWrite(green, HIGH);
-    digitalWrite(yellow, LOW);
-    digitalWrite(red, LOW);
+	// ��� ������� "1" �������� ���������
+	if (val == 49)
+	{
 
-    BTSerial.write("Green is on!\n");
+		digitalWrite(green, HIGH);
+		digitalWrite(yellow, LOW);
+		digitalWrite(red, LOW);
 
-  }
-  if (val == 50)
-  {
-    digitalWrite(green, LOW);
-    digitalWrite(yellow, HIGH);
-    digitalWrite(red, LOW);
+		BTSerial.write("Green is on!\n");
 
-    BTSerial.write("Yellow is on!\n");
-  }
-  if (val == 51)
-  {
-    digitalWrite(green, LOW);
-    digitalWrite(yellow, LOW);
-    digitalWrite(red, HIGH);
+	}
+	if (val == 50)
+	{
+		digitalWrite(green, LOW);
+		digitalWrite(yellow, HIGH);
+		digitalWrite(red, LOW);
 
-    BTSerial.write("Red is on!\n");
-  }
-  // ��� ������� "0" ��������� ���������
-  if (val == 48)
-  {
-    digitalWrite(green, LOW);
-    digitalWrite(yellow, LOW);
-    digitalWrite(red, LOW);
+		BTSerial.write("Yellow is on!\n");
+	}
+	if (val == 51)
+	{
+		digitalWrite(green, LOW);
+		digitalWrite(yellow, LOW);
+		digitalWrite(red, HIGH);
 
-    BTSerial.write("<OFF>>\n");
-  }
+		BTSerial.write("Red is on!\n");
+	}
+	// ��� ������� "0" ��������� ���������
+	if (val == 48)
+	{
+		digitalWrite(green, LOW);
+		digitalWrite(yellow, LOW);
+		digitalWrite(red, LOW);
+
+		BTSerial.write("<OFF>>\n");
+	}
 
 }
 void  powerchange()
 {
 
-  PressP = digitalRead(buttonP);
-  PressM = digitalRead(buttonM);
+	PressP = digitalRead(buttonP);
+	PressM = digitalRead(buttonM);
 
-  if (PressP)
-  {
-    addPower();
-  }
-  if (PressM)
-  {
-    decPower();
-  }
-  analogWrite(motor, power);
+	if (PressP)
+	{
+		addPower();
+	}
+	if (PressM)
+	{
+		decPower();
+	}
+	analogWrite(motor, power);
 }
 
 
 void addPower()
 {
-  if ((power + change) <= 250)
-  {
-    Serial.print("Adding Power. ");
-    Serial.println(power);
-    power += change;
-    
-  }
-  else { Serial.println("Cant add Power"); }
+	if ((power + change) <= 250)
+	{
+		Serial.print("Adding Power. ");
+		Serial.println(power);
+		power += change;
+
+	}
+	else { Serial.println("Cant add Power"); }
 }
 void decPower()
 {
-  if ((power - change) >= 0)
-  {
-    Serial.print("Decreasing Power. ");
-    Serial.println(power);
-    power -= change;
-  }
-  else { Serial.println("Cant decrease Power"); }
+	if ((power - change) >= 0)
+	{
+		Serial.print("Decreasing Power. ");
+		Serial.println(power);
+		power -= change;
+	}
+	else { Serial.println("Cant decrease Power"); }
 }
-
 
 
