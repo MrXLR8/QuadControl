@@ -16,8 +16,15 @@ int change = 2;
 bool PressP;
 bool PressM;
 
+#pragma region  bluetooth
+
 int gRxPin = 12;
 int gTxPin = 13;
+
+bool bluetoothStatus = false;
+#pragma endregion
+
+
 
 SoftwareSerial BTSerial(gRxPin, gTxPin);
 
@@ -46,45 +53,58 @@ void loop()
 	//powerchange();
 	powerset();
 	powersetusb();
-	delay(1000);
+
+	
 }
 int val;
 int bt = 0;
 int calc = 0;
 void powerset()
 {
-	bt = BTSerial.read();
 
-	Serial.print("BT DATA: ");
-	Serial.println(bt);
 
-	if (bt != -1)
+
+	if (BTSerial.available())
 	{
-		
-		bt -= 48;
 
-		calc = bt * 28;
-		analogWrite(motor, calc);
-		Serial.print("Setting power: ");
-		Serial.println(calc);
+		bt = BTSerial.read();
+		
+		Serial.print("BT DATA: ");
+		Serial.println(bt);
+
+
+		if (bt != -1)
+		{
+
+			bt -= 48;
+
+			calc = bt * 28;
+			analogWrite(motor, calc);
+			Serial.print("Setting power: ");
+			Serial.println(calc);
+		}
+		BTSerial.flush();
 	}
 }
 int usb = 0;
 
 void powersetusb()
 {
-	usb = Serial.read();
+	if (Serial.available()) {
+		usb = Serial.read();
 
 
-	if (usb != -1)
-	{
-		Serial.println(bt);
-		usb -= 48;
+		if (usb != -1)
+		{
+			Serial.println(bt);
+			usb -= 48;
 
-		calc = usb * 28;
-		analogWrite(motor, calc);
-		Serial.print("Setting USB power: ");
-		Serial.println(calc);
+			calc = usb * 28;
+			analogWrite(motor, calc);
+			Serial.print("Setting USB power: ");
+			Serial.println(calc);
+		}
+		Serial.flush();
 	}
 }
 void bluetoothM()

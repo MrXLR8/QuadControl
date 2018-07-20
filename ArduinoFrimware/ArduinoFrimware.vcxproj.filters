@@ -15,11 +15,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="BluetoothArduino.ino" />
-    <None Include="packages.config" />
+    <None Include="ArduinoFrimware.ino" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="__vm\.BluetoothArduino.vsarduino.h">
+    <ClInclude Include="__vm\.ArduinoFrimware.vsarduino.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
