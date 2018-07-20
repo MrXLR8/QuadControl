@@ -33,22 +33,22 @@ namespace ArduinoProject
 
             if (Button==grnBTN)
             {
-               Bluetooth.Send(1);
+               Bluetooth.SendAsync(1);
 
             }
             else if(Button==yellBTN)
             {
-                Bluetooth.Send(2);
+                Bluetooth.SendAsync(2);
             }
             else if(Button==redTN)
             {
 
-                Bluetooth.Send(3);
+                Bluetooth.SendAsync(3);
             }
             else if(Button==offBTN)
             {
 
-                Bluetooth.Send(0);
+                Bluetooth.SendAsync(0);
                 
             }
         }
@@ -76,7 +76,7 @@ namespace ArduinoProject
 
             }
             PowerText.Text = power.ToString();
-            Bluetooth.Send(power);
+            Bluetooth.SendAsync(power);
         }
     }
 }

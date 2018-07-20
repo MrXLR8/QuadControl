@@ -15,7 +15,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ArduinoFrimware", "ArduinoF
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		ArduinoProject\ArduinoProject\ArduinoProject.projitems*{51551de4-c904-4bf6-af8d-e63da0711ffb}*SharedItemsImports = 4
 		ArduinoProject\ArduinoProject\ArduinoProject.projitems*{9dfbc353-83ae-4816-bbc1-4a72183f96d0}*SharedItemsImports = 13
 		ArduinoProject\ArduinoProject\ArduinoProject.projitems*{c0401e73-41e1-4f47-936f-86a76d73dacb}*SharedItemsImports = 4
 	EndGlobalSection
@@ -292,7 +291,6 @@ Global
 		{C5F80730-F44F-4478-BDAE-6634EFC2CA88}.Debug|iPhoneSimulator.ActiveCfg = Debug|Win32
 		{C5F80730-F44F-4478-BDAE-6634EFC2CA88}.Debug|x64.ActiveCfg = Debug|Win32
 		{C5F80730-F44F-4478-BDAE-6634EFC2CA88}.Debug|x86.ActiveCfg = Debug|Win32
-		{C5F80730-F44F-4478-BDAE-6634EFC2CA88}.Debug|x86.Build.0 = Debug|Win32
 		{C5F80730-F44F-4478-BDAE-6634EFC2CA88}.Release|Any CPU.ActiveCfg = Release|Win32
 		{C5F80730-F44F-4478-BDAE-6634EFC2CA88}.Release|ARM.ActiveCfg = Release|Win32
 		{C5F80730-F44F-4478-BDAE-6634EFC2CA88}.Release|iPhone.ActiveCfg = Release|Win32

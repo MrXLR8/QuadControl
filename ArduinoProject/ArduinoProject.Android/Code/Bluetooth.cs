@@ -24,19 +24,15 @@ namespace ArduinoProject.Shared
 
             if (adapter == null)
             {
-
                 FormAction.print("[ОШИБКА]: Bluetooth не найден");
                 return false;
             }
-
             if (!adapter.IsEnabled)
             {
                 FormAction.print("[ОШИБКА]: Bluetooth выключен");
                 return false;
             }
-
             return true;
-
         }
 
         public static bool ConnectDevice()
@@ -49,7 +45,7 @@ namespace ArduinoProject.Shared
             BluetoothDevice device =
                 (from bd in adapter.BondedDevices
                  where bd.Name == deviceName
-                 select bd).FirstOrDefault();
+                 select bd).FirstOrDefault(); // получения устройства по имени из всех спарированых
 
             if (device == null)
             {
@@ -58,9 +54,7 @@ namespace ArduinoProject.Shared
             }
             else
                 FormAction.print("Подключилься к " + device.Name); 
-
-
-            _socket = device.CreateRfcommSocketToServiceRecord(Java.Util.UUID.FromString("00001101-0000-1000-8000-00805f9b34fb"));
+            _socket = device.CreateRfcommSocketToServiceRecord(Java.Util.UUID.FromString("00001101-0000-1000-8000-00805f9b34fb")); // ID Серийного соединения
 
             adapter.CancelDiscovery();
             try
@@ -73,7 +67,6 @@ namespace ArduinoProject.Shared
                 return false;
             }
             return true;
-
         }
 
         public static bool Send(string str)
