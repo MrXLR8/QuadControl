@@ -94,7 +94,7 @@ namespace ArduinoProject.Shared
             await _socket.ConnectAsync(_service.ConnectionHostName, _service.ConnectionServiceName, SocketProtectionLevel.BluetoothEncryptionAllowNullAuthentication);
         }
 
-        public static async Task SendAsync(string str)
+        public static async Task Send(string str)
         {
             if (_service == null) { await Start(); }
 
@@ -124,7 +124,7 @@ namespace ArduinoProject.Shared
 
         }
 
-        public static async Task SendAsync(int number)
+        public static async Task Send(int number)
         {
 
             if (_service == null) { await Start(); }

@@ -74,15 +74,12 @@ void powerset()
 		Serial.println(bt);
 
 
-		if (bt != -1)
+		if (bt != -1 & bt<=255)
 		{
 
-			bt -= 48;
-
-			calc = bt * 28;
-			analogWrite(motor, calc);
+			analogWrite(motor, bt);
 			Serial.print("Setting power: ");
-			Serial.println(calc);
+			Serial.println(bt);
 		}
 		BTSerial.flush();
 	}

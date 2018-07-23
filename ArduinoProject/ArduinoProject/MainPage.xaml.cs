@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using ArduinoProject.Shared;
+using ArduinoProject.Code;
 
 namespace ArduinoProject
 {
@@ -33,22 +34,22 @@ namespace ArduinoProject
 
             if (Button==grnBTN)
             {
-               Bluetooth.SendAsync(1);
+               Bluetooth.Send(1);
 
             }
             else if(Button==yellBTN)
             {
-                Bluetooth.SendAsync(2);
+                Bluetooth.Send(2);
             }
             else if(Button==redTN)
             {
 
-                Bluetooth.SendAsync(3);
+                Bluetooth.Send(3);
             }
             else if(Button==offBTN)
             {
 
-                Bluetooth.SendAsync(0);
+                Bluetooth.Send(0);
                 
             }
         }
@@ -57,10 +58,12 @@ namespace ArduinoProject
         {
             print("Power click");
             var Button = sender as Button;
+            double calc;
             if(Button==PowerDown)
             {
-                print("PWR "+power.ToString());
-                if ((power-change)>=0)
+                calc = power - change;
+                FormAction.print("PWR "+power.ToString());
+                if (calc >= 0)
                 {
                     power -= change;
                 }
@@ -68,15 +71,24 @@ namespace ArduinoProject
             }
             if(Button==PowerUp)
             {
-                print("PWR "+power.ToString());
-                if ((power+change)<=9)
+                FormAction.print("PWR "+power.ToString());
+                calc = power + change;
+                if (calc<=10)
                 {
                     power += change;
                 }
 
             }
-            PowerText.Text = power.ToString();
-            Bluetooth.SendAsync(power);
+
+            double progress = (double)power / 10;
+            ProgressBarPower.Progress = progress;
+
+           
+        }
+
+        private void TextField_Focused(object sender, FocusEventArgs e)
+        {
+            ((Editor)sender).Unfocus();
         }
     }
 }

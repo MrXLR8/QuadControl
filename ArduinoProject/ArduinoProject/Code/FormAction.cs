@@ -12,6 +12,7 @@ namespace ArduinoProject.Code
         public static void print(string text)
         {
             Form.TextField.Text += Environment.NewLine + " " + text;
+            Form.ScrollText.ScrollToAsync(Form.TextField, Xamarin.Forms.ScrollToPosition.End, true);
         }
     }
 }
