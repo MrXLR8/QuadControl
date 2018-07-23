@@ -68,7 +68,8 @@ void powerset()
 	{
 
 		bt = BTSerial.read();
-		
+		BTSerial.write(bt);
+
 		Serial.print("BT DATA: ");
 		Serial.println(bt);
 

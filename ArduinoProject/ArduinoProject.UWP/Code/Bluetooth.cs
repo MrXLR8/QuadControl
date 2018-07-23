@@ -126,7 +126,6 @@ namespace ArduinoProject.Shared
 
         public static async Task SendAsync(int number)
         {
-            string str = number.ToString();
 
             if (_service == null) { await Start(); }
 
@@ -134,14 +133,14 @@ namespace ArduinoProject.Shared
 
             if (_socket != null)
             {
-                FormAction.print("Отправляю строку:");
-                FormAction.print("> " + str);
+                FormAction.print("> " + number);
 
-                byte[] byteArray = Encoding.UTF8.GetBytes(str);
 
                 var writer = new DataWriter(_socket.OutputStream);
 
-                writer.WriteString(str);
+                writer.WriteByte(Convert.ToByte(number));
+
+                StartListening();
 
                 // Launch an async task to 
                 //complete the write operation
@@ -155,6 +154,45 @@ namespace ArduinoProject.Shared
                 FormAction.print("[ОШИБКА]: Соеденение не было установлено.");
             }
         }
+
+
+        //public static async Task StartListening()
+        //{
+        //    DataReader rx = new DataReader(_socket.InputStream);
+        //    bool SocketStatus = false;
+        //    uint bytesLoaded;
+        //    do
+        //    {
+        //        bytesLoaded = await rx.LoadAsync(20);
+        //        SocketStatus = Convert.ToBoolean(bytesLoaded);
+        //        var symbol = rx.ReadString(bytesLoaded);
+        //        FormAction.print("<" + symbol);
+        //    } while (SocketStatus);
+
+        //    FormAction.print("[ОШИБКА]: Соеденение закрыто");
+
+
+        //}
+
+
+        public static async Task StartListening()
+        {
+            DataReader rx = new DataReader(_socket.InputStream);
+            bool SocketStatus = false;
+            uint bytesLoaded;
+            do
+            {
+                bytesLoaded = await rx.LoadAsync(1);
+                SocketStatus = Convert.ToBoolean(bytesLoaded);
+                var symbol = rx.ReadByte();
+                FormAction.print("<" + symbol);
+            } while (SocketStatus);
+
+            FormAction.print("[ОШИБКА]: Соеденение закрыто");
+
+
+        }
+
     }
 }
  
