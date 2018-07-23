@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Windows.Devices.Bluetooth;
 using Windows.Devices.Bluetooth.Rfcomm;
 using Windows.Devices.Enumeration;
+using Windows.Devices.Radios;
 using Windows.Devices.SerialCommunication;
 using Windows.Networking.Connectivity;
 using Windows.Networking.Sockets;
@@ -24,9 +25,21 @@ namespace ArduinoProject.Shared
         private static Windows.Foundation.IAsyncOperation<BluetoothDevice> device_task;
         public static BluetoothDevice device;
 
+
+        public static async Task<bool> GetBluetoothIsEnabledAsync()
+        {
+            var radios = await Radio.GetRadiosAsync();
+            var bluetoothRadio = radios.FirstOrDefault(radio => radio.Kind == RadioKind.Bluetooth);
+            return bluetoothRadio != null && bluetoothRadio.State == RadioState.On;
+        }
+
         private static async Task Start()
         {
-
+            if (!(await GetBluetoothIsEnabledAsync()))
+            {
+                FormAction.print("[ОШИБКА] Bluetooth отключён");
+                return;
+            }
             var serviceInfoCollection = await DeviceInformation.FindAllAsync
                 (
                 RfcommDeviceService.GetDeviceSelector(RfcommServiceId.SerialPort),
@@ -41,7 +54,7 @@ namespace ArduinoProject.Shared
                     );
 
 
-                if (deviceInfo.Name == "HC-05")
+                if (deviceInfo.Name == Variable.bluetoothName)
                 {
                     device_task =  BluetoothDevice.FromIdAsync(deviceInfo.Id);  //поиск нужного нам устройства
                     break; 
@@ -53,15 +66,32 @@ namespace ArduinoProject.Shared
 
         public static async Task ConnectDevice()
         {
-            device = await device_task;
-            FormAction.print("Bluetooth Идентификатор получен для: " + device.Name);
-            var result = await device.GetRfcommServicesForIdAsync(RfcommServiceId.SerialPort, BluetoothCacheMode.Uncached);
-            _service = result.Services[0]; // получение Rfcomm серийного сервиса
-            FormAction.print("Rfcomm сервис создан " + _service.Device.Name);
+            if (device_task == null)
+            {
+                FormAction.print("[ОШИБКА]: "+ Variable.bluetoothName + " не сопряжен или не найден");
+                return;
+            }
+            else
+            {
+                device = await device_task;
+            }
+            
+            FormAction.print("Bluetooth споряжение найдено для: " + device.Name);
+            RfcommDeviceServicesResult result = await device.GetRfcommServicesForIdAsync(RfcommServiceId.SerialPort, BluetoothCacheMode.Uncached);
+
+
+            if(result.Services.Count==0)
+            {
+                FormAction.print("[ОШИБКА] Не удалось подключиться к Bluetooth устройству: " + device.Name + "// "+ "или устоойство не поддерживает выбранный сервис");
+                return;
+            }
+            _service = result.Services[0];
+
+
+            FormAction.print("Подключение к устройству успешно: " + _service.Device.Name);
 
             _socket = new StreamSocket();
             await _socket.ConnectAsync(_service.ConnectionHostName, _service.ConnectionServiceName, SocketProtectionLevel.BluetoothEncryptionAllowNullAuthentication);
-            FormAction.print("Сокет создан!");
         }
 
         public static async Task SendAsync(string str)
@@ -69,11 +99,11 @@ namespace ArduinoProject.Shared
             if (_service == null) { await Start(); }
 
 
-            FormAction.print("Отправляю строку:");
-            FormAction.print("> " + str);
+
             if (_socket != null)
             {
-
+                FormAction.print("Отправляю строку:");
+                FormAction.print("> " + str);
                 byte[] byteArray = Encoding.UTF8.GetBytes(str);
 
                 var writer = new DataWriter(_socket.OutputStream);
@@ -101,10 +131,11 @@ namespace ArduinoProject.Shared
             if (_service == null) { await Start(); }
 
 
-            FormAction.print("Отправляю строку:");
-            FormAction.print("> " + str);
+
             if (_socket != null)
             {
+                FormAction.print("Отправляю строку:");
+                FormAction.print("> " + str);
 
                 byte[] byteArray = Encoding.UTF8.GetBytes(str);
 
