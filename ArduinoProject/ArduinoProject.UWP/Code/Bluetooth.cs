@@ -92,6 +92,7 @@ namespace ArduinoProject.Shared
 
             _socket = new StreamSocket();
             await _socket.ConnectAsync(_service.ConnectionHostName, _service.ConnectionServiceName, SocketProtectionLevel.BluetoothEncryptionAllowNullAuthentication);
+            StartListening();
         }
 
         public static async Task Send(string str)
@@ -140,11 +141,18 @@ namespace ArduinoProject.Shared
 
                 writer.WriteByte(Convert.ToByte(number));
 
-                StartListening();
+              
 
                 // Launch an async task to 
                 //complete the write operation
-                await writer.StoreAsync();
+                try
+                {
+                    await writer.StoreAsync();
+                }
+                catch (System.ObjectDisposedException e)
+                {
+                    FormAction.print("[ОШИБКА]: Не удалось отправить " +e.Message);
+                }
 
 
 
@@ -179,10 +187,17 @@ namespace ArduinoProject.Shared
         {
             DataReader rx = new DataReader(_socket.InputStream);
             bool SocketStatus = false;
-            uint bytesLoaded;
+            uint bytesLoaded=0;
             do
             {
-                bytesLoaded = await rx.LoadAsync(1);
+                try
+                {
+                    bytesLoaded = await rx.LoadAsync(1);
+                }
+                catch (Exception e)
+                {
+                    FormAction.print("[ОШИБКА]: Соеденение закрыто. " +e.Message);
+                }
                 SocketStatus = Convert.ToBoolean(bytesLoaded);
                 var symbol = rx.ReadByte();
                 FormAction.print("<" + symbol);

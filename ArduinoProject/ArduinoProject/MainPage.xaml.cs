@@ -9,6 +9,7 @@ using ArduinoProject.Code;
 
 namespace ArduinoProject
 {
+    //TODO: кнопка ручного подлкючения
 	public partial class MainPage : ContentPage
 	{
         public static int power = 0;
@@ -62,7 +63,6 @@ namespace ArduinoProject
             if(Button==PowerDown)
             {
                 calc = power - change;
-                FormAction.print("PWR "+power.ToString());
                 if (calc >= 0)
                 {
                     power -= change;
@@ -71,7 +71,7 @@ namespace ArduinoProject
             }
             if(Button==PowerUp)
             {
-                FormAction.print("PWR "+power.ToString());
+
                 calc = power + change;
                 if (calc<=10)
                 {
@@ -83,6 +83,7 @@ namespace ArduinoProject
             double progress = (double)power / 10;
             ProgressBarPower.Progress = progress;
 
+            Bluetooth.Send(power * 25);
            
         }
 
