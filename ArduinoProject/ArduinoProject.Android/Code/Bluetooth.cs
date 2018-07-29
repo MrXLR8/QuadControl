@@ -19,7 +19,7 @@ namespace ArduinoProject.Shared
         
         private static BluetoothAdapter adapter = BluetoothAdapter.DefaultAdapter;
         private static BluetoothSocket _socket;
-        private static void Start()
+        private static async Task Start()
         {
 
             if (adapter == null)
@@ -32,12 +32,13 @@ namespace ArduinoProject.Shared
                 FormAction.print("[ОШИБКА]: Bluetooth выключен");
                 return;
             }
-            return;
+            await ConnectDevice();
+
         }
 
         public static async Task ConnectDevice()
         {
-            Start();
+           
 
             if (adapter == null)
             {
@@ -77,14 +78,14 @@ namespace ArduinoProject.Shared
         {
             if (_socket == null)
             {
-                 await ConnectDevice();
+                 await Start();
             }
             
 
 
             FormAction.print("Отправляю число:");
             FormAction.print("> " + number);
-            if (_socket.IsConnected)
+            if (_socket!=null&&_socket.IsConnected)
             {
 
                 byte _byte = Convert.ToByte(number);

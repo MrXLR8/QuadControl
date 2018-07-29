@@ -13,6 +13,8 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "ArduinoProject", "ArduinoPr
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ArduinoFrimware", "ArduinoFrimware\ArduinoFrimware.vcxproj", "{C5F80730-F44F-4478-BDAE-6634EFC2CA88}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Playground", "Playground\Playground.vcxproj", "{A2BE4821-9831-4B95-820A-4487F43A9279}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		ArduinoProject\ArduinoProject\ArduinoProject.projitems*{51551de4-c904-4bf6-af8d-e63da0711ffb}*SharedItemsImports = 4
@@ -299,6 +301,44 @@ Global
 		{C5F80730-F44F-4478-BDAE-6634EFC2CA88}.Release|x64.ActiveCfg = Release|Win32
 		{C5F80730-F44F-4478-BDAE-6634EFC2CA88}.Release|x86.ActiveCfg = Release|Win32
 		{C5F80730-F44F-4478-BDAE-6634EFC2CA88}.Release|x86.Build.0 = Release|Win32
+		{A2BE4821-9831-4B95-820A-4487F43A9279}.Ad-Hoc|Any CPU.ActiveCfg = Release|Win32
+		{A2BE4821-9831-4B95-820A-4487F43A9279}.Ad-Hoc|Any CPU.Build.0 = Release|Win32
+		{A2BE4821-9831-4B95-820A-4487F43A9279}.Ad-Hoc|ARM.ActiveCfg = Release|Win32
+		{A2BE4821-9831-4B95-820A-4487F43A9279}.Ad-Hoc|ARM.Build.0 = Release|Win32
+		{A2BE4821-9831-4B95-820A-4487F43A9279}.Ad-Hoc|iPhone.ActiveCfg = Release|Win32
+		{A2BE4821-9831-4B95-820A-4487F43A9279}.Ad-Hoc|iPhone.Build.0 = Release|Win32
+		{A2BE4821-9831-4B95-820A-4487F43A9279}.Ad-Hoc|iPhoneSimulator.ActiveCfg = Release|Win32
+		{A2BE4821-9831-4B95-820A-4487F43A9279}.Ad-Hoc|iPhoneSimulator.Build.0 = Release|Win32
+		{A2BE4821-9831-4B95-820A-4487F43A9279}.Ad-Hoc|x64.ActiveCfg = Release|Win32
+		{A2BE4821-9831-4B95-820A-4487F43A9279}.Ad-Hoc|x64.Build.0 = Release|Win32
+		{A2BE4821-9831-4B95-820A-4487F43A9279}.Ad-Hoc|x86.ActiveCfg = Release|Win32
+		{A2BE4821-9831-4B95-820A-4487F43A9279}.Ad-Hoc|x86.Build.0 = Release|Win32
+		{A2BE4821-9831-4B95-820A-4487F43A9279}.AppStore|Any CPU.ActiveCfg = Release|Win32
+		{A2BE4821-9831-4B95-820A-4487F43A9279}.AppStore|Any CPU.Build.0 = Release|Win32
+		{A2BE4821-9831-4B95-820A-4487F43A9279}.AppStore|ARM.ActiveCfg = Release|Win32
+		{A2BE4821-9831-4B95-820A-4487F43A9279}.AppStore|ARM.Build.0 = Release|Win32
+		{A2BE4821-9831-4B95-820A-4487F43A9279}.AppStore|iPhone.ActiveCfg = Release|Win32
+		{A2BE4821-9831-4B95-820A-4487F43A9279}.AppStore|iPhone.Build.0 = Release|Win32
+		{A2BE4821-9831-4B95-820A-4487F43A9279}.AppStore|iPhoneSimulator.ActiveCfg = Release|Win32
+		{A2BE4821-9831-4B95-820A-4487F43A9279}.AppStore|iPhoneSimulator.Build.0 = Release|Win32
+		{A2BE4821-9831-4B95-820A-4487F43A9279}.AppStore|x64.ActiveCfg = Release|Win32
+		{A2BE4821-9831-4B95-820A-4487F43A9279}.AppStore|x64.Build.0 = Release|Win32
+		{A2BE4821-9831-4B95-820A-4487F43A9279}.AppStore|x86.ActiveCfg = Release|Win32
+		{A2BE4821-9831-4B95-820A-4487F43A9279}.AppStore|x86.Build.0 = Release|Win32
+		{A2BE4821-9831-4B95-820A-4487F43A9279}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{A2BE4821-9831-4B95-820A-4487F43A9279}.Debug|ARM.ActiveCfg = Debug|Win32
+		{A2BE4821-9831-4B95-820A-4487F43A9279}.Debug|iPhone.ActiveCfg = Debug|Win32
+		{A2BE4821-9831-4B95-820A-4487F43A9279}.Debug|iPhoneSimulator.ActiveCfg = Debug|Win32
+		{A2BE4821-9831-4B95-820A-4487F43A9279}.Debug|x64.ActiveCfg = Debug|Win32
+		{A2BE4821-9831-4B95-820A-4487F43A9279}.Debug|x86.ActiveCfg = Debug|Win32
+		{A2BE4821-9831-4B95-820A-4487F43A9279}.Debug|x86.Build.0 = Debug|Win32
+		{A2BE4821-9831-4B95-820A-4487F43A9279}.Release|Any CPU.ActiveCfg = Release|Win32
+		{A2BE4821-9831-4B95-820A-4487F43A9279}.Release|ARM.ActiveCfg = Release|Win32
+		{A2BE4821-9831-4B95-820A-4487F43A9279}.Release|iPhone.ActiveCfg = Release|Win32
+		{A2BE4821-9831-4B95-820A-4487F43A9279}.Release|iPhoneSimulator.ActiveCfg = Release|Win32
+		{A2BE4821-9831-4B95-820A-4487F43A9279}.Release|x64.ActiveCfg = Release|Win32
+		{A2BE4821-9831-4B95-820A-4487F43A9279}.Release|x86.ActiveCfg = Release|Win32
+		{A2BE4821-9831-4B95-820A-4487F43A9279}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

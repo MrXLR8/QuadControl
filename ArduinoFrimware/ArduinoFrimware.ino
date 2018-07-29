@@ -1,25 +1,16 @@
 
 #include <SoftwareSerial.h>
 
-int green = 6;
-int yellow = 5;
-int red = 3;
 
-int buttonP = 9;
-int buttonM = 8;
+
 
 int motor = 10;
 
-int power = 0;
-int change = 2;
-
-bool PressP;
-bool PressM;
 
 #pragma region  bluetooth
 
-int gRxPin = 12;
-int gTxPin = 13;
+int gRxPin = 13;
+int gTxPin = 12;
 
 bool bluetoothStatus = false;
 #pragma endregion
@@ -31,12 +22,6 @@ SoftwareSerial BTSerial(gRxPin, gTxPin);
 
 void setup() {
 
-	pinMode(green, OUTPUT);
-	pinMode(yellow, OUTPUT);
-	pinMode(red, OUTPUT);
-
-	pinMode(buttonP, INPUT);
-	pinMode(buttonM, INPUT);
 
 	BTSerial.setTimeout(500);
 	BTSerial.begin(9600);
@@ -104,95 +89,6 @@ void powersetusb()
 		}
 		Serial.flush();
 	}
-}
-void bluetoothM()
-{
-
-	val = BTSerial.read();
-
-	if (val == -1) {
-		return;
-	}
-	Serial.println(val);
-
-
-
-	// ��� ������� "1" �������� ���������
-	if (val == 49)
-	{
-
-		digitalWrite(green, HIGH);
-		digitalWrite(yellow, LOW);
-		digitalWrite(red, LOW);
-
-		BTSerial.write("Green is on!\n");
-
-	}
-	if (val == 50)
-	{
-		digitalWrite(green, LOW);
-		digitalWrite(yellow, HIGH);
-		digitalWrite(red, LOW);
-
-		BTSerial.write("Yellow is on!\n");
-	}
-	if (val == 51)
-	{
-		digitalWrite(green, LOW);
-		digitalWrite(yellow, LOW);
-		digitalWrite(red, HIGH);
-
-		BTSerial.write("Red is on!\n");
-	}
-	// ��� ������� "0" ��������� ���������
-	if (val == 48)
-	{
-		digitalWrite(green, LOW);
-		digitalWrite(yellow, LOW);
-		digitalWrite(red, LOW);
-
-		BTSerial.write("<OFF>>\n");
-	}
-
-}
-void  powerchange()
-{
-
-	PressP = digitalRead(buttonP);
-	PressM = digitalRead(buttonM);
-
-	if (PressP)
-	{
-		addPower();
-	}
-	if (PressM)
-	{
-		decPower();
-	}
-	analogWrite(motor, power);
-}
-
-
-void addPower()
-{
-	if ((power + change) <= 250)
-	{
-		Serial.print("Adding Power. ");
-		Serial.println(power);
-		power += change;
-
-	}
-	else { Serial.println("Cant add Power"); }
-}
-void decPower()
-{
-	if ((power - change) >= 0)
-	{
-		Serial.print("Decreasing Power. ");
-		Serial.println(power);
-		power -= change;
-	}
-	else { Serial.println("Cant decrease Power"); }
 }
 
 
