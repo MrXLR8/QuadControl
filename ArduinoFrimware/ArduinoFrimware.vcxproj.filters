@@ -16,6 +16,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ArduinoFrimware.ino" />
+    <None Include="Accel.ino" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="__vm\.ArduinoFrimware.vsarduino.h">

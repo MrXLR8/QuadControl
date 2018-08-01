@@ -17,13 +17,18 @@
   <ItemGroup>
     <None Include="..\ArduinoFrimware\Playground.ino" />
     <None Include="..\ArduinoFrimware\LCD.ino" />
-    <None Include="..\ArduinoFrimware\Accel.ino" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="__vm\.Playground.vsarduino.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="__vm\.ArduinoFrimware.vsarduino.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ArduinoFrimware\F_Joystick.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ArduinoFrimware\F_LCD.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

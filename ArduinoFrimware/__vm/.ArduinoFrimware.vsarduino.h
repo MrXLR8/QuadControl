@@ -77,5 +77,7 @@ typedef void *__builtin_va_list;
 #define pgm_read_ptr(address_short)   short()
 
 #include "ArduinoFrimware.ino"
+#include "Accel.ino"
+#include "LCD.ino"
 #endif
 #endif

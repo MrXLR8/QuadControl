@@ -1,3 +1,4 @@
+#include "MPU6050.h"
 
 MPU6050 accel;
 int16_t ax_raw, ay_raw, az_raw, gx_raw, gy_raw, gz_raw;
