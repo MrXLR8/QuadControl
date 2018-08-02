@@ -1,35 +1,41 @@
 ﻿
 #include "F_LCD.h"
-#include "F_Joystick.h"
-#include "F_Joystick.h"
+#include "F_MPU6050.h"
 
-
-F_Joystick joystick(A0, A1,2, true);
 F_LCD display(20, 4);
+F_MPU6050 accel;
 
 void setup()
 {
 
 	pinMode(13, OUTPUT);
 	display.start();
+	accel.start();
+	Serial.println("asd");
+	
 }
 int cords[2];
+int gyroc[2];
+xyz data;
+xyz gyro;
 void loop()
 {
-	delay(100);
-	digitalWrite(13, HIGH);
-	Vector2D data;
-	data = joystick.position();
+
+
+	data=accel.getAccelXYZ();
+
+
 
 	cords[0] = data.x;
 	cords[1] = data.y;
-	display.clear();
-	display.printValues(0, cords, 2);
-	display.printValue(2, "Pressed?", joystick.pressed());
-	
+	cords[2] = data.z;
 
-	delay(100);
-	digitalWrite(13, LOW);
+	display.clear();
+	display.printValues(0, cords, 3);
+
+
+
+	delay(200);
 }
 
 

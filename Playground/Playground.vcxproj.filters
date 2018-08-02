@@ -31,5 +31,8 @@
     <ClInclude Include="..\ArduinoFrimware\F_LCD.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\ArduinoFrimware\F_MPU6050.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -78,6 +78,5 @@ typedef void *__builtin_va_list;
 
 #include "ArduinoFrimware.ino"
 #include "Accel.ino"
-#include "LCD.ino"
 #endif
 #endif
