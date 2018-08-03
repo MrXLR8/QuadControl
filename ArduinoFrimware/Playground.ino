@@ -11,32 +11,30 @@ void setup()
 	pinMode(13, OUTPUT);
 	display.start();
 	accel.start();
-	Serial.println("asd");
 	
 }
 int cords[2];
-int gyroc[2];
-xyz data;
-xyz gyro;
+Angle data;
+long loop_timer;
 void loop()
 {
 
 
-	data=accel.getAccelXYZ();
+	data=accel.getGyro();
 
 
 
-	cords[0] = data.x;
-	cords[1] = data.y;
-	cords[2] = data.z;
+	cords[0] = data.pitch;
+	cords[1] = data.roll;
 
 	display.clear();
 	display.printValues(0, cords, 3);
 
-
-
 	delay(200);
+
 }
+
+
 
 
 
