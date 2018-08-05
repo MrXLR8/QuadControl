@@ -113,7 +113,7 @@
   </ImportGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties arduino.upload.port="" />
+      <UserProperties debug.view.AnalogPins="1" arduino.upload.port="" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
