@@ -5,15 +5,16 @@ void setup()
 {
 	
 	Serial.println(card.start());
-	Serial.println(card.MbFree());
+
+
+	card.WriteFile("CREATED2/created.txt", "info");
 	
 }
 
 void loop()
 {
 
-	delay(1000);
-	Serial.println("alive");
+
 	
 
 

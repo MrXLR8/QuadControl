@@ -22,21 +22,65 @@ public:
 	bool start() 
 	{
 
-		if (!card.init(SPI_HALF_SPEED, cs)) 
+		if (!SD.begin(cs)) 
 		{
 			Serial.println("[SD] Card doesn`t inserted!");
 			return false;
 		}
-		if (!volume.init(card)) 
-		{
-			Serial.println("[SD] No FAT16/32 Volume found!");
-			return false;
-		}
 		~cs;
-		root.openRoot(volume);
 		return true;
 	}
 
+
+	String ReadFile(String filename)  // для записи в папки использовать такие же скобки как в комментах
+	{
+		File file = SD.open(filename, FILE_READ);
+		String result;
+		if (file) 
+		{
+			while (file.available()) 
+			{
+				result +=(char) file.read();
+			}
+			file.close();
+			return result;
+		}
+		else { Serial.println("[SD] Failed to open file to read!"); return ""; }
+	}
+
+	bool WriteFile(String filename, String textToWrite) 
+	{
+		
+		File file = SD.open(filename,FILE_WRITE);
+		if (file) 
+		{
+			file.println(textToWrite);
+			file.close();
+			return true;
+		}
+		else 
+		{
+			Serial.println("[SD] Failed to open file to write!"); 
+			return false;
+		}
+	}
+
+	bool CreateDir(String dirname) 
+	{
+		return SD.mkdir(dirname);
+	}
+
+	bool RemoveFile(String filename) 
+	{
+		return SD.remove(filename);
+	}
+
+	bool RemoveDir(String dirname) 
+	{
+		return SD.rmdir(dirname);
+	}
+
+	/*
 	int MbFree() 
 	{
 		uint32_t volumesize;
@@ -47,13 +91,11 @@ public:
 		volumesize /= 1024;
 		return volumesize;
 	}
-
+	*/
 private:
 	int cs;
 
-	Sd2Card card;
-	SdVolume volume;
-	SdFile root;
+
 };
 
 #endif
