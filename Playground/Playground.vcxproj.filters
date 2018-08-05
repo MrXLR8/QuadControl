@@ -37,10 +37,8 @@
     <ClInclude Include="..\ArduinoFrimware\F_SD.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\ArduinoFrimware\F_SD.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
+    <ClInclude Include="..\ArduinoFrimware\F_SonicRangefinder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

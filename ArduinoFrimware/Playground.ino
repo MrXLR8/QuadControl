@@ -1,20 +1,17 @@
 ﻿
-#include "F_SD.h"
-F_SD card(4);
+#include "F_SonicRangefinder.h"
+F_SonicRangefinder range(10, 11);
+
 void setup()
 {
-	
-	Serial.println(card.start());
 
-
-	card.WriteFile("CREATED2/created.txt", "info");
-	
 }
 
 void loop()
 {
 
-
+	Serial.println(range.getInch());
+	delay(1000);
 	
 
 

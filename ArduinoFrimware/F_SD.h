@@ -1,4 +1,12 @@
-// F_SD.h
+/*
+
+VCC - 5V
+CS (constructor (def-4))
+MOSI 11
+MISO 12
+SCK 13
+
+*/
 #include <SPI.h>
 #include <SD.h>
 
