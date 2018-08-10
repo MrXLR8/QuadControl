@@ -92,5 +92,12 @@ namespace ArduinoProject
         {
             ((Editor)sender).Unfocus();
         }
+
+        private void DataField_Completed(object sender, EventArgs e)
+        {
+            String text = DataField.Text;
+            SocketConnection.write(text);
+            DataField.Text = "";
+        }
     }
 }

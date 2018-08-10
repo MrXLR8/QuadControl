@@ -11,6 +11,7 @@
     <Grid x:Name="GlobalGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" x:Name="ActionHold" />
+            <RowDefinition Height="0.2*" x:Name="InputHold" />
             <RowDefinition  Height="0.1*" x:Name="ProgressHold"/>
             <RowDefinition  Height="0.2*" x:Name="MenuHold"/>
         </Grid.RowDefinitions>
@@ -21,8 +22,17 @@
         </ScrollView>       
         <BoxView Color="Gray" Grid.Row="2"/>
 
-       
         <Grid Grid.Row="1" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition  Width="0.5*"/>
+            </Grid.ColumnDefinitions>
+            <Entry Completed="DataField_Completed" Grid.Column="0" x:Name="DataField"/>
+            <Button Clicked="DataField_Completed" Text="Send" Grid.Column="1" x:Name="SendBtn"/>
+        </Grid>
+
+
+        <Grid Grid.Row="2" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
@@ -34,7 +44,7 @@
             <Button Grid.Column="2" Text="UP" Clicked="Power_Click" x:Name="PowerUp"/>
         </Grid>
 
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
