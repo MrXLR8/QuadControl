@@ -36,12 +36,14 @@ namespace ArduinoProject
 
             if (Button==grnBTN)
             {
+                
                 SocketConnection.write("asd");
 
             }
             else if(Button==yellBTN)
             {
-                Bluetooth.Send(2);
+                Task run = new Task(new Action(SocketConnection.listen));
+                run.Start();
             }
             else if(Button==redTN)
             {
