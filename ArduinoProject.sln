@@ -15,9 +15,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ArduinoFrimware", "ArduinoF
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Playground", "Playground\Playground.vcxproj", "{A2BE4821-9831-4B95-820A-4487F43A9279}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Wi-Fi", "Wi-Fi\Wi-Fi.vcxproj", "{3EB3BBAE-E445-4BF1-8A16-E57A8A948B2D}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		ArduinoProject\ArduinoProject\ArduinoProject.projitems*{51551de4-c904-4bf6-af8d-e63da0711ffb}*SharedItemsImports = 4
 		ArduinoProject\ArduinoProject\ArduinoProject.projitems*{9dfbc353-83ae-4816-bbc1-4a72183f96d0}*SharedItemsImports = 13
 		ArduinoProject\ArduinoProject\ArduinoProject.projitems*{c0401e73-41e1-4f47-936f-86a76d73dacb}*SharedItemsImports = 4
 	EndGlobalSection
@@ -339,6 +340,44 @@ Global
 		{A2BE4821-9831-4B95-820A-4487F43A9279}.Release|x64.ActiveCfg = Release|Win32
 		{A2BE4821-9831-4B95-820A-4487F43A9279}.Release|x86.ActiveCfg = Release|Win32
 		{A2BE4821-9831-4B95-820A-4487F43A9279}.Release|x86.Build.0 = Release|Win32
+		{3EB3BBAE-E445-4BF1-8A16-E57A8A948B2D}.Ad-Hoc|Any CPU.ActiveCfg = Release|Win32
+		{3EB3BBAE-E445-4BF1-8A16-E57A8A948B2D}.Ad-Hoc|Any CPU.Build.0 = Release|Win32
+		{3EB3BBAE-E445-4BF1-8A16-E57A8A948B2D}.Ad-Hoc|ARM.ActiveCfg = Release|Win32
+		{3EB3BBAE-E445-4BF1-8A16-E57A8A948B2D}.Ad-Hoc|ARM.Build.0 = Release|Win32
+		{3EB3BBAE-E445-4BF1-8A16-E57A8A948B2D}.Ad-Hoc|iPhone.ActiveCfg = Release|Win32
+		{3EB3BBAE-E445-4BF1-8A16-E57A8A948B2D}.Ad-Hoc|iPhone.Build.0 = Release|Win32
+		{3EB3BBAE-E445-4BF1-8A16-E57A8A948B2D}.Ad-Hoc|iPhoneSimulator.ActiveCfg = Release|Win32
+		{3EB3BBAE-E445-4BF1-8A16-E57A8A948B2D}.Ad-Hoc|iPhoneSimulator.Build.0 = Release|Win32
+		{3EB3BBAE-E445-4BF1-8A16-E57A8A948B2D}.Ad-Hoc|x64.ActiveCfg = Release|Win32
+		{3EB3BBAE-E445-4BF1-8A16-E57A8A948B2D}.Ad-Hoc|x64.Build.0 = Release|Win32
+		{3EB3BBAE-E445-4BF1-8A16-E57A8A948B2D}.Ad-Hoc|x86.ActiveCfg = Release|Win32
+		{3EB3BBAE-E445-4BF1-8A16-E57A8A948B2D}.Ad-Hoc|x86.Build.0 = Release|Win32
+		{3EB3BBAE-E445-4BF1-8A16-E57A8A948B2D}.AppStore|Any CPU.ActiveCfg = Release|Win32
+		{3EB3BBAE-E445-4BF1-8A16-E57A8A948B2D}.AppStore|Any CPU.Build.0 = Release|Win32
+		{3EB3BBAE-E445-4BF1-8A16-E57A8A948B2D}.AppStore|ARM.ActiveCfg = Release|Win32
+		{3EB3BBAE-E445-4BF1-8A16-E57A8A948B2D}.AppStore|ARM.Build.0 = Release|Win32
+		{3EB3BBAE-E445-4BF1-8A16-E57A8A948B2D}.AppStore|iPhone.ActiveCfg = Release|Win32
+		{3EB3BBAE-E445-4BF1-8A16-E57A8A948B2D}.AppStore|iPhone.Build.0 = Release|Win32
+		{3EB3BBAE-E445-4BF1-8A16-E57A8A948B2D}.AppStore|iPhoneSimulator.ActiveCfg = Release|Win32
+		{3EB3BBAE-E445-4BF1-8A16-E57A8A948B2D}.AppStore|iPhoneSimulator.Build.0 = Release|Win32
+		{3EB3BBAE-E445-4BF1-8A16-E57A8A948B2D}.AppStore|x64.ActiveCfg = Release|Win32
+		{3EB3BBAE-E445-4BF1-8A16-E57A8A948B2D}.AppStore|x64.Build.0 = Release|Win32
+		{3EB3BBAE-E445-4BF1-8A16-E57A8A948B2D}.AppStore|x86.ActiveCfg = Release|Win32
+		{3EB3BBAE-E445-4BF1-8A16-E57A8A948B2D}.AppStore|x86.Build.0 = Release|Win32
+		{3EB3BBAE-E445-4BF1-8A16-E57A8A948B2D}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{3EB3BBAE-E445-4BF1-8A16-E57A8A948B2D}.Debug|ARM.ActiveCfg = Debug|Win32
+		{3EB3BBAE-E445-4BF1-8A16-E57A8A948B2D}.Debug|iPhone.ActiveCfg = Debug|Win32
+		{3EB3BBAE-E445-4BF1-8A16-E57A8A948B2D}.Debug|iPhoneSimulator.ActiveCfg = Debug|Win32
+		{3EB3BBAE-E445-4BF1-8A16-E57A8A948B2D}.Debug|x64.ActiveCfg = Debug|Win32
+		{3EB3BBAE-E445-4BF1-8A16-E57A8A948B2D}.Debug|x86.ActiveCfg = Debug|Win32
+		{3EB3BBAE-E445-4BF1-8A16-E57A8A948B2D}.Debug|x86.Build.0 = Debug|Win32
+		{3EB3BBAE-E445-4BF1-8A16-E57A8A948B2D}.Release|Any CPU.ActiveCfg = Release|Win32
+		{3EB3BBAE-E445-4BF1-8A16-E57A8A948B2D}.Release|ARM.ActiveCfg = Release|Win32
+		{3EB3BBAE-E445-4BF1-8A16-E57A8A948B2D}.Release|iPhone.ActiveCfg = Release|Win32
+		{3EB3BBAE-E445-4BF1-8A16-E57A8A948B2D}.Release|iPhoneSimulator.ActiveCfg = Release|Win32
+		{3EB3BBAE-E445-4BF1-8A16-E57A8A948B2D}.Release|x64.ActiveCfg = Release|Win32
+		{3EB3BBAE-E445-4BF1-8A16-E57A8A948B2D}.Release|x86.ActiveCfg = Release|Win32
+		{3EB3BBAE-E445-4BF1-8A16-E57A8A948B2D}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

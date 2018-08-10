@@ -1,4 +1,4 @@
-﻿
+
 #include "ESP8266WiFi.h"
 
 
@@ -14,13 +14,13 @@ void setup()
 	pinMode(4, INPUT_PULLUP);
 	Serial.begin(115200);
 	delay(1000);
-	
-	if (digitalRead(4)==LOW)
+
+	if (digitalRead(4) == LOW)
 	{
 		WiFi.mode(WIFI_STA);
 		Serial.println(connectTo("XLR8`s Wi-Fi", "wormoman8627fd039h0bg9"));
 	}
-	else 
+	else
 	{
 		WiFi.mode(WIFI_AP);
 		Serial.println(hostAP());
@@ -30,7 +30,7 @@ void setup()
 	wifiServer.begin();
 }
 
-IPAddress hostAP() 
+IPAddress hostAP()
 {
 	char* ssid = "XLR8s_ESP82666";
 	char* pass = "wormoman";
@@ -60,8 +60,8 @@ IPAddress connectTo(char* ssid, char* pass)
 	Serial.println(ssid);
 	Serial.println(pass);
 	WiFi.begin(ssid, pass);
-	
-	while (WiFi.status() != WL_CONNECTED) 
+
+	while (WiFi.status() != WL_CONNECTED)
 	{
 		Serial.println("Trying to connect...");
 		delay(1000);
@@ -71,7 +71,7 @@ IPAddress connectTo(char* ssid, char* pass)
 }
 
 void loop()
-{	
+{
 	WiFiClient client = wifiServer.available();
 	if (client)
 	{
