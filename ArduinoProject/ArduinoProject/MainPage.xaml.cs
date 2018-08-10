@@ -20,6 +20,7 @@ namespace ArduinoProject
 			InitializeComponent();
             ArduinoProject.Code.FormAction.Form = this;
             
+            
 
 		}
 
@@ -35,7 +36,7 @@ namespace ArduinoProject
 
             if (Button==grnBTN)
             {
-               Bluetooth.Send(1);
+                SocketConnection.write("asd");
 
             }
             else if(Button==yellBTN)

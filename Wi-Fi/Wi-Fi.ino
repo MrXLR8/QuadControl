@@ -4,7 +4,7 @@
 
 
 
-WiFiServer wifiServer(80);
+WiFiServer wifiServer(49123);
 
 
 void setup()
@@ -41,7 +41,7 @@ IPAddress hostAP()
 
 	bool hidden = false;
 
-	IPAddress local_IP(192, 168, 1, 1);
+	IPAddress local_IP(192, 168, 1, 123);
 	IPAddress gateway(192, 168, 1, 1);
 	IPAddress subnet(255, 255, 255, 0);
 	WiFi.softAPConfig(local_IP, gateway, subnet);
@@ -75,7 +75,7 @@ void loop()
 	WiFiClient client = wifiServer.available();
 	if (client)
 	{
-		Serial.println("Client connected");
+		Serial.println(">>>Client connected");
 		while (client.connected())
 		{
 			if (Serial.available())
@@ -101,7 +101,7 @@ void loop()
 		}
 
 		client.stop();
-		Serial.println("Client disconnected");
+		Serial.println("<<<Client disconnected");
 	}
 
 }
