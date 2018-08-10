@@ -84,14 +84,17 @@ namespace ArduinoProject.Shared
             {
                 buffer[0]= (byte)ClientStream.ReadByte();
                 decode= Encoding.ASCII.GetString(buffer);
-                if (buffer[0]==13)
+                if (buffer[0]==13| buffer[0] == 10)
                 {
-                    Code.FormAction.print("Recived: " + result);
-                    result = "";
+                    if (result != "")
+                    {
+                        Code.FormAction.print("Recived: " + result);
+                        result = "";
+                    }
                 }
                 else
                 {
-                    if(buffer[0]!=10)
+
                     result += decode;
                 }
       
