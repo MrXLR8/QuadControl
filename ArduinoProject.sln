@@ -19,6 +19,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Wi-Fi", "Wi-Fi\Wi-Fi.vcxpro
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		ArduinoProject\ArduinoProject\ArduinoProject.projitems*{51551de4-c904-4bf6-af8d-e63da0711ffb}*SharedItemsImports = 4
 		ArduinoProject\ArduinoProject\ArduinoProject.projitems*{9dfbc353-83ae-4816-bbc1-4a72183f96d0}*SharedItemsImports = 13
 		ArduinoProject\ArduinoProject\ArduinoProject.projitems*{c0401e73-41e1-4f47-936f-86a76d73dacb}*SharedItemsImports = 4
 	EndGlobalSection

@@ -47,8 +47,8 @@ namespace ArduinoProject
             }
             else if(Button==redTN)
             {
-
-                Bluetooth.Send(3);
+                Order command1 =Order.Parse("[WL]TEST123.TEST2");
+                String test = command1.ToString();
             }
             else if(Button==offBTN)
             {
