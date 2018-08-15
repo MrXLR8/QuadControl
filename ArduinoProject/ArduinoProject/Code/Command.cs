@@ -28,9 +28,9 @@ namespace ArduinoProject.Code
 
         public Order(String _type, String[] _content)
         {
-            if(type.Length==2)
+            if(_type.Length==2)
             {
-                if(content.Length>0)
+                if(_content[0].Length>0)
                 {
                     type = _type;
                     content = _content;
