@@ -26,6 +26,21 @@ namespace ArduinoProject.Code
             return result;
         }
 
+
+        public Order(String toParse)
+        {
+            String type, body;
+            if (toParse[0] == '[' & toParse[3] == ']')
+            {
+                type = toParse.Remove(0, 1);
+                type = type.Remove(2);
+
+                body = toParse.Remove(0, 4);
+                content = body.Split('.');
+            }
+
+        }
+
         public Order(String _type, String[] _content)
         {
             if(_type.Length==2)
@@ -37,6 +52,8 @@ namespace ArduinoProject.Code
                 }
             }
         }
+
+
 
         public Order() { }
 

@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ArduinoProject.ConnectPage"
+              Title="Connection">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0" Text="Connection" FontSize="Large"  HorizontalTextAlignment="Center" />
+                <Label Grid.Row="1"  Text="Offline" TextColor="Red" x:Name="ConnectionStatus" FontSize="Large" HorizontalTextAlignment="Center" x:FieldModifier="public"/>
+                <Grid Grid.Row="2" Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Entry Grid.Row="0" Text="192.168.1.124" x:Name="ipEntry" FontSize="Large" HorizontalTextAlignment="Center" x:FieldModifier="public"/>
+                    <Entry Grid.Row="1" Text="49123" x:Name="portEntry" FontSize="Large" HorizontalTextAlignment="Center" x:FieldModifier="public"/>
+                </Grid>
+                <Button Grid.Row="3"  x:Name="ConnectionButton" x:FieldModifier="public" Clicked="ConnectionButton_Clicked" Text="Connect"/>
+                <Button Grid.Row="4" x:Name="DisconnectButton" x:FieldModifier="public" Clicked="DisconnectButton_Clicked" Text="Disconnect"/>
+            </Grid>
+
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0" Text="Ping" FontSize="Large" HorizontalTextAlignment="Center" x:Name="PingStatus" x:FieldModifier="public" />
+                <Label Grid.Row="1" Text="- ms" FontSize="Large" HorizontalTextAlignment="Center" x:Name="PingMS" x:FieldModifier="public" />
+                <Button Grid.Row="2" Text="PING" Clicked="PingButton_Clicked" x:Name="PingButton" x:FieldModifier="public"/>
+
+            </Grid>
+            
+            
+            
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

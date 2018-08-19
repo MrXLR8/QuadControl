@@ -4,5 +4,7 @@
             xmlns:local="clr-namespace:ArduinoProject"
             x:Class="ArduinoProject.TabbedPage1">
   <!--Pages can be added as references or inline-->
+    <local:ConnectPage></local:ConnectPage>
     <local:MainPage></local:MainPage>
+    
 </TabbedPage>

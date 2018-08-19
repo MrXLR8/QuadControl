@@ -5,33 +5,38 @@ using System.Threading.Tasks;
 using System.Net.Sockets;
 using System.Net;
 
+
 namespace ArduinoProject.Shared
 {
    public static class SocketConnection
     {
 
-        private static IPAddress address = IPAddress.Parse("192.168.1.124");
-        private static  int port = 49123;
-        private static Task connectTask;
-
+        private static IPAddress address;
+        private static int port;
+        public static boolDeleagate onConnect;
+        public static stringDelegate parseInfo;
 
         private static NetworkStream ClientStream;
-        private static NetworkStream ReciverStream;
        
         private static TcpClient ClientSocket=new TcpClient();
        // private static TcpListener ReciverSocket = new TcpListener(port);
-        public static async Task<bool> connect()
+        public static async Task<bool> connect(string _ip,int _port)
         {
+           
             try
             {
+                address = IPAddress.Parse(_ip);
+                port = _port;
+
                 await ClientSocket.ConnectAsync(address, port);
                 ClientStream = ClientSocket.GetStream();
-                
+                onConnect?.Invoke(true);
                 return true;
             }
             catch(Exception e)
             {
                 Code.FormAction.print("Failed to connect to: " + address + ":" + port);
+                onConnect?.Invoke(false);
                 return false;
             }
 
@@ -46,10 +51,7 @@ namespace ArduinoProject.Shared
           
             if(!ClientSocket.Connected)
             {
-               if(!await connect())
-                {
-                    return;
-                }
+                return;
             }
 
                 data += Environment.NewLine;
@@ -70,10 +72,7 @@ namespace ArduinoProject.Shared
 
             if (!ClientSocket.Connected)
             {
-                if (!await connect())
-                {
                     return;
-                }
             }
 
             String decode;

@@ -17,7 +17,7 @@
         </Grid.RowDefinitions>
 
         <ScrollView x:FieldModifier="public" x:Name="ScrollText">
-            <Editor Focused="TextField_Focused" AutoSize="TextChanges" x:FieldModifier="public"  IsSpellCheckEnabled="False"  x:Name="TextField" Text="Serial1"/>
+            <Editor Focused="TextField_Focused" AutoSize="TextChanges" x:FieldModifier="public"  IsSpellCheckEnabled="False"  x:Name="TextField"/>
 
         </ScrollView>       
         <BoxView Color="Gray" Grid.Row="2"/>

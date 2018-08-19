@@ -6,7 +6,6 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
-
 namespace ArduinoProject.Droid
 {
 
@@ -17,6 +16,7 @@ namespace ArduinoProject.Droid
        
         protected override void OnCreate(Bundle bundle)
         {
+           
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
