@@ -4,10 +4,10 @@ using System.Text;
 
 namespace ArduinoProject.Shared
 {
-    public delegate void voidDeleagate();
-    public delegate void boolDeleagate(bool status);
+    public delegate void voidDelegate();
+    public delegate void boolDelegate(bool status);
     public delegate void stringDelegate(string str);
-
+    public delegate void intDelegate(int integer);
     public static class Variable
     {
 

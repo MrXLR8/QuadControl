@@ -29,7 +29,7 @@
                         <RowDefinition/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <Entry Grid.Row="0" Text="192.168.1.124" x:Name="ipEntry" FontSize="Large" HorizontalTextAlignment="Center" x:FieldModifier="public"/>
+                    <Entry Grid.Row="0" Text="192.168.1.123" x:Name="ipEntry" FontSize="Large" HorizontalTextAlignment="Center" x:FieldModifier="public"/>
                     <Entry Grid.Row="1" Text="49123" x:Name="portEntry" FontSize="Large" HorizontalTextAlignment="Center" x:FieldModifier="public"/>
                 </Grid>
                 <Button Grid.Row="3"  x:Name="ConnectionButton" x:FieldModifier="public" Clicked="ConnectionButton_Clicked" Text="Connect"/>

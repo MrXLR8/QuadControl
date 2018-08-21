@@ -13,7 +13,7 @@ namespace ArduinoProject.Shared
 
         private static IPAddress address;
         private static int port;
-        public static boolDeleagate onConnect;
+        public static boolDelegate onConnect;
         public static stringDelegate parseInfo;
 
         private static NetworkStream ClientStream;
@@ -30,6 +30,7 @@ namespace ArduinoProject.Shared
 
                 await ClientSocket.ConnectAsync(address, port);
                 ClientStream = ClientSocket.GetStream();
+                new Task(new Action(listen)).Start();
                 onConnect?.Invoke(true);
                 return true;
             }
@@ -81,7 +82,11 @@ namespace ArduinoProject.Shared
             if (ClientSocket.Connected) Code.FormAction.print("Listener stated");
             while (ClientSocket.Connected)
             {
-                buffer[0]= (byte)ClientStream.ReadByte();
+                try
+                {
+                    buffer[0] = (byte)ClientStream.ReadByte();
+                }
+                catch (Exception e) { return; }
                 decode= Encoding.ASCII.GetString(buffer);
                 if (buffer[0]==13| buffer[0] == 10)
                 {

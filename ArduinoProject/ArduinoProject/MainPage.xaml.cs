@@ -42,8 +42,7 @@ namespace ArduinoProject
             }
             else if(Button==yellBTN)
             {
-                Task run = new Task(new Action(SocketConnection.listen));
-                run.Start();
+
             }
             else if(Button==redTN)
             {
