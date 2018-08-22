@@ -4,7 +4,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net.Sockets;
 using System.Net;
-
+using ArduinoProject.Code;
+using System.Threading;
 
 namespace ArduinoProject.Shared
 {
@@ -31,6 +32,10 @@ namespace ArduinoProject.Shared
                 await ClientSocket.ConnectAsync(address, port);
                 ClientStream = ClientSocket.GetStream();
                 new Task(new Action(listen)).Start();
+
+                Order ping = new Order("[WP]1");
+                ping.Execute();
+
                 onConnect?.Invoke(true);
                 return true;
             }
@@ -70,12 +75,14 @@ namespace ArduinoProject.Shared
 
         public static async void listen()
         {
+            Semaphore execute = new Semaphore(1, 1);
+
 
             if (!ClientSocket.Connected)
             {
                     return;
             }
-
+            bool contniute = false;
             String decode;
             String result = "";
             byte[] buffer = new byte[1];
@@ -85,6 +92,7 @@ namespace ArduinoProject.Shared
                 try
                 {
                     buffer[0] = (byte)ClientStream.ReadByte();
+                    
                 }
                 catch (Exception e) { return; }
                 decode= Encoding.ASCII.GetString(buffer);
@@ -92,13 +100,25 @@ namespace ArduinoProject.Shared
                 {
                     if (result != "")
                     {
-                        Code.FormAction.print("Recived: " + result);
+                        Xamarin.Forms.Device.BeginInvokeOnMainThread(() =>
+                        {
+                            if (result != "")
+                            {
+
+                                Code.FormAction.print("Recived: " + result);
+                                new Order(result).Execute();
+                                contniute = true;
+                            }
+                        });
+                       while(!contniute) { Thread.Sleep(10); }
                         result = "";
+                        contniute = false;
+
                     }
                 }
                 else
                 {
-
+                    if(buffer[0]!='\0')
                     result += decode;
                 }
       
@@ -111,6 +131,7 @@ namespace ArduinoProject.Shared
         public static async void disconnect()
         {
             ClientSocket.Close();
+            ClientSocket.EndConnect(null);
         }
     }
 }

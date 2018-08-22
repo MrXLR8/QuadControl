@@ -39,5 +39,11 @@
     <ClInclude Include="..\ArduinoFrimware\F_SonicRangefinder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\ArduinoFrimware\Order.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ArduinoFrimware\Variables.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

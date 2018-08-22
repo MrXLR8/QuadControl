@@ -1,4 +1,5 @@
 
+
 #include "ESP8266WiFi.h"
 
 #include "Order.h"
@@ -115,7 +116,7 @@ void loop()
 		{
 			if (Serial.available())
 			{
-				client.write(Serial.read());
+				client.write(Serial.read()); // то что пришло по серийнику отправить по вайфаю
 			}
 			while (client.available() > 0)
 			{
@@ -123,20 +124,22 @@ void loop()
 
 				char c = client.read();
 
-				Serial.write(c);
+				Serial.write(c);  // то что пришло по вайфаю отправить по серийнику
 
-				client.write(c);
+				//client.write(c); отправить обратно
 			}
 			delay(10);
 		}
 
-		if (Serial.available())
-		{
-			client.write(Serial.read());
-		}
+		//if (Serial.available())
+		//{
+		//	client.write(Serial.read());
+		//}
+
 
 		client.stop();
 
+		// сказать по юзб что клиент отключилься
 		vector<String> arg1;
 		arg1.push_back("-");
 		Order clientdisc("WC", arg1);

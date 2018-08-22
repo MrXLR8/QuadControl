@@ -9,6 +9,7 @@
 #include "WProgram.h"
 #endif
 
+#include <StandardCplusplus.h>
 #include <vector>
 #include "SoftwareSerial.h"
 
@@ -70,14 +71,22 @@ public:
 
 	void Execute()
 	{
-		if (content.empty()) return;
+		Serial.println(this->ToString());
 
+
+		if (content.empty()) return;
+		
 		if (type == "WP")
 		{
+
+			
 			if (content[0] == "1")
 			{
+			
 				content[0] = "2";
-				wifi->write(this->ToString().c_str());
+				Serial.println("Ping response");
+				wifi->println(this->ToString());
+				
 				content[0] = "1";
 			}
 		}
@@ -98,8 +107,14 @@ private:
 		for (int i = 0; i < line.length(); i++)
 		{
 			if (line[i] != delimer)
-			{      // "—" сплиттер
-				buffer += line[i];
+			{    
+				if (line[i] != '\n') 
+				{// "—" сплиттер
+					if (line[i] != '\r') 
+					{
+						buffer += line[i];
+					}
+				}
 			}
 			else
 			{
