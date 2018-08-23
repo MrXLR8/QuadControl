@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ArduinoProject.ControlPage"
+             Title="Control"
+             >
+
+    <ContentPage.Content>
+        
+        <Grid>
+                <Grid.RowDefinitions>
+                <RowDefinition Height="0.2*"/>
+                <RowDefinition Height="0.6*"/>
+                <RowDefinition Height="0.2*"/>
+                </Grid.RowDefinitions>
+            <BoxView Color="Gray" Grid.Row="0"/>
+            <BoxView Color="Gray" Grid.Row="2"/>
+            <Grid Grid.Row="0" x:Name="gyroGrid">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                
+                <Label Grid.Column="0" Text="Нос:" TextColor="Blue" Style="{StaticResource labelStyle}"  />
+                <StackLayout Grid.Column="1" Orientation="Vertical">
+                    <Label Text="0" x:Name="pitchLabel" x:FieldModifier="public" Style="{StaticResource labelStyle}"/>
+                    <Image Source="pitch.png" x:Name="pitchImage" x:FieldModifier="public" BindingContext="{x:Reference Name=pitchLabel}" RotationX="{Binding Path=Text}"/>
+                </StackLayout>
+
+
+                <Label Grid.Column="2" Text="Наклон:" TextColor="Green" Style="{StaticResource labelStyle}"  />
+                <StackLayout Grid.Column="3" Orientation="Vertical">
+                    <Label Text="0" x:Name="rollLabel" x:FieldModifier="public" Style="{StaticResource labelStyle}"/>
+                    <Image Source="roll.png" x:Name="rollImage" x:FieldModifier="public" BindingContext="{x:Reference Name=rollLabel}" Rotation="{Binding Path=Text}"/>
+                </StackLayout>
+
+            </Grid>
+
+            <Grid Grid.Row="1" x:Name="buttonGrid">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Label Grid.Column="0" Grid.Row="0  " Text="asd"/>
+                
+                <Image Grid.Column="1" Source="arrow_idle.png" Grid.Row="0" x:Name="up" x:FieldModifier="public"/>
+                <Image Grid.Column="1" Source="arrow_idle.png" Grid.Row="2" x:Name="down" Rotation="180" x:FieldModifier="public"/>
+                <Image Grid.Column="0" Source="arrow_idle.png" Grid.Row="1" x:Name="left" Rotation="270" x:FieldModifier="public"/>
+                <Image Grid.Column="2" Source="arrow_idle.png" Grid.Row="1" x:Name="right" Rotation="90" x:FieldModifier="public"/>
+            </Grid>
+        </Grid>
+     
+        
+    </ContentPage.Content>
+</ContentPage>

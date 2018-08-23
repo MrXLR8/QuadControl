@@ -3,6 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ArduinoProject.App">
 	<Application.Resources>
-    
-	</Application.Resources>
+        <Style x:Key="labelStyle" TargetType="Label">
+            <Setter Property="HorizontalOptions" Value="Center" />
+            <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+            <Setter Property="FontSize" Value="Large" />
+        </Style>
+    </Application.Resources>
 </Application>

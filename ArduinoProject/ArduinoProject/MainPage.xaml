@@ -4,7 +4,7 @@
              xmlns:local="clr-namespace:ArduinoProject"
              x:Name="Terminal"
              x:Class="ArduinoProject.MainPage"
-             Title="Main Page"
+             Title="Terminal"
              >
 
 
