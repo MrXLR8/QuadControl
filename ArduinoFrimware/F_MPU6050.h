@@ -1,6 +1,6 @@
 // F_MPU6050.h
 
-
+#include <Wire.h>
 
 #ifndef _F_MPU6050_h
 #define _F_MPU6050_h
@@ -29,10 +29,11 @@ public:
 
 	F_MPU6050() 
 	{
-
+		calibrated = false;
 	}
 
-
+	bool calibrated;
+	long gyro_x_cal, gyro_y_cal, gyro_z_cal;
 	void start() 
 	{
 		Wire.beginTransmission(0x68);                                        //Start communicating with the MPU-6050
@@ -51,9 +52,10 @@ public:
 		Wire.endTransmission();
 
 		calibrate();
+
 	}
 
-	long gyro_x_cal, gyro_y_cal, gyro_z_cal;
+
 
 	void calibrate() 
 	{
@@ -83,7 +85,7 @@ public:
 		acc_cal_roll = accCal.roll;
 
 
-		Serial.println("Calibrating finished");
+		calibrated = true;
 	}
 
 	Angle getAccel()
@@ -106,6 +108,7 @@ public:
 
 		GyroResult.pitch = angle_pitch_output*10;
 		GyroResult.roll = angle_roll_output*10;
+
 		return GyroResult;
 	}
 
@@ -130,7 +133,7 @@ private:
 		gyro_x = Wire.read() << 8 | Wire.read();                                 //Add the low and high byte to the gyro_x variable
 		gyro_y = Wire.read() << 8 | Wire.read();                                 //Add the low and high byte to the gyro_y variable
 		gyro_z = Wire.read() << 8 | Wire.read();                                 //Add the low and high byte to the gyro_z variable
-
+		
 		gyro_x -= gyro_x_cal;                                                //Subtract the offset calibration value from the raw gyro_x value
 		gyro_y -= gyro_y_cal;                                                //Subtract the offset calibration value from the raw gyro_y value
 		gyro_z -= gyro_z_cal;                                                //Subtract the offset calibration value from the raw gyro_z value
@@ -144,9 +147,10 @@ private:
 		angle_pitch_acc = asin((float)acc_y / acc_total_vector)* 57.296;       //Calculate the pitch angle
 		angle_roll_acc = asin((float)acc_x / acc_total_vector)* -57.296;       //Calculate the roll angle
 
-																			   //Place the MPU-6050 spirit level and note the values in the following two lines for calibration
+																		   //Place the MPU-6050 spirit level and note the values in the following two lines for calibration
 		angle_pitch_acc -= acc_cal_pitch;                                              //Accelerometer calibration value for pitch
-		angle_roll_acc -= acc_cal_roll;                                               //Accelerometer calibration value for roll
+		angle_roll_acc -= acc_cal_roll;     
+			//Accelerometer calibration value for roll
 	}
 
 	void processGyro() 
@@ -156,7 +160,8 @@ private:
 		angle_pitch += gyro_x * 0.0000611;                                   //Calculate the traveled pitch angle and add this to the angle_pitch variable
 		angle_roll += gyro_y * 0.0000611;                                    //Calculate the traveled roll angle and add this to the angle_roll variable
 
-																			 //0.000001066 = 0.0000611 * (3.142(PI) / 180degr) The Arduino sin function is in radians
+		
+		//0.000001066 = 0.0000611 * (3.142(PI) / 180degr) The Arduino sin function is in radians
 		angle_pitch += angle_roll * sin(gyro_z * 0.000001066);               //If the IMU has yawed transfer the roll angle to the pitch angel
 		angle_roll -= angle_pitch * sin(gyro_z * 0.000001066);               //If the IMU has yawed transfer the pitch angle to the roll angel
 
@@ -168,6 +173,7 @@ private:
 		if (set_gyro_angles) {                                                 //If the IMU is already started
 			angle_pitch = angle_pitch * 0.9996 + angle_pitch_acc * 0.0004;     //Correct the drift of the gyro pitch angle with the accelerometer pitch angle
 			angle_roll = angle_roll * 0.9996 + angle_roll_acc * 0.0004;        //Correct the drift of the gyro roll angle with the accelerometer roll angle
+			
 		}
 		else {                                                                //At first start
 			angle_pitch = angle_pitch_acc;                                     //Set the gyro pitch angle equal to the accelerometer pitch angle 
@@ -178,10 +184,10 @@ private:
 		//To dampen the pitch and roll angles a complementary filter is used
 		angle_pitch_output = angle_pitch_output * 0.9 + angle_pitch * 0.1;   //Take 90% of the output pitch value and add 10% of the raw pitch value
 		angle_roll_output = angle_roll_output * 0.9 + angle_roll * 0.1;      //Take 90% of the output roll value and add 10% of the raw roll value
-
+		
 	}
 
-	int angle_pitch, angle_roll;
+	float angle_pitch, angle_roll;
 	int acc_cal_pitch, acc_cal_roll;
 	float angle_pitch_acc, angle_roll_acc;
 
