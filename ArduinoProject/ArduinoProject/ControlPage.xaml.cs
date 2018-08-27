@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ArduinoProject.Code;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,6 +20,16 @@ namespace ArduinoProject
             down.Source = ImageSource.FromFile("arrow_idle.png");
             rollImage.Source = ImageSource.FromFile("roll.png");
             pitchImage.Source = ImageSource.FromFile("pitch.png");
+            GyroData.gyroFinished = updateGyroFields;
         }
-	}
+
+
+        void updateGyroFields(int pitch, int roll)
+        {
+            pitchLabel.Text = pitch.ToString();
+            rollLabel.Text = roll.ToString();
+        }
+    }
+
+
 }

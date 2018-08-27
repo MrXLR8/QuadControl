@@ -46,8 +46,8 @@ namespace ArduinoProject
             }
             else if(Button==redTN)
             {
-                Order command1 =Order.Parse("[WL]TEST123.TEST2");
-                String test = command1.ToString();
+                Order command1 =Order.Parse("[GR]1");
+                SocketConnection.write(command1.ToString());
             }
             else if(Button==offBTN)
             {

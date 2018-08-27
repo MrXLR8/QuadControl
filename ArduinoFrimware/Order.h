@@ -25,6 +25,7 @@ public:
 	vector<String> content;
 
 	static SoftwareSerial* wifi;
+	static MPU6050* mpu6050;
 	
 
 	Order() {}
@@ -88,6 +89,23 @@ public:
 				wifi->println(this->ToString());
 				
 				content[0] = "1";
+			}
+		}
+	
+		if (type == "GR") 
+		{
+			if (content[0] == "1")
+			{
+				mpu6050->update();
+				String _pitch = String(int(mpu6050->getAngleX()));
+				String _roll = String(int(mpu6050->getAngleY()));
+				String toSend = "[GD]" + _pitch + "." + _roll;
+				/*Order gyroData;
+				gyroData.type = "GD";
+				gyroData.content.push_back(_pitch);
+				gyroData.content.push_back(_roll);*/
+				Serial.println(toSend);
+				Order::wifi->println(toSend);
 			}
 		}
 	}

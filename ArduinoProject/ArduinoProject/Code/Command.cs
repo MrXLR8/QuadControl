@@ -83,7 +83,10 @@ namespace ArduinoProject.Code
             {
                 new Ping(this);
             }
-
+            if(type=="GD")
+            {
+                new GyroData(this);
+            }
 
         }
 
@@ -146,5 +149,17 @@ namespace ArduinoProject.Code
 
     }
 
+    public class GyroData
+    {
+        public static DintDelegate gyroFinished;
+
+        public GyroData(Order _source)
+        {
+            if (_source.content.Length == 2)
+            {
+                gyroFinished?.Invoke(Convert.ToInt32(_source.content[0]), Convert.ToInt32(_source.content[1]));
+            }
+        }
+    }
 
 }

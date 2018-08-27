@@ -31,10 +31,10 @@ namespace ArduinoProject.Shared
 
                 await ClientSocket.ConnectAsync(address, port);
                 ClientStream = ClientSocket.GetStream();
+           
                 new Task(new Action(listen)).Start();
 
-                Order ping = new Order("[WP]1");
-                ping.Execute();
+              
 
                 onConnect?.Invoke(true);
                 return true;
@@ -102,11 +102,16 @@ namespace ArduinoProject.Shared
                     {
                         Xamarin.Forms.Device.BeginInvokeOnMainThread(() =>
                         {
-                            if (result != "")
-                            {
 
-                                Code.FormAction.print("Recived: " + result);
-                                new Order(result).Execute();
+                            if (result !="")
+                            {
+                                contniute = false;
+                                Code.FormAction.print(">>>: " + result);
+                                if (result[0] == '['&&result[3]==']')
+                                {
+                                    new Order(result).Execute();
+                                    
+                                }
                                 contniute = true;
                             }
                         });
