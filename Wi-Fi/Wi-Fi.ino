@@ -102,6 +102,8 @@ IPAddress connectTo(char* ssid, char* pass)
 	return WiFi.localIP();
 }	
 
+char serialRead;
+
 void loop()
 {
 	WiFiClient client = wifiServer.available();
@@ -114,17 +116,19 @@ void loop()
 
 		while (client.connected())
 		{
-			if (Serial.available())
+			while (Serial.available()>0)
 			{
-				client.write(Serial.read()); // то что пришло по серийнику отправить по вайфаю
+				serialRead = Serial.read();
+				client.write(serialRead); // то что пришло по серийнику отправить по вайфаю
 			}
+			serialRead = (char)0;
 			while (client.available() > 0)
 			{
 
 
-				char c = client.read();
+				serialRead = client.read();
 
-				Serial.write(c);  // то что пришло по вайфаю отправить по серийнику
+				Serial.write(serialRead);  // то что пришло по вайфаю отправить по серийнику
 
 				//client.write(c); отправить обратно
 			}

@@ -106,7 +106,7 @@ namespace ArduinoProject.Shared
                             if (result !="")
                             {
                                 contniute = false;
-                                Code.FormAction.print(">>>: " + result);
+                              //  Code.FormAction.print(">>>: " + result);
                                 if (result[0] == '['&&result[3]==']')
                                 {
                                     new Order(result).Execute();

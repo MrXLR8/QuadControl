@@ -157,7 +157,11 @@ namespace ArduinoProject.Code
         {
             if (_source.content.Length == 2)
             {
-                gyroFinished?.Invoke(Convert.ToInt32(_source.content[0]), Convert.ToInt32(_source.content[1]));
+                try
+                {
+                    gyroFinished?.Invoke(Convert.ToInt32(_source.content[0]), Convert.ToInt32(_source.content[1]));
+                }
+                catch (Exception e) { }
             }
         }
     }

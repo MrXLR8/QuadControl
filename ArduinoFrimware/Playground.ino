@@ -33,8 +33,8 @@ void setup() {
 void loop()
 { // run over and over
 	mpu6050.update();
-
-	if (millsPassed(200)) 
+	
+	if (millsPassed(15)) 
 	{
 		sendGyroData();
 	}
@@ -63,9 +63,14 @@ void loop()
 void sendGyroData()
 {
 
+		static String lastP, lastR;
 		mpu6050.update();
 		String _pitch = String(int(mpu6050.getAngleX()));
 		String _roll = String(int(mpu6050.getAngleY()));
+		if (lastP == _pitch && lastR == _roll) 
+		{
+			return;
+		}
 		String toSend = "[GD]" + _pitch + "." + _roll;
 		/*Order gyroData;
 		gyroData.type = "GD";
@@ -73,6 +78,8 @@ void sendGyroData()
 		gyroData.content.push_back(_roll);*/
 		Serial.println(toSend);
 		Order::wifi->println(toSend);
+		lastP = _pitch;
+		lastR = _roll;
 		
 
 }

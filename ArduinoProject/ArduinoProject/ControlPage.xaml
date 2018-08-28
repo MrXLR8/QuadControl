@@ -13,9 +13,13 @@
                 <RowDefinition Height="0.6*"/>
                 <RowDefinition Height="0.2*"/>
                 </Grid.RowDefinitions>
-            <BoxView Color="Gray" Grid.Row="0"/>
-            <BoxView Color="Gray" Grid.Row="2"/>
-            <Grid Grid.Row="0" x:Name="gyroGrid">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.8*"/>
+                <ColumnDefinition  Width="0.2*"/>
+            </Grid.ColumnDefinitions>
+            <BoxView Color="Gray" Grid.Row="0" Grid.ColumnSpan="2"/>
+            <BoxView Color="Gray" Grid.Row="2" Grid.ColumnSpan="2"/>
+            <Grid Grid.Row="0" Grid.ColumnSpan="2" x:Name="gyroGrid">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
@@ -37,7 +41,17 @@
                 </StackLayout>
 
             </Grid>
+            <Grid Grid.Row="1" Grid.Column="1" BackgroundColor="#8e8d8d">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Image  Source="arrow_idle.png" Grid.Row="0" x:Name="pullUP" x:FieldModifier="public"/>
+                <Slider Grid.Row="1" />
+                <Image  Source="arrow_idle.png" Grid.Row="2" x:Name="pullDOWN" Rotation="180" x:FieldModifier="public"/>
 
+            </Grid>
             <Grid Grid.Row="1" x:Name="buttonGrid">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -55,6 +69,10 @@
                 <Image Grid.Column="1" Source="arrow_idle.png" Grid.Row="2" x:Name="down" Rotation="180" x:FieldModifier="public"/>
                 <Image Grid.Column="0" Source="arrow_idle.png" Grid.Row="1" x:Name="left" Rotation="270" x:FieldModifier="public"/>
                 <Image Grid.Column="2" Source="arrow_idle.png" Grid.Row="1" x:Name="right" Rotation="90" x:FieldModifier="public"/>
+            </Grid>
+            
+            <Grid Grid.Row="1" x:Name="lowPanelGrid" Grid.ColumnSpan="2">
+                
             </Grid>
         </Grid>
      
