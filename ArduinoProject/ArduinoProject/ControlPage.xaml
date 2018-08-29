@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ArduinoProject.ControlPage"
              Title="Control"
+             xmlns:control="clr-namespace:ArduinoProject"
              >
 
     <ContentPage.Content>
@@ -48,7 +49,7 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <Image  Source="arrow_idle.png" Grid.Row="0" x:Name="pullUP" x:FieldModifier="public"/>
-                <Slider Grid.Row="1" />
+                <control:VerticalSlider CompName="push" Grid.Row="1"/>
                 <Image  Source="arrow_idle.png" Grid.Row="2" x:Name="pullDOWN" Rotation="180" x:FieldModifier="public"/>
 
             </Grid>
@@ -63,16 +64,19 @@
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <Label Grid.Column="0" Grid.Row="0  " Text="asd"/>
-                
-                <Image Grid.Column="1" Source="arrow_idle.png" Grid.Row="0" x:Name="up" x:FieldModifier="public"/>
+
+                <Image Grid.Column="1" Source="arrow_idle.png" Grid.Row="0" x:Name="up"  x:FieldModifier="public">
+
+                </Image>
                 <Image Grid.Column="1" Source="arrow_idle.png" Grid.Row="2" x:Name="down" Rotation="180" x:FieldModifier="public"/>
                 <Image Grid.Column="0" Source="arrow_idle.png" Grid.Row="1" x:Name="left" Rotation="270" x:FieldModifier="public"/>
+                <control:VerticalSlider x:Name="motor1" CompName="motor1" Grid.Row="0" Value="33"  onSliderChanged="VerticalSlider_onSliderChanged"/>
                 <Image Grid.Column="2" Source="arrow_idle.png" Grid.Row="1" x:Name="right" Rotation="90" x:FieldModifier="public"/>
             </Grid>
             
-            <Grid Grid.Row="1" x:Name="lowPanelGrid" Grid.ColumnSpan="2">
-                
+            <Grid Grid.Row="2" x:Name="lowPanelGrid" Grid.ColumnSpan="2">
+
+                <Button Clicked="Button_Clicked"/>
             </Grid>
         </Grid>
      

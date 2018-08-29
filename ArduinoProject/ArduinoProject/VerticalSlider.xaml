@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Grid xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ArduinoProject.VerticalSlider"
+             BackgroundColor="White"
+      >
+    <BoxView BackgroundColor="Black"/>
+    <Grid BackgroundColor="Green" Margin="5" x:Name="inGrid">
+    <Grid.RowDefinitions>
+            <RowDefinition Height="0.2*"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.1*"/>
+            <ColumnDefinition Width="0.8*"/>
+            <ColumnDefinition Width="0.1*"/>
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Column="1" BackgroundColor="White" VerticalOptions="Center" HorizontalOptions="Center" x:Name="FormLabel" Grid.Row="0" Text="100" x:FieldModifier="public"/>
+    <Slider Grid.Column="1" Maximum="100" Minimum="0" Grid.Row="1" VerticalOptions="CenterAndExpand" Rotation="270" x:Name="FormSlider"  x:FieldModifier="public"/>
+    </Grid>
+</Grid>

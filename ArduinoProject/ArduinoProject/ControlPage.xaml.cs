@@ -29,6 +29,16 @@ namespace ArduinoProject
             pitchLabel.Text = pitch.ToString();
             rollLabel.Text = roll.ToString();
         }
+        private void VerticalSlider_onSliderChanged(VerticalSlider sender)
+        {
+
+            FormAction.print($"{sender.CompName}: {sender.Value}");
+        }
+
+        private void Button_Clicked(object sender, EventArgs e)
+        {
+            motor1.Value = 10;
+        }
     }
 
 

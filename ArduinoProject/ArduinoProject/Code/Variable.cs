@@ -13,5 +13,16 @@ namespace ArduinoProject.Shared
     {
 
         public static string bluetoothName = "HC-05";
+        public static int middlePower = 50;
+    }
+    public static class Method
+    {
+        public static int map(int x, int in_min, int in_max, int out_min, int out_max)
+        {
+            int res = (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+            if (res > out_max) return out_max;
+            if (res < out_min) return out_min;
+            return res;
+        }
     }
 }
