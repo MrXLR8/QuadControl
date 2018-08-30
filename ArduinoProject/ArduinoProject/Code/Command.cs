@@ -161,7 +161,10 @@ namespace ArduinoProject.Code
                 {
                     gyroFinished?.Invoke(Convert.ToInt32(_source.content[0]), Convert.ToInt32(_source.content[1]));
                 }
-                catch (Exception e) { }
+                catch (Exception e)
+                {
+                    System.Diagnostics.Debug.Write(e);
+                }
             }
         }
     }

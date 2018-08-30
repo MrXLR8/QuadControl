@@ -42,7 +42,7 @@ namespace ArduinoProject
                 _value = value;
                 FormSlider.Value = _value;
                 FormLabel.Text = _value.ToString();
-                
+
             }
         }
 

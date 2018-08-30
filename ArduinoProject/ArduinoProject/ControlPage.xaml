@@ -20,6 +20,7 @@
             </Grid.ColumnDefinitions>
             <BoxView Color="Gray" Grid.Row="0" Grid.ColumnSpan="2"/>
             <BoxView Color="Gray" Grid.Row="2" Grid.ColumnSpan="2"/>
+            
             <Grid Grid.Row="0" Grid.ColumnSpan="2" x:Name="gyroGrid">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -42,14 +43,14 @@
                 </StackLayout>
 
             </Grid>
-            <Grid Grid.Row="1" Grid.Column="1" BackgroundColor="#8e8d8d">
+            <Grid Grid.Row="1" x:Name="pullUPGrid" Grid.Column="1" BackgroundColor="#8e8d8d">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <Image  Source="arrow_idle.png" Grid.Row="0" x:Name="pullUP" x:FieldModifier="public"/>
-                <control:VerticalSlider CompName="push" Grid.Row="1"/>
+                <control:VerticalSlider CompName="push" x:Name="push" Grid.Row="1"/>
                 <Image  Source="arrow_idle.png" Grid.Row="2" x:Name="pullDOWN" Rotation="180" x:FieldModifier="public"/>
 
             </Grid>
@@ -70,8 +71,12 @@
                 </Image>
                 <Image Grid.Column="1" Source="arrow_idle.png" Grid.Row="2" x:Name="down" Rotation="180" x:FieldModifier="public"/>
                 <Image Grid.Column="0" Source="arrow_idle.png" Grid.Row="1" x:Name="left" Rotation="270" x:FieldModifier="public"/>
-                <control:VerticalSlider x:Name="motor1" CompName="motor1" Grid.Row="0" Value="33"  onSliderChanged="VerticalSlider_onSliderChanged"/>
                 <Image Grid.Column="2" Source="arrow_idle.png" Grid.Row="1" x:Name="right" Rotation="90" x:FieldModifier="public"/>
+                
+                <control:VerticalSlider x:Name="motor1" CompName="motor1" Grid.Row="0" Grid.Column="0" onSliderChanged="VerticalSlider_onSliderChanged"/>
+                <control:VerticalSlider x:Name="motor2" CompName="motor2" Grid.Row="0" Grid.Column="2" onSliderChanged="VerticalSlider_onSliderChanged"/>
+                <control:VerticalSlider x:Name="motor3" CompName="motor3" Grid.Row="2" Grid.Column="0" onSliderChanged="VerticalSlider_onSliderChanged"/>
+                <control:VerticalSlider x:Name="motor4" CompName="motor4" Grid.Row="2" Grid.Column="2" onSliderChanged="VerticalSlider_onSliderChanged"/>
             </Grid>
             
             <Grid Grid.Row="2" x:Name="lowPanelGrid" Grid.ColumnSpan="2">

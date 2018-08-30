@@ -28,16 +28,19 @@ namespace ArduinoProject
         {
             pitchLabel.Text = pitch.ToString();
             rollLabel.Text = roll.ToString();
+
+            motor1.Value=  Shared.Method.map(pitch,-180,180,0,100);
+            motor4.Value = Shared.Method.map(roll, -180, 180, 0, 100);
         }
         private void VerticalSlider_onSliderChanged(VerticalSlider sender)
         {
 
-            FormAction.print($"{sender.CompName}: {sender.Value}");
+            //FormAction.print($"{sender.CompName}: {sender.Value}");
         }
 
         private void Button_Clicked(object sender, EventArgs e)
         {
-            motor1.Value = 10;
+    
         }
     }
 
