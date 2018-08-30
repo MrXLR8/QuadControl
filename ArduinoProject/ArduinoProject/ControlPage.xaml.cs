@@ -13,13 +13,15 @@ namespace ArduinoProject
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class ControlPage : ContentPage
 	{
-		public ControlPage ()
+       static FileImageSource IdleImage =new FileImageSource().File = "arrow_idle.png";
+       static FileImageSource PressedImage = new FileImageSource().File = "arrow_pressed.png";
+        public ControlPage ()
 		{
 			InitializeComponent ();
-            up.Source = ImageSource.FromFile("arrow_idle.png");
-            down.Source = ImageSource.FromFile("arrow_idle.png");
-            rollImage.Source = ImageSource.FromFile("roll.png");
-            pitchImage.Source = ImageSource.FromFile("pitch.png");
+        //    up.Image = new FileImageSource().File = "arrow_idle.png";
+          //  down.Source = ImageSource.FromFile("arrow_idle.png");
+            //rollImage.Source = ImageSource.FromFile("roll.png");
+            //pitchImage.Source = ImageSource.FromFile("pitch.png");
             GyroData.gyroFinished = updateGyroFields;
         }
 
@@ -41,6 +43,20 @@ namespace ArduinoProject
         private void Button_Clicked(object sender, EventArgs e)
         {
     
+        }
+
+        private void Control_Pressed(object sender, EventArgs e)
+        {
+            Button target = (Button)sender;
+            target.Image = PressedImage;
+            motor1.Value = 0;
+        }
+
+        private void Control_Released(object sender, EventArgs e)
+        {
+            Button target = (Button)sender;
+            target.Image =IdleImage;
+            motor1.Value = 100;
         }
     }
 

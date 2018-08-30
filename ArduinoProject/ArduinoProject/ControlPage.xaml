@@ -7,84 +7,81 @@
              >
 
     <ContentPage.Content>
-        
-        <Grid>
-                <Grid.RowDefinitions>
-                <RowDefinition Height="0.2*"/>
-                <RowDefinition Height="0.6*"/>
-                <RowDefinition Height="0.2*"/>
-                </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0.8*"/>
-                <ColumnDefinition  Width="0.2*"/>
-            </Grid.ColumnDefinitions>
-            <BoxView Color="Gray" Grid.Row="0" Grid.ColumnSpan="2"/>
-            <BoxView Color="Gray" Grid.Row="2" Grid.ColumnSpan="2"/>
-            
-            <Grid Grid.Row="0" Grid.ColumnSpan="2" x:Name="gyroGrid">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                
-                <Label Grid.Column="0" Text="Нос:" TextColor="Blue" Style="{StaticResource labelStyle}"  />
-                <StackLayout Grid.Column="1" Orientation="Vertical">
-                    <Label Text="0" x:Name="pitchLabel" x:FieldModifier="public" Style="{StaticResource labelStyle}"/>
-                    <Image Source="pitch.png" x:Name="pitchImage" x:FieldModifier="public" BindingContext="{x:Reference Name=pitchLabel}" RotationX="{Binding Path=Text}"/>
-                </StackLayout>
+
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="0.2*"/>
+          <RowDefinition Height="0.6*"/>
+          <RowDefinition Height="0.2*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="0.8*"/>
+          <ColumnDefinition  Width="0.2*"/>
+        </Grid.ColumnDefinitions>
+        <BoxView Color="Gray" Grid.Row="0" Grid.ColumnSpan="2"/>
+        <BoxView Color="Gray" Grid.Row="2" Grid.ColumnSpan="2"/>
+
+        <Grid Grid.Row="0" Grid.ColumnSpan="2" x:Name="gyroGrid">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+          </Grid.ColumnDefinitions>
+
+          <Label Grid.Column="0" Text="Нос:" TextColor="Blue" Style="{StaticResource labelStyle}"  />
+          <StackLayout Grid.Column="1" Orientation="Vertical">
+            <Label Text="0" x:Name="pitchLabel" x:FieldModifier="public" Style="{StaticResource labelStyle}"/>
+            <Image Source="pitch.png" x:Name="pitchImage" x:FieldModifier="public" BindingContext="{x:Reference Name=pitchLabel}" RotationX="{Binding Path=Text}"/>
+          </StackLayout>
 
 
-                <Label Grid.Column="2" Text="Наклон:" TextColor="Green" Style="{StaticResource labelStyle}"  />
-                <StackLayout Grid.Column="3" Orientation="Vertical">
-                    <Label Text="0" x:Name="rollLabel" x:FieldModifier="public" Style="{StaticResource labelStyle}"/>
-                    <Image Source="roll.png" x:Name="rollImage" x:FieldModifier="public" BindingContext="{x:Reference Name=rollLabel}" Rotation="{Binding Path=Text}"/>
-                </StackLayout>
+          <Label Grid.Column="2" Text="Наклон:" TextColor="Green" Style="{StaticResource labelStyle}"  />
+          <StackLayout Grid.Column="3" Orientation="Vertical">
+            <Label Text="0" x:Name="rollLabel" x:FieldModifier="public" Style="{StaticResource labelStyle}"/>
+            <Image Source="roll.png" x:Name="rollImage" x:FieldModifier="public" BindingContext="{x:Reference Name=rollLabel}" Rotation="{Binding Path=Text}"/>
+          </StackLayout>
 
-            </Grid>
-            <Grid Grid.Row="1" x:Name="pullUPGrid" Grid.Column="1" BackgroundColor="#8e8d8d">
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <Image  Source="arrow_idle.png" Grid.Row="0" x:Name="pullUP" x:FieldModifier="public"/>
-                <control:VerticalSlider CompName="push" x:Name="push" Grid.Row="1"/>
-                <Image  Source="arrow_idle.png" Grid.Row="2" x:Name="pullDOWN" Rotation="180" x:FieldModifier="public"/>
+        </Grid>
+        <Grid Grid.Row="1" x:Name="pullUPGrid" Grid.Column="1" BackgroundColor="#8e8d8d">
+          <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+          </Grid.RowDefinitions>
+          <Image  Source="arrow_idle.png" Grid.Row="0" x:Name="pullUP" x:FieldModifier="public"/>
+          <control:VerticalSlider CompName="push" x:Name="push" Grid.Row="1"/>
+          <Image  Source="arrow_idle.png" Grid.Row="2" x:Name="pullDOWN" Rotation="180" x:FieldModifier="public"/>
 
-            </Grid>
-            <Grid Grid.Row="1" x:Name="buttonGrid">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
+        </Grid>
+        <Grid Grid.Row="1" x:Name="buttonGrid">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+          </Grid.ColumnDefinitions>
+          <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+          </Grid.RowDefinitions>
+                <Button Grid.Column="1" Grid.Row="0" Pressed="Control_Pressed" Released="Control_Released" Image="arrow_idle.png" x:Name="up"/>
+                <Button Grid.Column="1" Pressed="Control_Pressed" Released="Control_Released" Image="arrow_idle.png" Grid.Row="2" x:Name="down" Rotation="180" x:FieldModifier="public"/>
+                <Button Grid.Column="0" Pressed="Control_Pressed" Released="Control_Released" Image="arrow_idle.png" Grid.Row="1" x:Name="left" Rotation="270" x:FieldModifier="public"/>
+                <Button Grid.Column="2" Pressed="Control_Pressed" Released="Control_Released" Image="arrow_idle.png" Grid.Row="1" x:Name="right" Rotation="90" x:FieldModifier="public"/>
 
-                <Image Grid.Column="1" Source="arrow_idle.png" Grid.Row="0" x:Name="up"  x:FieldModifier="public">
-
-                </Image>
-                <Image Grid.Column="1" Source="arrow_idle.png" Grid.Row="2" x:Name="down" Rotation="180" x:FieldModifier="public"/>
-                <Image Grid.Column="0" Source="arrow_idle.png" Grid.Row="1" x:Name="left" Rotation="270" x:FieldModifier="public"/>
-                <Image Grid.Column="2" Source="arrow_idle.png" Grid.Row="1" x:Name="right" Rotation="90" x:FieldModifier="public"/>
-                
                 <control:VerticalSlider x:Name="motor1" CompName="motor1" Grid.Row="0" Grid.Column="0" onSliderChanged="VerticalSlider_onSliderChanged"/>
                 <control:VerticalSlider x:Name="motor2" CompName="motor2" Grid.Row="0" Grid.Column="2" onSliderChanged="VerticalSlider_onSliderChanged"/>
                 <control:VerticalSlider x:Name="motor3" CompName="motor3" Grid.Row="2" Grid.Column="0" onSliderChanged="VerticalSlider_onSliderChanged"/>
                 <control:VerticalSlider x:Name="motor4" CompName="motor4" Grid.Row="2" Grid.Column="2" onSliderChanged="VerticalSlider_onSliderChanged"/>
-            </Grid>
-            
+
+
+
+        </Grid>
             <Grid Grid.Row="2" x:Name="lowPanelGrid" Grid.ColumnSpan="2">
 
                 <Button Clicked="Button_Clicked"/>
             </Grid>
         </Grid>
-     
-        
     </ContentPage.Content>
 </ContentPage>
