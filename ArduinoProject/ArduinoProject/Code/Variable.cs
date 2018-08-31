@@ -9,6 +9,7 @@ namespace ArduinoProject.Shared
     public delegate void stringDelegate(string str);
     public delegate void intDelegate(int integer);
     public delegate void DintDelegate(int integer1,int integer2);
+    public delegate void QintDelegate(int integer1, int integer2,int integer3,int integer4);
     public static class Variable
     {
 

@@ -23,16 +23,24 @@ namespace ArduinoProject
             //rollImage.Source = ImageSource.FromFile("roll.png");
             //pitchImage.Source = ImageSource.FromFile("pitch.png");
             GyroData.gyroFinished = updateGyroFields;
+            MotorData.motorFinished = updateMotorSliders;
         }
 
 
         void updateGyroFields(int pitch, int roll)
         {
             pitchLabel.Text = pitch.ToString();
-            rollLabel.Text = roll.ToString();
+            rollLabel.Text = (roll*-1).ToString();
 
-            motor1.Value=  Shared.Method.map(pitch,-180,180,0,100);
-            motor4.Value = Shared.Method.map(roll, -180, 180, 0, 100);
+
+        }
+
+        void updateMotorSliders(int m1,int m2,int m3,int m4)
+        {
+            motor1.Value = m1;
+            motor2.Value = m2;
+            motor3.Value = m3;
+            motor4.Value = m4;
         }
         private void VerticalSlider_onSliderChanged(VerticalSlider sender)
         {

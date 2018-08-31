@@ -96,7 +96,6 @@ public:
 		{
 			if (content[0] == "1")
 			{
-				mpu6050->update();
 				String _pitch = String(int(mpu6050->getAngleX()));
 				String _roll = String(int(mpu6050->getAngleY()));
 				String toSend = "[GD]" + _pitch + "." + _roll;

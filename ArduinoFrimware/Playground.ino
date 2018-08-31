@@ -1,7 +1,9 @@
-﻿#include <MPU6050_tockn.h>
+﻿#include "WiFiTimingFilter.h"
+#include "TimePassed.h"
+#include "Stabilize.h"
+#include <MPU6050_tockn.h>
 
 
-#include "F_MPU6050.h"
 #include "Variables.h"
 #include <StandardCplusplus.h>
 #include "Order.h"
@@ -10,8 +12,20 @@
 SoftwareSerial wifi(11, 12);
 SoftwareSerial* Order::wifi;
 
+SoftwareSerial* WiFiTimingFilter::WiFi;
+WiFiTimingFilter SendTimer;
+
+
 MPU6050 mpu6050(Wire);
 MPU6050* Order::mpu6050;
+
+
+MPU6050* Stabilize::gyro;
+
+Stabilize::Angle Stabilize::currentVector;
+Stabilize::Angle Stabilize::requiredVector;
+Stabilize::Angle Stabilize::stableVector;
+Stabilize::Motors Stabilize::last(50,50,50,50);
 void setup() {
 	// Open serial communications and wait for port to open:
 	Serial.begin(76800);
@@ -20,7 +34,13 @@ void setup() {
 	
 	// set the data rate for the SoftwareSerial port
 	Order::wifi = &wifi;
+	WiFiTimingFilter::WiFi = &wifi;
+
 	Order::mpu6050 = &mpu6050;
+
+	Stabilize::gyro = &mpu6050;
+	Stabilize::start();
+
 	wifi.begin(76800);
 
 	Order::mpu6050->begin();
@@ -34,10 +54,10 @@ void loop()
 { // run over and over
 	mpu6050.update();
 	
-	if (millsPassed(15)) 
-	{
-		sendGyroData();
-	}
+	sendGyroData();
+	sendMotorData();
+
+	SendTimer.proceed();
 
 	if (wifi.available())
 	{
@@ -59,15 +79,15 @@ void loop()
 
 	//sendGyroData();
 }
-
+TimePassed gyroTime;
 void sendGyroData()
 {
-
+	if (gyroTime.passed(30)) 
+	{
 		static String lastP, lastR;
-		mpu6050.update();
 		String _pitch = String(int(mpu6050.getAngleX()));
 		String _roll = String(int(mpu6050.getAngleY()));
-		if (lastP == _pitch && lastR == _roll) 
+		if (lastP == _pitch && lastR == _roll)
 		{
 			return;
 		}
@@ -76,26 +96,53 @@ void sendGyroData()
 		gyroData.type = "GD";
 		gyroData.content.push_back(_pitch);
 		gyroData.content.push_back(_roll);*/
-		Serial.println(toSend);
-		Order::wifi->println(toSend);
+
+
+
+		//Serial.println(toSend);
+		//Order::wifi->println(toSend);
+		SendTimer.addString(toSend);
 		lastP = _pitch;
 		lastR = _roll;
-		
-
-}
-
-
-int lastmills;
-bool millsPassed(int delay) 
-{
-	int diff = millis() - lastmills;
-	
-	if (diff >= delay)
-	{
-		lastmills = millis(); return true;
 	}
-	return false;
+
 }
+
+TimePassed motorime;
+void sendMotorData() 
+{
+	if (motorime.passed(30)) 
+	{
+		Stabilize::Motors toSend = Stabilize::StabIt();
+
+		if (toSend == Stabilize::last) return;
+		Order MotorData;
+		MotorData.type = "MD";
+		MotorData.content.push_back(String(toSend.m1));
+		MotorData.content.push_back(String(toSend.m2));
+		MotorData.content.push_back(String(toSend.m3));
+		MotorData.content.push_back(String(toSend.m4));
+
+		Stabilize::last = toSend;
+
+		SendTimer.addString(MotorData.ToString());
+	//	Order::wifi->println(MotorData.ToString());
+		//Serial.println(MotorData.ToString());
+	}
+	
+}
+
+//int lastmills;
+//bool millsPassed(int delay) 
+//{
+//	int diff = millis() - lastmills;
+//	
+//	if (diff >= delay)
+//	{
+//		lastmills = millis(); return true;
+//	}
+//	return false;
+//}
 
 void serialecho() {
 	if (Serial.available())

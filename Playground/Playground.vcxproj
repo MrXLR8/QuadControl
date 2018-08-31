@@ -105,7 +105,10 @@
     <ClInclude Include="..\ArduinoFrimware\F_SD.h" />
     <ClInclude Include="..\ArduinoFrimware\F_SonicRangefinder.h" />
     <ClInclude Include="..\ArduinoFrimware\Order.h" />
+    <ClInclude Include="..\ArduinoFrimware\Stabilize.h" />
+    <ClInclude Include="..\ArduinoFrimware\TimePassed.h" />
     <ClInclude Include="..\ArduinoFrimware\Variables.h" />
+    <ClInclude Include="..\ArduinoFrimware\WiFiTimingFilter.h" />
     <ClInclude Include="__vm\.ArduinoFrimware.vsarduino.h" />
     <ClInclude Include="__vm\.Playground.vsarduino.h" />
   </ItemGroup>

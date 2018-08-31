@@ -45,5 +45,14 @@
     <ClInclude Include="..\ArduinoFrimware\Variables.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\ArduinoFrimware\Stabilize.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ArduinoFrimware\TimePassed.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ArduinoFrimware\WiFiTimingFilter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

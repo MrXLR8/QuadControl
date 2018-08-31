@@ -87,6 +87,10 @@ namespace ArduinoProject.Code
             {
                 new GyroData(this);
             }
+            if(type=="MD")
+            {
+                new MotorData(this);
+            }
 
         }
 
@@ -169,4 +173,20 @@ namespace ArduinoProject.Code
         }
     }
 
+    public class MotorData
+    {
+        public static QintDelegate motorFinished;
+        public MotorData(Order source)
+        {
+            if (source.content.Length == 4)
+            {
+                int m1 = Convert.ToInt32(source.content[0]);
+                int m2 = Convert.ToInt32(source.content[1]);
+                int m3 = Convert.ToInt32(source.content[2]);
+                int m4 = Convert.ToInt32(source.content[3]);
+
+                motorFinished?.Invoke(m1, m2, m3, m4);
+            }
+        }
+    }
 }
