@@ -49,9 +49,9 @@
             <RowDefinition/>
             <RowDefinition/>
           </Grid.RowDefinitions>
-          <Image  Source="arrow_idle.png" Grid.Row="0" x:Name="pullUP" x:FieldModifier="public"/>
-          <control:VerticalSlider CompName="push" x:Name="push" Grid.Row="1"/>
-          <Image  Source="arrow_idle.png" Grid.Row="2" x:Name="pullDOWN" Rotation="180" x:FieldModifier="public"/>
+                <Button  Image="arrow_idle.png" Grid.Row="0" x:Name="pullUP" x:FieldModifier="public" Pressed="Control_Pressed" Released="Control_Released"/>
+                <control:VerticalSlider CompName="push" x:Name="push" Grid.Row="1"/>
+                <Button  Image="arrow_idle.png" Grid.Row="2" x:Name="pullDOWN" Rotation="180" x:FieldModifier="public" Pressed="Control_Pressed" Released="Control_Released"/>
 
         </Grid>
         <Grid Grid.Row="1" x:Name="buttonGrid">
@@ -70,17 +70,16 @@
                 <Button Grid.Column="0" Pressed="Control_Pressed" Released="Control_Released" Image="arrow_idle.png" Grid.Row="1" x:Name="left" Rotation="270" x:FieldModifier="public"/>
                 <Button Grid.Column="2" Pressed="Control_Pressed" Released="Control_Released" Image="arrow_idle.png" Grid.Row="1" x:Name="right" Rotation="90" x:FieldModifier="public"/>
 
-                <control:VerticalSlider x:Name="motor1" CompName="motor1" Grid.Row="0" Grid.Column="0" onSliderChanged="VerticalSlider_onSliderChanged"/>
-                <control:VerticalSlider x:Name="motor2" CompName="motor2" Grid.Row="0" Grid.Column="2" onSliderChanged="VerticalSlider_onSliderChanged"/>
-                <control:VerticalSlider x:Name="motor3" CompName="motor3" Grid.Row="2" Grid.Column="0" onSliderChanged="VerticalSlider_onSliderChanged"/>
-                <control:VerticalSlider x:Name="motor4" CompName="motor4" Grid.Row="2" Grid.Column="2" onSliderChanged="VerticalSlider_onSliderChanged"/>
+                <control:VerticalSlider x:Name="motor1" CompName="motor1" Grid.Row="0" Grid.Column="0"/>
+                <control:VerticalSlider x:Name="motor2" CompName="motor2" Grid.Row="0" Grid.Column="2"/>
+                <control:VerticalSlider x:Name="motor3" CompName="motor3" Grid.Row="2" Grid.Column="0"/>
+                <control:VerticalSlider x:Name="motor4" CompName="motor4" Grid.Row="2" Grid.Column="2"/>
 
 
 
         </Grid>
             <Grid Grid.Row="2" x:Name="lowPanelGrid" Grid.ColumnSpan="2">
 
-                <Button Clicked="Button_Clicked"/>
             </Grid>
         </Grid>
     </ContentPage.Content>

@@ -42,29 +42,32 @@ namespace ArduinoProject
             motor3.Value = m3;
             motor4.Value = m4;
         }
-        private void VerticalSlider_onSliderChanged(VerticalSlider sender)
-        {
 
-            //FormAction.print($"{sender.CompName}: {sender.Value}");
-        }
-
-        private void Button_Clicked(object sender, EventArgs e)
-        {
-    
-        }
 
         private void Control_Pressed(object sender, EventArgs e)
         {
             Button target = (Button)sender;
             target.Image = PressedImage;
-            motor1.Value = 0;
         }
+
+
+
 
         private void Control_Released(object sender, EventArgs e)
         {
             Button target = (Button)sender;
             target.Image =IdleImage;
-            motor1.Value = 100;
+
+            if(target==pullUP|target==pullDOWN)
+            {
+                PullButton_Released(target);
+            }
+
+        }
+
+        private void PullButton_Released(Button sender)
+        {
+
         }
     }
 
