@@ -13,6 +13,11 @@ namespace ArduinoProject
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class ControlPage : ContentPage
 	{
+
+
+        const int angleChange = 3;
+
+
        static FileImageSource IdleImage =new FileImageSource().File = "arrow_idle.png";
        static FileImageSource PressedImage = new FileImageSource().File = "arrow_pressed.png";
         public ControlPage ()
@@ -48,6 +53,25 @@ namespace ArduinoProject
         {
             Button target = (Button)sender;
             target.Image = PressedImage;
+
+            switch (target.ClassId)
+            {
+                case "up":
+                    Stablizing.AddRequest(Stablizing.Angle.Pitch, angleChange);
+                    break;
+                case "down":
+                    Stablizing.AddRequest(Stablizing.Angle.Pitch, -angleChange);
+                    break;
+                case "left":
+                    Stablizing.AddRequest(Stablizing.Angle.Roll, -angleChange);
+                    break;
+                case "right":
+                    Stablizing.AddRequest(Stablizing.Angle.Roll, angleChange);
+                    break;
+
+            }
+
+            sendControlData();
         }
 
 
@@ -62,13 +86,49 @@ namespace ArduinoProject
             {
                 PullButton_Released(target);
             }
+            
+            switch(target.ClassId)
+            {
+                case "up":
+                    Stablizing.RemoveRequest(Stablizing.Angle.Pitch, angleChange);
+                    break;
+                case "down":
+                    Stablizing.RemoveRequest(Stablizing.Angle.Pitch, -angleChange);
+                    break;
+                case "left":
+                    Stablizing.RemoveRequest(Stablizing.Angle.Roll, -angleChange);
+                    break;
+                case "right":
+                    Stablizing.RemoveRequest(Stablizing.Angle.Roll, angleChange);
+                    break;
 
+            }
+
+
+            sendControlData();
         }
 
         private void PullButton_Released(Button sender)
         {
-
+            switch(sender.ClassId)
+            {
+                case "pUP":
+                    Stablizing.MotorPower += 1;
+                    break;
+                case "pDOWN":
+                    Stablizing.MotorPower -= 1;
+                    break;
+            }
+            push.Value = Stablizing.MotorPower;
+            
         }
+
+        private void sendControlData()
+        {
+            String StringOrder=Stablizing.Form().ToString();
+            FormAction.print(StringOrder);
+        }
+
     }
 
 

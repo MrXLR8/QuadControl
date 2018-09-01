@@ -83,11 +83,11 @@ namespace ArduinoProject.Code
             {
                 new Ping(this);
             }
-            if(type=="GD")
+            else if(type=="GD")
             {
                 new GyroData(this);
             }
-            if(type=="MD")
+            else if(type=="MD")
             {
                 new MotorData(this);
             }
@@ -189,4 +189,5 @@ namespace ArduinoProject.Code
             }
         }
     }
+
 }

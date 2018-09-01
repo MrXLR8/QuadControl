@@ -40,6 +40,7 @@ namespace ArduinoProject.Shared
               
 
                 onConnect?.Invoke(true);
+                new Order("[WP]1").Execute(); //PING
                 return true;
             }
             catch(Exception e)

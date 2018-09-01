@@ -19,6 +19,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Code\Command.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Code\FormAction.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Code\SocketConnection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Code\Stablizing.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Code\Variable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ConnectPage.xaml.cs">
       <DependentUpon>ConnectPage.xaml</DependentUpon>
