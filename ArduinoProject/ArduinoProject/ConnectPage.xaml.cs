@@ -18,22 +18,26 @@ namespace ArduinoProject
 		{
 
             InitializeComponent();
-            SocketConnection.onConnect = new boolDelegate(onConnected);
+            SocketConnection.onConnect =onConnected;
+            SocketConnection.onDisconnect = onDisconnected;
             Ping.pingFinished = Ping_Recived;
         }
 
         private void ConnectionButton_Clicked(object sender, EventArgs e)
         {
-            SocketConnection.connect(ipEntry.Text,Convert.ToInt32(portEntry.Text));
 
             ConnectionStatus.Text = "Connecting...";
             ConnectionStatus.TextColor = Color.Gray;
             ConnectionButton.IsEnabled = false;
+
+            SocketConnection.connect(ipEntry.Text,Convert.ToInt32(portEntry.Text));
+
+   
         }
 
         private void DisconnectButton_Clicked(object sender, EventArgs e)
         {
-            new Order("[WP]2").Execute();
+            SocketConnection.disconnect();
         }
 
 
@@ -43,15 +47,24 @@ namespace ArduinoProject
             {
                 ConnectionStatus.Text = "Connected";
                 ConnectionStatus.TextColor = Color.Green;
+                ConnectionButton.IsEnabled = false;
             }
             else
             {
                 ConnectionStatus.Text = "Failed";
                 ConnectionStatus.TextColor = Color.Red;
+                ConnectionButton.IsEnabled = true;
             }
-            ConnectionButton.IsEnabled = true;
+       
         }
 
+        private void onDisconnected()
+        {
+            ConnectionButton.IsEnabled = true;
+            ConnectionStatus.Text = "Disconnected";
+            ConnectionStatus.TextColor = Color.Gray;
+
+        }
         private void PingButton_Clicked(object sender, EventArgs e)
         {
             PingMS.Text = "...";

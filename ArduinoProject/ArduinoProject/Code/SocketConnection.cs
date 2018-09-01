@@ -15,17 +15,20 @@ namespace ArduinoProject.Shared
         private static IPAddress address;
         private static int port;
         public static boolDelegate onConnect;
+        public static voidDelegate onDisconnect;
         public static stringDelegate parseInfo;
 
         private static NetworkStream ClientStream;
-       
-        private static TcpClient ClientSocket=new TcpClient();
+
+        private static TcpClient ClientSocket;
        // private static TcpListener ReciverSocket = new TcpListener(port);
         public static async Task<bool> connect(string _ip,int _port)
         {
            
             try
             {
+                ClientSocket = new TcpClient(); 
+
                 address = IPAddress.Parse(_ip);
                 port = _port;
 
@@ -136,7 +139,8 @@ namespace ArduinoProject.Shared
         public static async void disconnect()
         {
             ClientSocket.Close();
-            ClientSocket.EndConnect(null);
+           
+            onDisconnect?.Invoke();
         }
     }
 }
