@@ -60,7 +60,12 @@ public:
 			return false;
 		}
 
-	
+		Angle(int _pitch, int _roll) 
+		{
+			pitch = _pitch;
+			roll = _roll;
+		}
+		Angle() {}
 	};
 
 	class Motors 
@@ -106,7 +111,7 @@ public:
 	static Angle requiredVector;// что должно быть
 
 	static Motors last;
-	static const int sensivity = 2;
+	static const int sensivity = 1;
 	static int middlePower;
 
 	static void start() 
@@ -161,13 +166,20 @@ public:
 		return Motors::calculateMiddle(pitch, roll);
 
 	}
+
+	static Stabilize::Angle getAccel()
+	{
+		return Stabilize::Angle(gyro->getAngleY(), gyro->getAngleX()*-1);
+	}
 	private:
 
 		static void getCurrent()
 		{
-			currentVector.pitch = int(gyro->getAngleX());
-			currentVector.roll = int(gyro->getAngleY());
+			Angle accel= getAccel();
+			currentVector.pitch = int(accel.pitch);
+			currentVector.roll = int(accel.roll);
 		}
+
 	
 
 };

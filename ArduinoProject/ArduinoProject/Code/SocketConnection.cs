@@ -107,7 +107,7 @@ namespace ArduinoProject.Shared
                         Xamarin.Forms.Device.BeginInvokeOnMainThread(() =>
                         {
 
-                            if (result !="")
+                            if (result.Length>3)
                             {
                                 contniute = false;
                               //  Code.FormAction.print(">>>: " + result);

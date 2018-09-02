@@ -96,13 +96,11 @@ public:
 		{
 			if (content[0] == "1")
 			{
-				String _pitch = String(int(mpu6050->getAngleX()));
-				String _roll = String(int(mpu6050->getAngleY()));
+				Stabilize::Angle toSendA;
+				toSendA = Stabilize::getAccel();
+				String _pitch = String(int(toSendA.pitch));
+				String _roll = String(int(toSendA.roll));
 				String toSend = "[GD]" + _pitch + "." + _roll;
-				/*Order gyroData;
-				gyroData.type = "GD";
-				gyroData.content.push_back(_pitch);
-				gyroData.content.push_back(_roll);*/
 				Serial.println(toSend);
 				Order::wifi->println(toSend);
 			}

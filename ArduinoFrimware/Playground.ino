@@ -1,4 +1,5 @@
-﻿#include "WiFiTimingFilter.h"
+﻿#include "F_MPU_TOCKN.h"
+#include "WiFiTimingFilter.h"
 #include "TimePassed.h"
 #include "Stabilize.h"
 #include <MPU6050_tockn.h>
@@ -17,6 +18,7 @@ WiFiTimingFilter SendTimer;
 
 
 MPU6050 mpu6050(Wire);
+
 MPU6050* Order::mpu6050;
 
 
@@ -79,14 +81,17 @@ void loop()
 	}
 
 }
+
+
 TimePassed gyroTime;
 void sendGyroData()
 {
 	if (gyroTime.passed(30)) 
 	{
 		static String lastP, lastR;
-		String _pitch = String(int(mpu6050.getAngleX()));
-		String _roll = String(int(mpu6050.getAngleY()));
+		Stabilize::Angle accel = Stabilize::getAccel();
+		String _pitch = String(int(accel.pitch));
+		String _roll = String(int(accel.roll));
 		if (lastP == _pitch && lastR == _roll)
 		{
 			return;
@@ -132,8 +137,6 @@ void sendMotorData()
 	
 }
 
-
-
 void serialecho() {
 	if (Serial.available())
 	{
@@ -145,7 +148,6 @@ void serialecho() {
 	}
 
 }
-
 
 
 
