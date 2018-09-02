@@ -15,7 +15,7 @@ namespace ArduinoProject
 	{
 
 
-        const int angleChange = 3;
+        const int angleChange = 10;
 
 
        static FileImageSource IdleImage =new FileImageSource().File = "arrow_idle.png";
@@ -63,10 +63,10 @@ namespace ArduinoProject
                     Stablizing.AddRequest(Stablizing.Angle.Pitch, -angleChange);
                     break;
                 case "left":
-                    Stablizing.AddRequest(Stablizing.Angle.Roll, -angleChange);
+                    Stablizing.AddRequest(Stablizing.Angle.Roll, angleChange);
                     break;
                 case "right":
-                    Stablizing.AddRequest(Stablizing.Angle.Roll, angleChange);
+                    Stablizing.AddRequest(Stablizing.Angle.Roll, -angleChange);
                     break;
 
             }
@@ -96,10 +96,10 @@ namespace ArduinoProject
                     Stablizing.RemoveRequest(Stablizing.Angle.Pitch, -angleChange);
                     break;
                 case "left":
-                    Stablizing.RemoveRequest(Stablizing.Angle.Roll, -angleChange);
+                    Stablizing.RemoveRequest(Stablizing.Angle.Roll, angleChange);
                     break;
                 case "right":
-                    Stablizing.RemoveRequest(Stablizing.Angle.Roll, angleChange);
+                    Stablizing.RemoveRequest(Stablizing.Angle.Roll, -angleChange);
                     break;
 
             }
@@ -126,7 +126,7 @@ namespace ArduinoProject
         private void sendControlData()
         {
             String StringOrder=Stablizing.Form().ToString();
-            FormAction.print(StringOrder);
+            Shared.SocketConnection.write(StringOrder);
         }
 
     }

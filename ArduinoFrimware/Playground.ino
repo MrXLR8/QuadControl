@@ -25,6 +25,7 @@ MPU6050* Stabilize::gyro;
 Stabilize::Angle Stabilize::currentVector;
 Stabilize::Angle Stabilize::requiredVector;
 Stabilize::Angle Stabilize::stableVector;
+int Stabilize::middlePower = 50;
 Stabilize::Motors Stabilize::last(50,50,50,50);
 void setup() {
 	// Open serial communications and wait for port to open:
@@ -51,7 +52,7 @@ void setup() {
 }
 
 void loop()
-{ // run over and over
+{ 
 	mpu6050.update();
 	
 	sendGyroData();
@@ -77,7 +78,6 @@ void loop()
 		}
 	}
 
-	//sendGyroData();
 }
 TimePassed gyroTime;
 void sendGyroData()
@@ -132,17 +132,7 @@ void sendMotorData()
 	
 }
 
-//int lastmills;
-//bool millsPassed(int delay) 
-//{
-//	int diff = millis() - lastmills;
-//	
-//	if (diff >= delay)
-//	{
-//		lastmills = millis(); return true;
-//	}
-//	return false;
-//}
+
 
 void serialecho() {
 	if (Serial.available())
@@ -158,21 +148,4 @@ void serialecho() {
 
 
 
-//MPU6050 mpu6050(Wire);
-//
-//void setup() {
-//	Serial.begin(9600);
-//	Wire.begin();
-//	mpu6050.begin();
-//	mpu6050.calcGyroOffsets(true);
-//}
-//
-//void loop() {
-//	mpu6050.update();
-//	Serial.print("angleX : ");
-//	Serial.print(mpu6050.getAngleX());
-//	Serial.print("\tangleY : ");
-//	Serial.print(mpu6050.getAngleY());
-//	Serial.print("\tangleZ : ");
-//	Serial.println(mpu6050.getAngleZ());
-//}
+

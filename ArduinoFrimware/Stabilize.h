@@ -106,8 +106,8 @@ public:
 	static Angle requiredVector;// что должно быть
 
 	static Motors last;
-
-	const static int middlePower=50;
+	static const int sensivity = 2;
+	static int middlePower;
 
 	static void start() 
 	{
@@ -116,6 +116,8 @@ public:
 
 		stableVector.pitch = 0;
 		stableVector.roll = 0;
+
+		middlePower = 50;
 
 		requiredVector = stableVector;
 		getCurrent();
@@ -141,17 +143,17 @@ public:
 	
 
 
-		roll.m1 = map(diff*-1, -90, 90, 0, 100); // дифф -10. но левая сторона должна подниматься при падении. значит диф меняем
+		roll.m1 = map(diff*-1, -90/ sensivity, 90/ sensivity,  middlePower-50, 50+ middlePower); // дифф -10. но левая сторона должна подниматься при падении. значит диф меняем
 		roll.m3 = roll.m1;
 
-		roll.m2= map(diff, -90, 90, 0, 100); // дифф -10. ослабляем эту сторону. Возможно надо ослабить эффект каждого на пополам?
+		roll.m2= map(diff, -90/ sensivity, 90/ sensivity, 0+ middlePower - 50, 50+ middlePower); // дифф -10. ослабляем эту сторону. Возможно надо ослабить эффект каждого на пополам?
 		roll.m4= roll.m2;
 		//pitch
 		diff = requiredVector.pitch - currentVector.pitch;
-		pitch.m1 = map(diff*-1, -90, 90, 0, 100); 
+		pitch.m1 = map(diff*-1, -90/ sensivity, 90/ sensivity, 0+ middlePower - 50, 50+ middlePower);
 		pitch.m2 = pitch.m1;
 		
-		pitch.m3 = map(diff, -90, 90, 0, 100);
+		pitch.m3 = map(diff, -90/ sensivity, 90/ sensivity, 0+ middlePower - 50, 50+ middlePower);
 		pitch.m4 = pitch.m3;
 		
 		 

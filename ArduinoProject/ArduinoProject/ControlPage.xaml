@@ -50,7 +50,7 @@
             <RowDefinition/>
           </Grid.RowDefinitions>
                 <Button  Image="arrow_idle.png" Grid.Row="0" x:Name="pullUP" ClassId="pUP" x:FieldModifier="public" Pressed="Control_Pressed" Released="Control_Released"/>
-                <control:VerticalSlider CompName="push" x:Name="push" Grid.Row="1"/>
+                <control:VerticalSlider CompName="push" Value="50" x:Name="push" Grid.Row="1"/>
                 <Button  Image="arrow_idle.png" Grid.Row="2" x:Name="pullDOWN" ClassId="pDOWN" Rotation="180" x:FieldModifier="public" Pressed="Control_Pressed" Released="Control_Released"/>
 
         </Grid>

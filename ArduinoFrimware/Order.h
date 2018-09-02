@@ -12,7 +12,7 @@
 #include <StandardCplusplus.h>
 #include <vector>
 #include "SoftwareSerial.h"
-
+#include "Stabilize.h"
 using namespace std;
 #pragma once
 
@@ -106,6 +106,15 @@ public:
 				Serial.println(toSend);
 				Order::wifi->println(toSend);
 			}
+		}
+	
+		if (type == "AC") 
+		{
+			Stabilize::Angle recived;
+			recived.pitch = atoi(content[0].c_str());
+			recived.roll = atoi(content[1].c_str());
+			Stabilize::requiredVector = Stabilize::stableVector + recived;
+			Stabilize::middlePower = atoi(content[2].c_str());
 		}
 	}
 
