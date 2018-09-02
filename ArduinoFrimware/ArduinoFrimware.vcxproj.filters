@@ -16,10 +16,45 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ArduinoFrimware.ino" />
-    <None Include="Accel.ino" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="__vm\.ArduinoFrimware.vsarduino.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WiFiTimingFilter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Playground\__vm\.ArduinoFrimware.vsarduino.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Playground\__vm\.Playground.vsarduino.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F_Joystick.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F_LCD.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F_MPU6050.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F_SD.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F_SonicRangefinder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Order.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Stabilize.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TimePassed.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Variables.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

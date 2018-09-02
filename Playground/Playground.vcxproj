@@ -98,20 +98,6 @@
   <ItemGroup>
     <None Include="..\ArduinoFrimware\Playground.ino" />
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\ArduinoFrimware\F_Joystick.h" />
-    <ClInclude Include="..\ArduinoFrimware\F_LCD.h" />
-    <ClInclude Include="..\ArduinoFrimware\F_MPU6050.h" />
-    <ClInclude Include="..\ArduinoFrimware\F_SD.h" />
-    <ClInclude Include="..\ArduinoFrimware\F_SonicRangefinder.h" />
-    <ClInclude Include="..\ArduinoFrimware\Order.h" />
-    <ClInclude Include="..\ArduinoFrimware\Stabilize.h" />
-    <ClInclude Include="..\ArduinoFrimware\TimePassed.h" />
-    <ClInclude Include="..\ArduinoFrimware\Variables.h" />
-    <ClInclude Include="..\ArduinoFrimware\WiFiTimingFilter.h" />
-    <ClInclude Include="__vm\.ArduinoFrimware.vsarduino.h" />
-    <ClInclude Include="__vm\.Playground.vsarduino.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
