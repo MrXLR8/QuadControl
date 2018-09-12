@@ -18,7 +18,7 @@ void setup()
 
 
 	pinMode(4, INPUT_PULLUP);
-	Serial.begin(76800);
+	Serial.begin(74800);
 	delay(1000);
 
 	if (digitalRead(4) == LOW)
@@ -38,7 +38,7 @@ void setup()
 
 IPAddress hostAP()
 {
-	char* ssid = "XLR8s_ESP82666";
+	char* ssid = "XLR8s_WiFi-Drone";
 	char* pass = "wormoman";
 
 

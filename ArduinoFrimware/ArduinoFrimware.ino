@@ -10,7 +10,7 @@
 #include "Order.h"
 #include <SoftwareSerial.h>
 
-SoftwareSerial wifi(11, 12);
+SoftwareSerial wifi(8, 9);
 SoftwareSerial* Order::wifi;
 
 SoftwareSerial* WiFiTimingFilter::WiFi;
@@ -44,7 +44,7 @@ void setup() {
 	Stabilize::gyro = &mpu6050;
 	Stabilize::start();
 
-	wifi.begin(76800);
+	wifi.begin(74800);
 
 	Order::mpu6050->begin();
 	Order::mpu6050->calcGyroOffsets(true);
