@@ -31,7 +31,7 @@ int Stabilize::middlePower = 50;
 Stabilize::Motors Stabilize::last(50,50,50,50);
 void setup() {
 	// Open serial communications and wait for port to open:
-	Serial.begin(76800);
+	Serial.begin(74800);
 
 
 	
@@ -44,7 +44,7 @@ void setup() {
 	Stabilize::gyro = &mpu6050;
 	Stabilize::start();
 
-	wifi.begin(76800);
+	wifi.begin(74800);
 
 	Order::mpu6050->begin();
 	Order::mpu6050->calcGyroOffsets(true);

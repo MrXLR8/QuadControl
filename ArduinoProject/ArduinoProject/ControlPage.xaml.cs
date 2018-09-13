@@ -113,10 +113,10 @@ namespace ArduinoProject
             switch(sender.ClassId)
             {
                 case "pUP":
-                    Stablizing.MotorPower += 1;
+                    Stablizing.MotorPower += 10;
                     break;
                 case "pDOWN":
-                    Stablizing.MotorPower -= 1;
+                    Stablizing.MotorPower -= 10;
                     break;
             }
             push.Value = Stablizing.MotorPower;

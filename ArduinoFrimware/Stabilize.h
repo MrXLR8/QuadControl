@@ -89,7 +89,7 @@ public:
 	
 		static Motors calculateMiddle(Motors first,Motors second) 
 		{
-			return Motors((first.m1 + second.m1) / 2, (first.m2 + second.m2) / 2, (first.m3 + second.m3) / 2, (first.m4 + second.m4) / 2);
+			return Motors(constrain((first.m1 + second.m1) / 2,0,100), constrain((first.m2 + second.m2) / 2,0,100), constrain((first.m3 + second.m3) / 2,0,100), constrain((first.m4 + second.m4) / 2,0,100));
 		}
 
 		friend bool operator==(const Motors& left, const Motors& right)
@@ -110,6 +110,8 @@ public:
 	static Angle currentVector; // что сейчас на гиро
 	static Angle requiredVector;// что должно быть
 
+	static Angle offSets; //добавочные отклонения
+
 	static Motors last;
 	static const int sensivity = 1;
 	static int middlePower;
@@ -118,6 +120,8 @@ public:
 	{
 
 
+		offSets.pitch = gyro->getAngleX();
+		offSets.roll = gyro->getAngleY(); 
 
 		stableVector.pitch = 0;
 		stableVector.roll = 0;
@@ -169,7 +173,7 @@ public:
 
 	static Stabilize::Angle getAccel()
 	{
-		return Stabilize::Angle(gyro->getAngleY(), gyro->getAngleX()*-1);
+		return Stabilize::Angle(gyro->getAngleY()-offSets.roll, ((gyro->getAngleX() - offSets.pitch)*-1));
 	}
 	private:
 

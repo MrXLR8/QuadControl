@@ -10,7 +10,7 @@
 #include "Order.h"
 #include <SoftwareSerial.h>
 
-SoftwareSerial wifi(8, 9);
+SoftwareSerial wifi(8, 7);
 SoftwareSerial* Order::wifi;
 
 SoftwareSerial* WiFiTimingFilter::WiFi;
@@ -27,12 +27,17 @@ MPU6050* Stabilize::gyro;
 Stabilize::Angle Stabilize::currentVector;
 Stabilize::Angle Stabilize::requiredVector;
 Stabilize::Angle Stabilize::stableVector;
+Stabilize::Angle Stabilize::offSets;
+
+
+
 int Stabilize::middlePower = 50;
 Stabilize::Motors Stabilize::last(50, 50, 50, 50);
 void setup() {
 	// Open serial communications and wait for port to open:
-	Serial.begin(76800);
+	Serial.begin(9600);
 
+	digitalWrite(LED_BUILTIN, HIGH);
 
 
 	// set the data rate for the SoftwareSerial port
@@ -44,15 +49,18 @@ void setup() {
 	Stabilize::gyro = &mpu6050;
 	Stabilize::start();
 
-	wifi.begin(74800);
+	wifi.begin(9600);
 
 	Order::mpu6050->begin();
 	Order::mpu6050->calcGyroOffsets(true);
 
-	Serial.println("start");
+	Serial.println("Start");
+	digitalWrite(LED_BUILTIN, LOW);
 
 }
 
+String buffer = "";
+char c;
 void loop()
 {
 	mpu6050.update();
@@ -64,20 +72,29 @@ void loop()
 
 	if (wifi.available())
 	{
-		String buffer = "";
+
 		while (wifi.available())
 		{
-			char c = wifi.read();
+			c = wifi.read();
+			
 			buffer += c;
+			if ((int)c == 10) break;
+			
 		}
+		int lastchar = (int)buffer[buffer.length() - 1];
 
 
-		if (buffer[0] == '[')
+		if (buffer[0] == '['&lastchar==10)
 		{
 			Order recived;
 			recived.Parse(buffer);
 			recived.Execute();
 		}
+		else {
+			Serial.print("BAD: ");
+			Serial.println(buffer);
+		}
+		buffer = "";
 	}
 
 }
@@ -86,7 +103,7 @@ void loop()
 TimePassed gyroTime;
 void sendGyroData()
 {
-	if (gyroTime.passed(30))
+	if (gyroTime.passed(50))
 	{
 		static String lastP, lastR;
 		Stabilize::Angle accel = Stabilize::getAccel();
@@ -116,7 +133,7 @@ void sendGyroData()
 TimePassed motorime;
 void sendMotorData()
 {
-	if (motorime.passed(30))
+	if (motorime.passed(50))
 	{
 		Stabilize::Motors toSend = Stabilize::StabIt();
 

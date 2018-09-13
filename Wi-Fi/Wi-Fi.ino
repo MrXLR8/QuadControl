@@ -18,7 +18,7 @@ void setup()
 
 
 	pinMode(4, INPUT_PULLUP);
-	Serial.begin(74800);
+	Serial.begin(9600);
 	delay(1000);
 
 	if (digitalRead(4) == LOW)
