@@ -110,7 +110,7 @@ public:
 	static Angle currentVector; // что сейчас на гиро
 	static Angle requiredVector;// что должно быть
 
-	static Angle offSets; //добавочные отклонения
+	
 
 	static Motors last;
 	static const int sensivity = 1;
@@ -120,13 +120,15 @@ public:
 	{
 
 
-		offSets.pitch = gyro->getAngleX();
-		offSets.roll = gyro->getAngleY(); 
+		//offSets.pitch = gyro->getAngleX();
+		//offSets.roll = gyro->getAngleY(); 
 
+		//Serial.println("OFFSET");
+		//Serial.println(offSets.pitch);
 		stableVector.pitch = 0;
 		stableVector.roll = 0;
 
-		middlePower = 50;
+		middlePower = 10;
 
 		requiredVector = stableVector;
 		getCurrent();
@@ -173,7 +175,7 @@ public:
 
 	static Stabilize::Angle getAccel()
 	{
-		return Stabilize::Angle(gyro->getAngleY()-offSets.roll, ((gyro->getAngleX() - offSets.pitch)*-1));
+		return Stabilize::Angle(gyro->getAngleY(), (gyro->getAngleX()*-1));
 	}
 	private:
 

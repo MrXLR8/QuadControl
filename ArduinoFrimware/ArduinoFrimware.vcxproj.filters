@@ -57,5 +57,8 @@
     <ClInclude Include="Variables.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="F_ESC.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

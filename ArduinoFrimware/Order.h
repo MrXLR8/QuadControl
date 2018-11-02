@@ -13,6 +13,7 @@
 #include <vector>
 #include "SoftwareSerial.h"
 #include "Stabilize.h"
+#include "F_ESC.h"
 using namespace std;
 #pragma once
 
@@ -23,10 +24,10 @@ class Order
 public:
 	String type;
 	vector<String> content;
-
+	static F_ESC* ESC;
 	static SoftwareSerial* wifi;
 	static MPU6050* mpu6050;
-	
+
 
 	Order() {}
 
@@ -113,6 +114,14 @@ public:
 			recived.roll = atoi(content[1].c_str());
 			Stabilize::requiredVector = Stabilize::stableVector + recived;
 			Stabilize::middlePower = atoi(content[2].c_str());
+		}
+
+		if (type == "MP")
+		{
+			bool what = atoi(content[0].c_str());
+			ESC->motorAllow(what);
+			Serial.print("Motor status: ");
+			Serial.println(what);
 		}
 	}
 

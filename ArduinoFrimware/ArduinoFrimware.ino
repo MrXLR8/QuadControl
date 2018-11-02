@@ -1,10 +1,11 @@
-#include "F_MPU_TOCKN.h"
+
+#include "F_ESC.h"
 #include "WiFiTimingFilter.h"
 #include "TimePassed.h"
 #include "Stabilize.h"
 #include <MPU6050_tockn.h>
 
-
+#include <Servo.h>
 #include "Variables.h"
 #include <StandardCplusplus.h>
 #include "Order.h"
@@ -20,6 +21,7 @@ WiFiTimingFilter SendTimer;
 MPU6050 mpu6050(Wire);
 
 MPU6050* Order::mpu6050;
+F_ESC* Order::ESC;
 
 
 MPU6050* Stabilize::gyro;
@@ -27,32 +29,46 @@ MPU6050* Stabilize::gyro;
 Stabilize::Angle Stabilize::currentVector;
 Stabilize::Angle Stabilize::requiredVector;
 Stabilize::Angle Stabilize::stableVector;
-Stabilize::Angle Stabilize::offSets;
+
+
 
 
 
 int Stabilize::middlePower = 50;
 Stabilize::Motors Stabilize::last(50, 50, 50, 50);
+
+F_ESC ESC(9, 6, 5, 3);
 void setup() {
 	// Open serial communications and wait for port to open:
 	Serial.begin(9600);
-
+	pinMode(LED_BUILTIN, OUTPUT);
 	digitalWrite(LED_BUILTIN, HIGH);
-
+	Serial.println("Booting...");
 
 	// set the data rate for the SoftwareSerial port
 	Order::wifi = &wifi;
+	Order::ESC = &ESC;
 	WiFiTimingFilter::WiFi = &wifi;
 
 	Order::mpu6050 = &mpu6050;
 
 	Stabilize::gyro = &mpu6050;
-	Stabilize::start();
+	
 
 	wifi.begin(9600);
+	ESC.Calibrate(3000, 1000, 2000, 1350);
+	mpu6050.calcGyroOffsets(true);
+	mpu6050.begin();
 
-	Order::mpu6050->begin();
-	Order::mpu6050->calcGyroOffsets(true);
+
+	Stabilize::start();
+
+	
+
+	Serial.println("");
+	
+	
+
 
 	Serial.println("Start");
 	digitalWrite(LED_BUILTIN, LOW);
@@ -105,6 +121,7 @@ void sendGyroData()
 {
 	if (gyroTime.passed(50))
 	{
+
 		static String lastP, lastR;
 		Stabilize::Angle accel = Stabilize::getAccel();
 		String _pitch = String(int(accel.pitch));
@@ -138,6 +155,8 @@ void sendMotorData()
 		Stabilize::Motors toSend = Stabilize::StabIt();
 
 		if (toSend == Stabilize::last) return;
+		
+		ESC.SetAll(toSend);
 		Order MotorData;
 		MotorData.type = "MD";
 		MotorData.content.push_back(String(toSend.m1));

@@ -12,7 +12,7 @@ namespace ArduinoProject.Code
             Roll
         }
 
-        public static int MotorPower = 50;
+        public static int MotorPower = 10;
         static int ReqPitch = 0;
         static int ReqRoll = 0;
 

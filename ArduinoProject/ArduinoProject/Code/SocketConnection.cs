@@ -58,11 +58,9 @@ namespace ArduinoProject.Shared
 
         public static async void write(String data)
         {
-          
-            if(!ClientSocket.Connected)
-            {
-                return;
-            }
+            if (ClientSocket == null) return;
+            if(!ClientSocket.Connected) return;
+           
 
                 data += Environment.NewLine;
                  byte[] bytes = Encoding.ASCII.GetBytes(data);
