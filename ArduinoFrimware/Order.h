@@ -116,12 +116,22 @@ public:
 			Stabilize::middlePower = atoi(content[2].c_str());
 		}
 
-		if (type == "MP")
+		if (type == "MA")
 		{
 			bool what = atoi(content[0].c_str());
 			ESC->motorAllow(what);
 			Serial.print("Motor status: ");
 			Serial.println(what);
+		}
+		if (type == "MP")
+		{
+			int motor = atoi(content[0].c_str());
+			int power = atoi(content[1].c_str());
+			ESC->set(motor, power);
+			Serial.print("Powering ");
+			Serial.print(motor);
+			Serial.print(" at ");
+			Serial.println(power);
 		}
 	}
 

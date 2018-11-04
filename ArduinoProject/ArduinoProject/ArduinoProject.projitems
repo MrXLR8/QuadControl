@@ -65,4 +65,7 @@
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)scheme.fzz" />
+  </ItemGroup>
 </Project>

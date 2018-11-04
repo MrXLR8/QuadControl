@@ -1,153 +1,95 @@
-﻿#include "F_MPU_TOCKN.h"
-#include "WiFiTimingFilter.h"
-#include "TimePassed.h"
-#include "Stabilize.h"
-#include <MPU6050_tockn.h>
+﻿/**
+ * Usage, according to documentation(https://www.firediy.fr/files/drone/HW-01-V4.pdf) :
+ *     1. Plug your Arduino to your computer with USB cable, open terminal, then type 1 to send max throttle to every ESC to enter programming mode
+ *     2. Power up your ESCs. You must hear "beep1 beep2 beep3" tones meaning the power supply is OK
+ *     3. After 2sec, "beep beep" tone emits, meaning the throttle highest point has been correctly confirmed
+ *     4. Type 0 to send min throttle
+ *     5. Several "beep" tones emits, which means the quantity of the lithium battery cells (3 beeps for a 3 cells LiPo)
+ *     6. A long beep tone emits meaning the throttle lowest point has been correctly confirmed
+ *     7. Type 2 to launch test function. This will send min to max throttle to ESCs to test them
+ *
+ * @author lobodol <grobodol@gmail.com>
+ */
+ // ---------------------------------------------------------------------------
+#include <Servo.h>
+// ---------------------------------------------------------------------------
+// Customize here pulse lengths as needed
+#define MIN_PULSE_LENGTH 1000 // Minimum pulse length in µs
+#define MAX_PULSE_LENGTH 2000 // Maximum pulse length in µs
+// ---------------------------------------------------------------------------
+Servo motA, motB, motC, motD;
+int data=1000;
+// ---------------------------------------------------------------------------
 
-
-#include "Variables.h"
-#include <StandardCplusplus.h>
-#include "Order.h"
-#include <SoftwareSerial.h>
-
-SoftwareSerial wifi(11, 12);
-SoftwareSerial* Order::wifi;
-
-SoftwareSerial* WiFiTimingFilter::WiFi;
-WiFiTimingFilter SendTimer;
-
-
-MPU6050 mpu6050(Wire);
-
-MPU6050* Order::mpu6050;
-
-
-MPU6050* Stabilize::gyro;
-
-Stabilize::Angle Stabilize::currentVector;
-Stabilize::Angle Stabilize::requiredVector;
-Stabilize::Angle Stabilize::stableVector;
-int Stabilize::middlePower = 50;
-Stabilize::Motors Stabilize::last(50,50,50,50);
+/**
+ * Initialisation routine
+ */
 void setup() {
-	// Open serial communications and wait for port to open:
-	Serial.begin(74800);
+	Serial.setTimeout(100);
+	Serial.begin(9600);
+
+	motA.attach(9, MIN_PULSE_LENGTH, MAX_PULSE_LENGTH);
+	motB.attach(6, MIN_PULSE_LENGTH, MAX_PULSE_LENGTH);
+	motC.attach(5, MIN_PULSE_LENGTH, MAX_PULSE_LENGTH);
+	motD.attach(3, MIN_PULSE_LENGTH, MAX_PULSE_LENGTH);
 
 
-	
-	// set the data rate for the SoftwareSerial port
-	Order::wifi = &wifi;
-	WiFiTimingFilter::WiFi = &wifi;
 
-	Order::mpu6050 = &mpu6050;
-
-	Stabilize::gyro = &mpu6050;
-	Stabilize::start();
-
-	wifi.begin(74800);
-
-	Order::mpu6050->begin();
-	Order::mpu6050->calcGyroOffsets(true);
-
-	Serial.println("start");
-
+	displayInstructions();
 }
 
-void loop()
-{ 
-	mpu6050.update();
-	
-	sendGyroData();
-	sendMotorData();
+/**
+ * Main function
+ */
 
-	SendTimer.proceed();
-
-	if (wifi.available())
-	{
-		String buffer = "";
-		while (wifi.available())
-		{
-			char c = wifi.read();
-			buffer += c;
-		}
+void loop() {
+	if (Serial.available()) {
+		data = Serial.parseInt();
 
 
-		if (buffer[0] == '[')
-		{
-			Order recived;
-			recived.Parse(buffer);
-			recived.Execute();
-		}
+		Serial.print("WRITING: ");
+		Serial.println(data);
 	}
 
+	motA.writeMicroseconds(data);
+	motB.writeMicroseconds(data);
+	motC.writeMicroseconds(data);
+	motD.writeMicroseconds(data);
+
+
 }
 
-
-TimePassed gyroTime;
-void sendGyroData()
+/**
+ * Test function: send min throttle to max throttle to each ESC.
+ */
+void test()
 {
-	if (gyroTime.passed(30)) 
-	{
-		static String lastP, lastR;
-		Stabilize::Angle accel = Stabilize::getAccel();
-		String _pitch = String(int(accel.pitch));
-		String _roll = String(int(accel.roll));
-		if (lastP == _pitch && lastR == _roll)
-		{
-			return;
-		}
-		String toSend = "[GD]" + _pitch + "." + _roll;
-		/*Order gyroData;
-		gyroData.type = "GD";
-		gyroData.content.push_back(_pitch);
-		gyroData.content.push_back(_roll);*/
+	for (int i = MIN_PULSE_LENGTH; i <= MAX_PULSE_LENGTH; i += 5) {
+		Serial.print("Pulse length = ");
+		Serial.println(i);
 
+		motA.writeMicroseconds(i);
+		motB.writeMicroseconds(i);
+		motC.writeMicroseconds(i);
+		motD.writeMicroseconds(i);
 
-
-		//Serial.println(toSend);
-		//Order::wifi->println(toSend);
-		SendTimer.addString(toSend);
-		lastP = _pitch;
-		lastR = _roll;
+		delay(200);
 	}
 
+	Serial.println("STOP");
+	motA.writeMicroseconds(MIN_PULSE_LENGTH);
+	motB.writeMicroseconds(MIN_PULSE_LENGTH);
+	motC.writeMicroseconds(MIN_PULSE_LENGTH);
+	motD.writeMicroseconds(MIN_PULSE_LENGTH);
 }
 
-TimePassed motorime;
-void sendMotorData() 
+/**
+ * Displays instructions to user
+ */
+void displayInstructions()
 {
-	if (motorime.passed(30)) 
-	{
-		Stabilize::Motors toSend = Stabilize::StabIt();
-
-		if (toSend == Stabilize::last) return;
-		Order MotorData;
-		MotorData.type = "MD";
-		MotorData.content.push_back(String(toSend.m1));
-		MotorData.content.push_back(String(toSend.m2));
-		MotorData.content.push_back(String(toSend.m3));
-		MotorData.content.push_back(String(toSend.m4));
-
-		Stabilize::last = toSend;
-
-		SendTimer.addString(MotorData.ToString());
-	//	Order::wifi->println(MotorData.ToString());
-		//Serial.println(MotorData.ToString());
-	}
-	
+	Serial.println("READY - PLEASE SEND INSTRUCTIONS AS FOLLOWING :");
+	Serial.println("\t0 : Send min throttle");
+	Serial.println("\t1 : Send max throttle");
+	Serial.println("\t2 : Run test function\n");
 }
-
-void serialecho() {
-	if (Serial.available())
-	{
-		String Sbuffer = "";
-		Sbuffer = Serial.readString();
-
-		Serial.println(Sbuffer);
-		Order::wifi->println(Sbuffer);
-	}
-
-}
-
-
-

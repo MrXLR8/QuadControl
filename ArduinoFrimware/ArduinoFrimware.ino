@@ -22,7 +22,7 @@ MPU6050 mpu6050(Wire);
 
 MPU6050* Order::mpu6050;
 F_ESC* Order::ESC;
-
+F_ESC ESC(9, 6, 5, 3);
 
 MPU6050* Stabilize::gyro;
 
@@ -37,29 +37,36 @@ Stabilize::Angle Stabilize::stableVector;
 int Stabilize::middlePower = 50;
 Stabilize::Motors Stabilize::last(50, 50, 50, 50);
 
-F_ESC ESC(9, 6, 5, 3);
+Servo motA, motB, motC, motD; //TEST ! UDALUT!
+#define MIN_POWER = 1000;
+#define MAX_POWER = 2000;
 void setup() {
-	// Open serial communications and wait for port to open:
+
 	Serial.begin(9600);
 	pinMode(LED_BUILTIN, OUTPUT);
-	digitalWrite(LED_BUILTIN, HIGH);
+	digitalWrite(LED_BUILTIN, HIGH); // тухнет если не завис при запуске
 	Serial.println("Booting...");
 
-	// set the data rate for the SoftwareSerial port
+	//Передача переменной Wi-Fi
 	Order::wifi = &wifi;
 	Order::ESC = &ESC;
 	WiFiTimingFilter::WiFi = &wifi;
 
+	//Передача переменной Гироскопа
 	Order::mpu6050 = &mpu6050;
-
 	Stabilize::gyro = &mpu6050;
-	
 
-	wifi.begin(9600);
-	ESC.Calibrate(3000, 1000, 2000, 1350);
 	mpu6050.calcGyroOffsets(true);
 	mpu6050.begin();
+	Serial.println();
 
+
+	ESC.Calibrate(3000, 1200); //калибровка с задержкой {1}, но чтобы не сгорел ограничить в {2}
+
+	wifi.begin(9600);
+
+
+	
 
 	Stabilize::start();
 
@@ -153,6 +160,15 @@ void sendMotorData()
 	if (motorime.passed(50))
 	{
 		Stabilize::Motors toSend = Stabilize::StabIt();
+
+		Stabilize::Motors testMotor; //!!!ТЕСТОВЫЫЙ МОТОР 10%. УДАЛИТЬ
+		testMotor.m1 = 10;
+		testMotor.m2 = 10;
+		testMotor.m3 = 10;
+		testMotor.m4 = 10;
+
+
+
 
 		if (toSend == Stabilize::last) return;
 		
