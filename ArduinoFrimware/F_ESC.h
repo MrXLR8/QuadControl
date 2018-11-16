@@ -40,23 +40,55 @@ public:
 		motorStatus = true;
 
 		hardLimit = _hard;
-		delay(delayE);
 		Serial.println("Calibrating ESC");
 
-		m1.attach(_m1, MIN_POWER, MAX_POWER);
-		m2.attach(_m2, MIN_POWER, MAX_POWER);
-		m3.attach(_m3, MIN_POWER, MAX_POWER);
-		m4.attach(_m4, MIN_POWER, MAX_POWER);
+		m1.attach(_m2, MIN_POWER, MAX_POWER); // настроены так как подписаны на еск
+		m2.attach(_m1, MIN_POWER, MAX_POWER);
+		m3.attach(_m4, MIN_POWER, MAX_POWER);
+		m4.attach(_m3, MIN_POWER, MAX_POWER);
 
-		delay(delayE);
+		delay(8000);
+
+		Serial.print("Setting MAX: ");
+		Serial.println(MAX_POWER);
+		m1.writeMicroseconds(MAX_POWER);
+		m2.writeMicroseconds(MAX_POWER);
+		m3.writeMicroseconds(MAX_POWER); //ВОЗМОЖНО ТОЛЬКО ПОТОМУ ЧТО ОН БЫЛ ПОДКЛЮЧЕН!!!!
+		m4.writeMicroseconds(MAX_POWER);
+		
+
+		delay(8000);
+
 		Serial.print("Setting MIN: ");
 		Serial.println(MIN_POWER);
-		//m1.writeMicroseconds(MIN_POWER);
-		//m2.writeMicroseconds(MIN_POWER);
+		m1.writeMicroseconds(MIN_POWER);
+		m2.writeMicroseconds(MIN_POWER);
 		m3.writeMicroseconds(MIN_POWER); //ВОЗМОЖНО ТОЛЬКО ПОТОМУ ЧТО ОН БЫЛ ПОДКЛЮЧЕН!!!!
-		//m4.writeMicroseconds(MIN_POWER);
+		m4.writeMicroseconds(MIN_POWER);
+		delay(8000);
+
+		Serial.println("ESC CALIBARATION COMPLETED!");
+		//motorStatus = false;
+
+	}
+
+	void easyCalibrate(int delayE, int _hard)
+	{
+		motorStatus = true;
+
+		hardLimit = _hard;
+		Serial.println("Calibrating ESC");
+
+		m1.attach(_m2, MIN_POWER, MAX_POWER); // настроены так как подписаны на еск
+		m2.attach(_m1, MIN_POWER, MAX_POWER);
+		m3.attach(_m4, MIN_POWER, MAX_POWER);
+		m4.attach(_m3, MIN_POWER, MAX_POWER);
+
+		delay(delayE);
+		delay(delayE);
+		delay(delayE);
 		
-		delay(10000);
+
 
 
 		Serial.println("ESC CALIBARATION COMPLETED!");
@@ -75,14 +107,16 @@ public:
 			m4.writeMicroseconds(MIN_POWER);
 		}
 	}
-
+	int realpower;
 	void set(int motor, int power) 
 	{
 		if (!motorStatus) return;
-		int realpower = map(power, 0, 100, MIN_POWER, hardLimit);
+		realpower = map(power, 0, 100, MIN_POWER, hardLimit);
+		/*
 		Serial.print(motor);
 		Serial.print(":");
 		Serial.println(realpower);
+		*/
 		switch (motor)
 		{
 		case 1:
@@ -101,17 +135,19 @@ public:
 			break;
 		}
 	}
-
+	Stabilize::Motors lastData;
 	void SetAll(Stabilize::Motors _data) 
 	{
 		if (!motorStatus) return;
 		
-		
-		set(1, _data.m1);
-		set(2, _data.m2);
-		set(3, _data.m3);
-		set(4, _data.m4);
+		if(lastData.m1!=_data.m1) 		set(1, _data.m1);
+		if (lastData.m2 != _data.m2) 		set(2, _data.m2);
+		if (lastData.m3 != _data.m3) 		set(3, _data.m3);
+		if (lastData.m4 != _data.m4) 		set(4, _data.m4);
 
+		lastData = _data;
+
+		/*
 		Serial.print("MOTORS: ");
 		Serial.print(_data.m1);
 		Serial.print("|");
@@ -120,12 +156,13 @@ public:
 		Serial.print(_data.m3);
 		Serial.print("|");
 		Serial.println(_data.m4);
+		*/
 	}
 
 	void SetAll(int all) 
 	{
 		if (!motorStatus) return;
-		int realpower = map(all, 0, 100, MIN_POWER, hardLimit);
+		realpower = map(all, 0, 100, MIN_POWER, hardLimit);
 
 		m1.writeMicroseconds(realpower);
 		m2.writeMicroseconds(realpower);
