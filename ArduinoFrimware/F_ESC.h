@@ -14,7 +14,7 @@ public:
 	const int MIN_POWER = 1000;
 	const int MAX_POWER = 2000;
 	int _m1, _m2, _m3, _m4;
-	Servo m1, m2, m3, m4;
+	Servo motor[4];
 	int hardLimit;
 	bool motorStatus = false;
 	F_ESC(int m1pin, int m2pin, int m3pin, int m4pin) 
@@ -24,12 +24,6 @@ public:
 		_m3 = m3pin;
 		_m4 = m4pin;
 
-		Serial.print("Attaching motors MIN: ");
-		Serial.print(MIN_POWER);
-		Serial.print("| MAX: ");
-		Serial.println(MAX_POWER);
-		Serial.print("Motor 1 are: ");
-		Serial.println(_m1);
 		
 
 
@@ -37,38 +31,38 @@ public:
 
 	void Calibrate(int delayE,int _hard)
 	{
-		motorStatus = true;
+
 
 		hardLimit = _hard;
 		Serial.println("Calibrating ESC");
 
-		m1.attach(_m2, MIN_POWER, MAX_POWER); // настроены так как подписаны на еск
-		m2.attach(_m1, MIN_POWER, MAX_POWER);
-		m3.attach(_m4, MIN_POWER, MAX_POWER);
-		m4.attach(_m3, MIN_POWER, MAX_POWER);
+		motor[0].attach(_m2, MIN_POWER, MAX_POWER); // настроены так как подписаны на еск
+		motor[1].attach(_m1, MIN_POWER, MAX_POWER);
+		motor[2].attach(_m4, MIN_POWER, MAX_POWER);
+		motor[3].attach(_m3, MIN_POWER, MAX_POWER);
 
-		delay(8000);
+		delay(10000);
 
 		Serial.print("Setting MAX: ");
 		Serial.println(MAX_POWER);
-		m1.writeMicroseconds(MAX_POWER);
-		m2.writeMicroseconds(MAX_POWER);
-		m3.writeMicroseconds(MAX_POWER); //ВОЗМОЖНО ТОЛЬКО ПОТОМУ ЧТО ОН БЫЛ ПОДКЛЮЧЕН!!!!
-		m4.writeMicroseconds(MAX_POWER);
+		motor[0].writeMicroseconds(MAX_POWER);
+		motor[1].writeMicroseconds(MAX_POWER);
+		motor[2].writeMicroseconds(MAX_POWER); //ВОЗМОЖНО ТОЛЬКО ПОТОМУ ЧТО ОН БЫЛ ПОДКЛЮЧЕН!!!!
+		motor[3].writeMicroseconds(MAX_POWER);
 		
 
 		delay(8000);
 
 		Serial.print("Setting MIN: ");
 		Serial.println(MIN_POWER);
-		m1.writeMicroseconds(MIN_POWER);
-		m2.writeMicroseconds(MIN_POWER);
-		m3.writeMicroseconds(MIN_POWER); //ВОЗМОЖНО ТОЛЬКО ПОТОМУ ЧТО ОН БЫЛ ПОДКЛЮЧЕН!!!!
-		m4.writeMicroseconds(MIN_POWER);
-		delay(8000);
+		motor[0].writeMicroseconds(MIN_POWER);
+		motor[1].writeMicroseconds(MIN_POWER);
+		motor[2].writeMicroseconds(MIN_POWER); //ВОЗМОЖНО ТОЛЬКО ПОТОМУ ЧТО ОН БЫЛ ПОДКЛЮЧЕН!!!!
+		motor[3].writeMicroseconds(MIN_POWER);
+		delay(10000);
 
 		Serial.println("ESC CALIBARATION COMPLETED!");
-		//motorStatus = false;
+		motorStatus = false;
 
 	}
 
@@ -79,10 +73,10 @@ public:
 		hardLimit = _hard;
 		Serial.println("Calibrating ESC");
 
-		m1.attach(_m2, MIN_POWER, MAX_POWER); // настроены так как подписаны на еск
-		m2.attach(_m1, MIN_POWER, MAX_POWER);
-		m3.attach(_m4, MIN_POWER, MAX_POWER);
-		m4.attach(_m3, MIN_POWER, MAX_POWER);
+		motor[0].attach(_m2, MIN_POWER, MAX_POWER); // настроены так как подписаны на еск
+		motor[1].attach(_m1, MIN_POWER, MAX_POWER);
+		motor[2].attach(_m4, MIN_POWER, MAX_POWER);
+		motor[3].attach(_m3, MIN_POWER, MAX_POWER);
 
 		delay(delayE);
 		delay(delayE);
@@ -101,46 +95,34 @@ public:
 		motorStatus = status;
 		if (!status) 
 		{
-			m1.writeMicroseconds(MIN_POWER);
-			m2.writeMicroseconds(MIN_POWER);
-			m3.writeMicroseconds(MIN_POWER);
-			m4.writeMicroseconds(MIN_POWER);
+			motor[0].writeMicroseconds(MIN_POWER);
+			motor[1].writeMicroseconds(MIN_POWER);
+			motor[2].writeMicroseconds(MIN_POWER);
+			motor[3].writeMicroseconds(MIN_POWER);
 		}
 	}
 	int realpower;
-	void set(int motor, int power) 
+	void set(int selected, int power) 
 	{
-		if (!motorStatus) return;
-		realpower = map(power, 0, 100, MIN_POWER, hardLimit);
+		if (!motorStatus) 
+			 return;
+			realpower = map(power, 0, 100, MIN_POWER, hardLimit);
+
+		Serial.println("setting");
 		/*
 		Serial.print(motor);
 		Serial.print(":");
 		Serial.println(realpower);
 		*/
-		switch (motor)
-		{
-		case 1:
-			m1.writeMicroseconds(realpower);
-			break;
-		case 2:
-			m2.writeMicroseconds(realpower);
-			break;
-		case 3:
-			m3.writeMicroseconds(realpower);
-			break;
-		case 4:
-			m4.writeMicroseconds(realpower);
-			break;
-		default:
-			break;
-		}
+		motor[selected - 1].writeMicroseconds(realpower);
+
 	}
 	Stabilize::Motors lastData;
 	void SetAll(Stabilize::Motors _data) 
 	{
 		if (!motorStatus) return;
 		
-		if(lastData.m1!=_data.m1) 		set(1, _data.m1);
+		if(lastData.m1!=_data.m1) 			set(1, _data.m1);
 		if (lastData.m2 != _data.m2) 		set(2, _data.m2);
 		if (lastData.m3 != _data.m3) 		set(3, _data.m3);
 		if (lastData.m4 != _data.m4) 		set(4, _data.m4);
@@ -164,10 +146,10 @@ public:
 		if (!motorStatus) return;
 		realpower = map(all, 0, 100, MIN_POWER, hardLimit);
 
-		m1.writeMicroseconds(realpower);
-		m2.writeMicroseconds(realpower);
-		m3.writeMicroseconds(realpower);
-		m4.writeMicroseconds(realpower);
+		motor[0].writeMicroseconds(realpower);
+		motor[1].writeMicroseconds(realpower);
+		motor[2].writeMicroseconds(realpower);
+		motor[3].writeMicroseconds(realpower);
 	}
 };
 

@@ -11,35 +11,43 @@
 #include "Order.h"
 #include <SoftwareSerial.h>
 
+
+#define MIN_POWER = 1000;
+#define MAX_POWER = 2000;
+
+#pragma region Wifi_Vars
+
 SoftwareSerial wifi(8, 7);
 SoftwareSerial* Order::wifi;
-
 SoftwareSerial* WiFiTimingFilter::WiFi;
+
 WiFiTimingFilter SendTimer;
 
+#pragma endregion
+#pragma region MPU_Vars
 
+
+MPU6050* Stabilize::gyro;
 MPU6050 mpu6050(Wire);
-
 MPU6050* Order::mpu6050;
+#pragma endregion
+
 F_ESC* Order::ESC;
 F_ESC ESC(9, 6, 5, 3);
 
-MPU6050* Stabilize::gyro;
+
+#pragma region  Stabilizing_Vars
 
 Stabilize::Angle Stabilize::currentVector;
 Stabilize::Angle Stabilize::requiredVector;
 Stabilize::Angle Stabilize::stableVector;
 
-
-
-
-
 int Stabilize::middlePower = 50;
 Stabilize::Motors Stabilize::last(50, 50, 50, 50);
 
-Servo motA, motB, motC, motD; //TEST ! UDALUT!
-#define MIN_POWER = 1000;
-#define MAX_POWER = 2000;
+Stabilize::Motors Stabilized;
+#pragma endregion
+
 void setup() {
 
 	Serial.begin(9600);
@@ -66,16 +74,10 @@ void setup() {
 	wifi.begin(9600);
 
 
-	
-
 	Stabilize::start();
 
-	
 
 	Serial.println("");
-	
-	
-
 
 	Serial.println("Start");
 	digitalWrite(LED_BUILTIN, LOW);
@@ -90,7 +92,7 @@ void loop()
 
 	sendGyroData();
 	sendMotorData();
-
+	setMotors();
 	SendTimer.proceed();
 
 	if (wifi.available())
@@ -122,6 +124,13 @@ void loop()
 
 }
 
+void setMotors() 
+{
+
+	if (Stabilized == Stabilize::last) return;
+
+	ESC.SetAll(Stabilized);
+}
 
 TimePassed gyroTime;
 void sendGyroData()
@@ -157,30 +166,18 @@ void sendGyroData()
 TimePassed motorime;
 void sendMotorData()
 {
+	Stabilized = Stabilize::StabIt();
 	if (motorime.passed(50))
 	{
-		Stabilize::Motors toSend = Stabilize::StabIt();
 
-		Stabilize::Motors testMotor; //!!!ÒÅÑÒÎÂÛÛÉ ÌÎÒÎÐ 10%. ÓÄÀËÈÒÜ
-		testMotor.m1 = 10;
-		testMotor.m2 = 10;
-		testMotor.m3 = 10;
-		testMotor.m4 = 10;
-
-
-
-
-		if (toSend == Stabilize::last) return;
-		
-		ESC.SetAll(toSend);
 		Order MotorData;
 		MotorData.type = "MD";
-		MotorData.content.push_back(String(toSend.m1));
-		MotorData.content.push_back(String(toSend.m2));
-		MotorData.content.push_back(String(toSend.m3));
-		MotorData.content.push_back(String(toSend.m4));
+		MotorData.content.push_back(String(Stabilized.m1));
+		MotorData.content.push_back(String(Stabilized.m2));
+		MotorData.content.push_back(String(Stabilized.m3));
+		MotorData.content.push_back(String(Stabilized.m4));
 
-		Stabilize::last = toSend;
+		Stabilize::last = Stabilized;
 
 		SendTimer.addString(MotorData.ToString());
 		//	Order::wifi->println(MotorData.ToString());
