@@ -27,12 +27,12 @@ int data=1000;
 void setup() {
 	Serial.setTimeout(100);
 	Serial.begin(9600);
-
+	digitalWrite(13, HIGH);
 	mot1.attach(6, MIN_PULSE_LENGTH, MAX_PULSE_LENGTH);
 	mot2.attach(9, MIN_PULSE_LENGTH, MAX_PULSE_LENGTH);
 	mot3.attach(3, MIN_PULSE_LENGTH, MAX_PULSE_LENGTH);
 	mot4.attach(5, MIN_PULSE_LENGTH, MAX_PULSE_LENGTH);
-	delay(8000);
+
 	Serial.println("Calibrating");
 	Serial.println("MAX");
 
@@ -42,7 +42,7 @@ void setup() {
 	mot3.writeMicroseconds(MAX_PULSE_LENGTH);
 	mot4.writeMicroseconds(MAX_PULSE_LENGTH);
 
-	delay(8000);
+	delay(3000);
 
 	Serial.println("MIN");
 	mot1.writeMicroseconds(MIN_PULSE_LENGTH);
@@ -51,6 +51,7 @@ void setup() {
 	mot4.writeMicroseconds(MIN_PULSE_LENGTH);
 	delay(10000);
 	displayInstructions();
+	digitalWrite(13, LOW);
 }
 
 /**
@@ -68,10 +69,10 @@ void loop() {
 		else { test(); }
 	}
 
-	mot1.writeMicroseconds(data);
-	mot2.writeMicroseconds(data);
-	mot3.writeMicroseconds(data);
-	mot4.writeMicroseconds(data);
+	mot1.writeMicroseconds(1020);
+	mot2.writeMicroseconds(1020);
+	mot3.writeMicroseconds(1020);
+	mot4.writeMicroseconds(1020);
 	
 
 

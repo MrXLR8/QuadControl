@@ -135,6 +135,8 @@
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
     <Content Include="line.png" />
     <Content Include="pitch.png" />
+    <Content Include="powerOff.png" />
+    <Content Include="powerOn.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="roll.png" />
   </ItemGroup>

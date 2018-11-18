@@ -21,6 +21,7 @@
         <BoxView Color="Gray" Grid.Row="0" Grid.ColumnSpan="2"/>
         <BoxView Color="Gray" Grid.Row="2" Grid.ColumnSpan="2"/>
 
+
         <Grid Grid.Row="0" Grid.ColumnSpan="2" x:Name="gyroGrid">
           <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -69,6 +70,7 @@
                 <Button Grid.Column="1" Pressed="Control_Pressed" Released="Control_Released" Image="arrow_idle.png" Grid.Row="2" x:Name="down" ClassId="down" Rotation="180" x:FieldModifier="public"/>
                 <Button Grid.Column="0" Pressed="Control_Pressed" Released="Control_Released" Image="arrow_idle.png" Grid.Row="1" x:Name="left" ClassId="left" Rotation="270" x:FieldModifier="public"/>
                 <Button Grid.Column="2" Pressed="Control_Pressed" Released="Control_Released" Image="arrow_idle.png" Grid.Row="1" x:Name="right" ClassId="right" Rotation="90" x:FieldModifier="public"/>
+                <Button Grid.Column="1" Grid.Row="1" Released="motorPower_Pressed" Image="powerOff.png" x:Name="motor_power" Margin="20" x:FieldModifier="public"/>
 
                 <control:VerticalSlider x:Name="motor1" CompName="motor1" Grid.Row="0" Grid.Column="0"/>
                 <control:VerticalSlider x:Name="motor2" CompName="motor2" Grid.Row="0" Grid.Column="2"/>

@@ -20,6 +20,12 @@ namespace ArduinoProject
 
        static FileImageSource IdleImage =new FileImageSource().File = "arrow_idle.png";
        static FileImageSource PressedImage = new FileImageSource().File = "arrow_pressed.png";
+
+        static FileImageSource poweredOn = new FileImageSource().File = "powerOn.png";
+        static FileImageSource poweredOff = new FileImageSource().File = "powerOff.png";
+        static bool MotorAllow = false;
+
+
         public ControlPage ()
 		{
 			InitializeComponent ();
@@ -75,9 +81,20 @@ namespace ArduinoProject
         }
 
 
+        private void motorPower_Pressed(object sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+            MotorAllow = !MotorAllow;
+            button.Image = MotorAllow ? poweredOn : poweredOff;
+
+            Order toSend = new Order("MA", new string[] { Convert.ToInt32(MotorAllow).ToString()});
+            Shared.SocketConnection.write(toSend.ToString());
+        }
 
 
-        private void Control_Released(object sender, EventArgs e)
+
+
+            private void Control_Released(object sender, EventArgs e)
         {
             Button target = (Button)sender;
             target.Image =IdleImage;
