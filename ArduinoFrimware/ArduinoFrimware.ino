@@ -117,7 +117,7 @@ void loop()
 	sendMotorData();
 	setMotors();
 	SendTimer.proceed();
-	getWifiOrder();
+	//getWifiOrder();
 
 	
 }
