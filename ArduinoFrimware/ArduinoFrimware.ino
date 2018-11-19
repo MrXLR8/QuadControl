@@ -63,25 +63,16 @@ void setup() {
 	Order::mpu6050 = &mpu6050;
 	Stabilize::gyro = &mpu6050;
 
+	ESC.Attach();
 	
 	mpu6050.calcGyroOffsets(true);
 	mpu6050.begin();
+
 	Serial.println();
 	
 
-#pragma region testMotor
 
-
-	test.attach(5, MIN_POWER, MAX_POWER);
-	Serial.println("Setting ");
-	delay(3000);
-
-	Serial.println("Setting MIN: ");
-	test.write(1000);
-	delay(8000);
-
-#pragma endregion
-	//ESC.Calibrate(10000, 1300); //калибровка с задержкой {1}, но чтобы не сгорел ограничить в {2}
+	ESC.Calibrate(1300); //калибровка с задержкой {1}, но чтобы не сгорел ограничить в {2}
 
 
 
@@ -93,7 +84,7 @@ void setup() {
 
 	Serial.println("");
 
-	Serial.println("Start");
+	Serial.println("===========================");
 	digitalWrite(LED_BUILTIN, LOW);
 
 }
@@ -150,14 +141,9 @@ void getWifiOrder()
 }
 void setMotors() 
 {
-	/*
 	if (Stabilized == Stabilize::last) return;
 
 	ESC.SetAll(Stabilized);
-	*/
-	int randomI = random(1020, 1050);
-	test.write(randomI);
-	delay(200);
 }
 
 TimePassed gyroTime;
