@@ -29,15 +29,20 @@ public:
 		_m4 = m4pin;
 	}
 
+	void Attach() 
+	{
+		motor[0].attach(_m2, MIN_POWER, MAX_POWER); // настроены так как подписаны на еск
+		motor[1].attach(_m1, MIN_POWER, MAX_POWER);
+		motor[2].attach(_m4, MIN_POWER, MAX_POWER);
+		motor[3].attach(_m3, MIN_POWER, MAX_POWER);
+	}
+
 	void Calibrate(int _hard)
 	{
 		hardLimit = _hard;
 		Serial.println("Calibrating ESC");
 
-		motor[0].attach(_m2, MIN_POWER, MAX_POWER); // настроены так как подписаны на еск
-		motor[1].attach(_m1, MIN_POWER, MAX_POWER);
-		motor[2].attach(_m4, MIN_POWER, MAX_POWER);
-		motor[3].attach(_m3, MIN_POWER, MAX_POWER);
+
 
 		delay(10000);
 

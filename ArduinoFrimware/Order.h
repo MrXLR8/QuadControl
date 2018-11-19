@@ -11,7 +11,7 @@
 
 #include <StandardCplusplus.h>
 #include <vector>
-#include "SoftwareSerial.h"
+
 #include "Stabilize.h"
 #include "F_ESC.h"
 using namespace std;
@@ -25,7 +25,6 @@ public:
 	String type;
 	vector<String> content;
 	static F_ESC* ESC;
-	static SoftwareSerial* wifi;
 	static MPU6050* mpu6050;
 
 
@@ -73,12 +72,12 @@ public:
 
 	void Execute()
 	{
-		Serial.println(this->ToString());
+		//Serial.println(this->ToString());
 
 
 		if (content.empty()) return;
 		
-		if (type == "WP")
+		if (type == "WP") //PING
 		{
 
 			
@@ -86,14 +85,13 @@ public:
 			{
 			
 				content[0] = "2";
-				Serial.println("Ping response");
-				wifi->println(this->ToString());
+				Serial.println(this->ToString());
 				
 				content[0] = "1";
 			}
 		}
 	
-		if (type == "GR") 
+		if (type == "GR")  //PING запрос на данные гиро
 		{
 			if (content[0] == "1")
 			{
@@ -103,11 +101,10 @@ public:
 				String _roll = String(int(toSendA.roll));
 				String toSend = "[GD]" + _pitch + "." + _roll;
 				Serial.println(toSend);
-				Order::wifi->println(toSend);
 			}
 		}
 	
-		if (type == "AC") 
+		if (type == "AC")  //“ребуемый вектор и т€га 
 		{
 			Stabilize::Angle recived;
 			recived.pitch = atoi(content[0].c_str());
@@ -116,21 +113,17 @@ public:
 			Stabilize::middlePower = atoi(content[2].c_str());
 		}
 
-		if (type == "MA")
+		if (type == "MA") //питание моторов
 		{
 			bool what = atoi(content[0].c_str());
 			ESC->motorAllow(what);
 
 		}
-		if (type == "MP")
+		if (type == "MP") //принудительное включение мотора
 		{
 			int motor = atoi(content[0].c_str());
 			int power = atoi(content[1].c_str());
 			ESC->set(motor, power);
-			Serial.print("Powering ");
-			Serial.print(motor);
-			Serial.print(" at ");
-			Serial.println(power);
 		}
 	}
 

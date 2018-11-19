@@ -11,7 +11,7 @@
 
 #include <StandardCplusplus.h>
 #include <queue>
-#include "SoftwareSerial.h"
+
 #include "TimePassed.h"
 
 using namespace std;
@@ -23,7 +23,6 @@ public:
 
 	TimePassed ochered;
 
-	static SoftwareSerial* WiFi;
 	WiFiTimingFilter() 
 	{
 		max = 0;
@@ -60,7 +59,7 @@ public:
 
 				if (ochered.passed(delay))
 				{
-				//	WiFi->println(content.front());
+					Serial.println(content.front());
 					content.pop();
 				}
 			}

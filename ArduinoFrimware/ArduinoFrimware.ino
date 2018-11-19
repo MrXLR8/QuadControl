@@ -7,10 +7,9 @@
 
 
 #include <Servo.h>
-#include "Variables.h"
 #include <StandardCplusplus.h>
 #include "Order.h"
-#include <SoftwareSerial.h>
+
 
 
 #define MIN_POWER 1000
@@ -18,9 +17,6 @@
 
 #pragma region Wifi_Vars
 
-SoftwareSerial wifi(8, 7);
-SoftwareSerial* Order::wifi;
-SoftwareSerial* WiFiTimingFilter::WiFi;
 
 WiFiTimingFilter SendTimer;
 
@@ -60,19 +56,18 @@ void setup() {
 	Serial.println("Booting...");
 
 	//Передача переменной Wi-Fi
-	Order::wifi = &wifi;
 	Order::ESC = &ESC;
-	WiFiTimingFilter::WiFi = &wifi;
+
 
 	//Передача переменной Гироскопа
 	Order::mpu6050 = &mpu6050;
 	Stabilize::gyro = &mpu6050;
 
-	/*
+	
 	mpu6050.calcGyroOffsets(true);
 	mpu6050.begin();
 	Serial.println();
-	*/
+	
 
 #pragma region testMotor
 
@@ -91,7 +86,6 @@ void setup() {
 
 
 	
-	wifi.begin(9600);
 
 
 	Stabilize::start(10); // Тяга моторов когда в ровном положении.
@@ -117,19 +111,19 @@ void loop()
 	sendMotorData();
 	setMotors();
 	SendTimer.proceed();
-	//getWifiOrder();
+	getWifiOrder();
 
 	
 }
 
 void getWifiOrder() 
 {
-	if (wifi.available())
+	if (Serial.available())
 	{
 
-		while (wifi.available())
+		while (Serial.available())
 		{
-			c = wifi.read();
+			c = Serial.read();
 
 			buffer += c;
 			if ((int)c == 10) break;
@@ -145,10 +139,12 @@ void getWifiOrder()
 			recived.Parse(buffer);
 			recived.Execute();
 		}
+		/*
 		else {
 			Serial.print("BAD: ");
 			Serial.println(buffer);
 		}
+		*/
 		buffer = "";
 	}
 }
@@ -161,8 +157,7 @@ void setMotors()
 	*/
 	int randomI = random(1020, 1050);
 	test.write(randomI);
-	Serial.println(randomI);
-	delay(100);
+	delay(200);
 }
 
 TimePassed gyroTime;
@@ -180,15 +175,7 @@ void sendGyroData()
 			return;
 		}
 		String toSend = "[GD]" + _pitch + "." + _roll;
-		/*Order gyroData;
-		gyroData.type = "GD";
-		gyroData.content.push_back(_pitch);
-		gyroData.content.push_back(_roll);*/
 
-
-
-		//Serial.println(toSend);
-		//Order::wifi->println(toSend);
 		SendTimer.addString(toSend);
 		lastP = _pitch;
 		lastR = _roll;
@@ -219,17 +206,9 @@ void sendMotorData()
 
 }
 
-void serialecho() {
-	if (Serial.available())
-	{
-		String Sbuffer = "";
-		Sbuffer = Serial.readString();
 
-		Serial.println(Sbuffer);
-		Order::wifi->println(Sbuffer);
-	}
 
-}
+
 
 
 
