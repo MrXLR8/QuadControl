@@ -46,7 +46,7 @@ Stabilize::Motors Stabilized;
 #pragma endregion
 
 Servo test;
-bool blink = true;
+
 void setup() {
 
 	Serial.begin(9600);
@@ -93,8 +93,7 @@ String buffer = "";
 char c;
 void loop()
 {
-	digitalWrite(LED_BUILTIN, blink ? HIGH : LOW);
-	blink = !blink;
+
 
 	mpu6050.update();
 
@@ -102,17 +101,19 @@ void loop()
 	sendMotorData();
 	setMotors();
 	SendTimer.proceed();
-	getWifiOrder();
+
 
 	
 }
 
-void getWifiOrder() 
+void serialEvent()
 {
-	if (Serial.available())
+	if (Serial.available()>0)
 	{
+		delay(15);
 
-		while (Serial.available())
+
+		while (Serial.available()>0)
 		{
 			c = Serial.read();
 
@@ -123,19 +124,20 @@ void getWifiOrder()
 
 		int lastchar = (int)buffer[buffer.length() - 1];
 
-
+		Serial.println(buffer);
 		if (buffer[0] == '['&lastchar == 10)
 		{
 			Order recived;
+			
 			recived.Parse(buffer);
 			recived.Execute();
 		}
-		/*
+		
 		else {
 			Serial.print("BAD: ");
 			Serial.println(buffer);
 		}
-		*/
+		
 		buffer = "";
 	}
 }

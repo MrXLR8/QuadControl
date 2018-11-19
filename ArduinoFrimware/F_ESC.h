@@ -15,7 +15,7 @@
 #endif
 class F_ESC {
 public:
-
+	
 
 
 	int hardLimit;
@@ -64,13 +64,19 @@ public:
 
 	void motorAllow(bool status) 
 	{
+
+
 		motorStatus = status;
 		if (!motorStatus)
 		{
 			SetAll(MIN_POWER);
 		}
-		Serial.print("Motor status: ");
-		Serial.println(motorStatus?"Activated":"Offline");
+		else 
+		{
+			ESC.SetAll(Stabilize::StabIt());
+		}
+		digitalWrite(LED_BUILTIN, motorStatus ? HIGH : LOW);
+
 	}
 
 
