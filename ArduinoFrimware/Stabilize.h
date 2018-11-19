@@ -116,7 +116,7 @@ public:
 	static const int sensivity = 1;
 	static int middlePower;
 
-	static void start() 
+	static void start(int _middle) 
 	{
 
 
@@ -128,7 +128,7 @@ public:
 		stableVector.pitch = 0;
 		stableVector.roll = 0;
 
-		middlePower = 10;
+		middlePower = _middle;
 
 		requiredVector = stableVector;
 		getCurrent();

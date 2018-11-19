@@ -5,6 +5,7 @@
 #include "Stabilize.h"
 #include <MPU6050_tockn.h>
 
+
 #include <Servo.h>
 #include "Variables.h"
 #include <StandardCplusplus.h>
@@ -12,8 +13,8 @@
 #include <SoftwareSerial.h>
 
 
-#define MIN_POWER = 1000;
-#define MAX_POWER = 2000;
+#define MIN_POWER 1000
+#define MAX_POWER 2000
 
 #pragma region Wifi_Vars
 
@@ -48,9 +49,12 @@ Stabilize::Motors Stabilize::last(50, 50, 50, 50);
 Stabilize::Motors Stabilized;
 #pragma endregion
 
+Servo test;
+bool blink = true;
 void setup() {
 
 	Serial.begin(9600);
+	
 	pinMode(LED_BUILTIN, OUTPUT);
 	digitalWrite(LED_BUILTIN, HIGH); // тухнет если не завис при запуске
 	Serial.println("Booting...");
@@ -64,17 +68,33 @@ void setup() {
 	Order::mpu6050 = &mpu6050;
 	Stabilize::gyro = &mpu6050;
 
+	/*
 	mpu6050.calcGyroOffsets(true);
 	mpu6050.begin();
 	Serial.println();
+	*/
+
+#pragma region testMotor
 
 
-	ESC.Calibrate(10000, 1300); //калибровка с задержкой {1}, но чтобы не сгорел ограничить в {2}
+	test.attach(5, MIN_POWER, MAX_POWER);
+	Serial.println("Setting ");
+	delay(3000);
 
+	Serial.println("Setting MIN: ");
+	test.write(1000);
+	delay(8000);
+
+#pragma endregion
+	//ESC.Calibrate(10000, 1300); //калибровка с задержкой {1}, но чтобы не сгорел ограничить в {2}
+
+
+
+	
 	wifi.begin(9600);
 
 
-	Stabilize::start();
+	Stabilize::start(10); // “€га моторов когда в ровном положении.
 
 
 	Serial.println("");
@@ -88,28 +108,38 @@ String buffer = "";
 char c;
 void loop()
 {
+	digitalWrite(LED_BUILTIN, blink ? HIGH : LOW);
+	blink = !blink;
+
 	mpu6050.update();
 
 	sendGyroData();
 	sendMotorData();
 	setMotors();
 	SendTimer.proceed();
+	getWifiOrder();
 
+	
+}
+
+void getWifiOrder() 
+{
 	if (wifi.available())
 	{
 
 		while (wifi.available())
 		{
 			c = wifi.read();
-			
+
 			buffer += c;
 			if ((int)c == 10) break;
-			
+
 		}
+
 		int lastchar = (int)buffer[buffer.length() - 1];
 
 
-		if (buffer[0] == '['&lastchar==10)
+		if (buffer[0] == '['&lastchar == 10)
 		{
 			Order recived;
 			recived.Parse(buffer);
@@ -121,15 +151,18 @@ void loop()
 		}
 		buffer = "";
 	}
-
 }
-
 void setMotors() 
 {
-
+	/*
 	if (Stabilized == Stabilize::last) return;
 
 	ESC.SetAll(Stabilized);
+	*/
+	int randomI = random(1020, 1050);
+	test.write(randomI);
+	Serial.println(randomI);
+	delay(100);
 }
 
 TimePassed gyroTime;

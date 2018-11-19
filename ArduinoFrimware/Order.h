@@ -120,8 +120,7 @@ public:
 		{
 			bool what = atoi(content[0].c_str());
 			ESC->motorAllow(what);
-			Serial.print("Motor status: ");
-			Serial.println(what);
+
 		}
 		if (type == "MP")
 		{
