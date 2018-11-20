@@ -17,7 +17,7 @@
 #define MIN_PULSE_LENGTH 1000 // Minimum pulse length in µs
 #define MAX_PULSE_LENGTH 2000 // Maximum pulse length in µs
 // ---------------------------------------------------------------------------
-Servo mot1, mot2, mot3, mot4;
+Servo mot1;
 int data=1000;
 // ---------------------------------------------------------------------------
 
@@ -28,28 +28,8 @@ void setup() {
 	Serial.setTimeout(100);
 	Serial.begin(9600);
 	digitalWrite(13, HIGH);
-	mot1.attach(6, MIN_PULSE_LENGTH, MAX_PULSE_LENGTH);
-	mot2.attach(9, MIN_PULSE_LENGTH, MAX_PULSE_LENGTH);
-	mot3.attach(3, MIN_PULSE_LENGTH, MAX_PULSE_LENGTH);
-	mot4.attach(5, MIN_PULSE_LENGTH, MAX_PULSE_LENGTH);
+	mot1.attach(5, MIN_PULSE_LENGTH, MAX_PULSE_LENGTH);
 
-	Serial.println("Calibrating");
-	Serial.println("MAX");
-
-
-	mot1.writeMicroseconds(MAX_PULSE_LENGTH);
-	mot2.writeMicroseconds(MAX_PULSE_LENGTH);
-	mot3.writeMicroseconds(MAX_PULSE_LENGTH);
-	mot4.writeMicroseconds(MAX_PULSE_LENGTH);
-
-	delay(3000);
-
-	Serial.println("MIN");
-	mot1.writeMicroseconds(MIN_PULSE_LENGTH);
-	mot2.writeMicroseconds(MIN_PULSE_LENGTH);
-	mot3.writeMicroseconds(MIN_PULSE_LENGTH);
-	mot4.writeMicroseconds(MIN_PULSE_LENGTH);
-	delay(10000);
 	displayInstructions();
 	digitalWrite(13, LOW);
 }
@@ -61,18 +41,20 @@ void setup() {
 void loop() {
 	if (Serial.available()) {
 		data = Serial.parseInt();
-		if (data != 1) {
-
-			Serial.print("WRITING: ");
-			Serial.println(data);
+		if (data == 1) {
+			test();  data = 0;
+			
 		}
-		else { test(); }
+		else { 
+			if (data >= 1000) {
+				Serial.print("WRITING: ");
+				mot1.writeMicroseconds(data);
+				Serial.println(data);
+			}
+		}
 	}
 
-	mot1.writeMicroseconds(1020);
-	mot2.writeMicroseconds(1020);
-	mot3.writeMicroseconds(1020);
-	mot4.writeMicroseconds(1020);
+
 	
 
 
@@ -89,18 +71,14 @@ void test()
 		i += random(-2, 4);
 		if (i < 1000) i = 1000;
 		mot1.writeMicroseconds(random(1000, 1100));
-		mot2.writeMicroseconds(random(1000, 1100));
-		mot3.writeMicroseconds(random(1000, 1100));
-		mot4.writeMicroseconds(i);
+
 
 		delay(random(10,50));
 	}
 
 	Serial.println("STOP");
 	mot1.writeMicroseconds(MIN_PULSE_LENGTH);
-	mot2.writeMicroseconds(MIN_PULSE_LENGTH);
-	mot3.writeMicroseconds(MIN_PULSE_LENGTH);
-	mot4.writeMicroseconds(MIN_PULSE_LENGTH);
+
 }
 
 /**
