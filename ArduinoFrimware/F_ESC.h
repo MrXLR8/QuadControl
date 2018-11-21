@@ -84,7 +84,7 @@ public:
 		}
 		else 
 		{
-			ESC.SetAll(Stabilize::StabIt());
+			SetAll(Stabilize::StabIt());
 		}
 		digitalWrite(LED_BUILTIN, motorStatus ? HIGH : LOW);
 

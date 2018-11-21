@@ -170,6 +170,7 @@ void sendGyroData()
 	}
 
 }
+//TODO: проверка на новизну моторных данных
 
 TimePassed motorime;
 void sendMotorData()
