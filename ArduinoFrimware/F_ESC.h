@@ -4,8 +4,8 @@
 #include <Servo.h>
 #ifndef _F_ESC_h
 #define _F_ESC_h
-#define MIN_POWER 1000
-#define MAX_POWER 2000
+#define MIN_POWER 1050
+#define MAX_POWER 1500
 
 
 #if defined(ARDUINO) && ARDUINO >= 100
@@ -106,15 +106,16 @@ public:
 	}
 
 	Stabilize::Motors lastData;
+	bool overRideLastCheck = false;
 	void SetAll(Stabilize::Motors _data) 
 	{
 		if (!motorStatus) return;
 		
-		if (lastData.m1 != _data.m1) 			set(1, _data.m1);
-		if (lastData.m2 != _data.m2) 		set(2, _data.m2);
-		if (lastData.m3 != _data.m3) 		set(3, _data.m3);
-		if (lastData.m4 != _data.m4) 		set(4, _data.m4);
-
+		if (lastData.m1 != _data.m1|overRideLastCheck) 		set(1, _data.m1);
+		if (lastData.m2 != _data.m2| overRideLastCheck) 		set(2, _data.m2);
+		if (lastData.m3 != _data.m3| overRideLastCheck) 		set(3, _data.m3);
+		if (lastData.m4 != _data.m4| overRideLastCheck) 		set(4, _data.m4);
+		overRideLastCheck = false;
 		lastData = _data;
 	}
 

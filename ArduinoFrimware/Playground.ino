@@ -14,7 +14,7 @@
 #include <Servo.h>
 // ---------------------------------------------------------------------------
 // Customize here pulse lengths as needed
-#define MIN_PULSE_LENGTH 1000 // Minimum pulse length in µs
+#define MIN_PULSE_LENGTH 1050 // Minimum pulse length in µs
 #define MAX_PULSE_LENGTH 2000 // Maximum pulse length in µs
 // ---------------------------------------------------------------------------
 Servo mot1;
@@ -28,7 +28,7 @@ void setup() {
 	Serial.setTimeout(100);
 	Serial.begin(9600);
 	digitalWrite(13, HIGH);
-	mot1.attach(5, MIN_PULSE_LENGTH, MAX_PULSE_LENGTH);
+	mot1.attach(6, MIN_PULSE_LENGTH, MAX_PULSE_LENGTH);
 
 	displayInstructions();
 	digitalWrite(13, LOW);

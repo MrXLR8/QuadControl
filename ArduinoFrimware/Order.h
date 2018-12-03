@@ -111,19 +111,29 @@ public:
 			recived.roll = atoi(content[1].c_str());
 			Stabilize::requiredVector = Stabilize::stableVector + recived;
 			Stabilize::middlePower = atoi(content[2].c_str());
+			ESC->overRideLastCheck = true;
+		}
+
+		if (type == "CA")  //калибровка гиро
+		{
+			mpu6050->calcGyroOffsets(true);
+			delay(2000);
 		}
 
 		if (type == "MA") //питание моторов
 		{
 			bool what = atoi(content[0].c_str());
 			ESC->motorAllow(what);
+			ESC->overRideLastCheck = true;
 
 		}
 		if (type == "MP") //принудительное включение мотора
 		{
 			int motor = atoi(content[0].c_str());
 			int power = atoi(content[1].c_str());
+			ESC->overRideLastCheck = true;
 			ESC->set(motor, power);
+
 		}
 	}
 

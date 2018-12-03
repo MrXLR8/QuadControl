@@ -12,7 +12,7 @@
 
 
 
-#define MIN_POWER 1000
+#define MIN_POWER 1050
 #define MAX_POWER 2000
 
 #pragma region Wifi_Vars
@@ -64,15 +64,16 @@ void setup() {
 	Stabilize::gyro = &mpu6050;
 
 	ESC.Attach();
-	
+	delay(3000);
 	mpu6050.calcGyroOffsets(true);
+	//mpu6050.setGyroOffsets(-0.45, -0.54, -1.82);
 	mpu6050.begin();
 
 	Serial.println();
 	
 
 
-	ESC.Calibrate(1300); //калибровка с задержкой {1}, но чтобы не сгорел ограничить в {2}
+	ESC.Calibrate(1500); //калибровка с задержкой {1}, но чтобы не сгорел ограничить в {2}
 
 
 
@@ -96,7 +97,7 @@ void loop()
 
 
 	mpu6050.update();
-
+	
 	sendGyroData();
 	sendMotorData();
 	setMotors();
@@ -143,7 +144,7 @@ void serialEvent()
 }
 void setMotors() 
 {
-	if (Stabilized == Stabilize::last) return;
+	//if (Stabilized == Stabilize::last) return;
 
 	ESC.SetAll(Stabilized);
 }
@@ -173,24 +174,29 @@ void sendGyroData()
 //TODO: проверка на новизну моторных данных
 
 TimePassed motorime;
+Stabilize::Motors lastStab;
 void sendMotorData()
 {
 	Stabilized = Stabilize::StabIt();
-	if (motorime.passed(50))
-	{
+	if (!(lastStab == Stabilized)) {
+		if (motorime.passed(50))
+		{
 
-		Order MotorData;
-		MotorData.type = "MD";
-		MotorData.content.push_back(String(Stabilized.m1));
-		MotorData.content.push_back(String(Stabilized.m2));
-		MotorData.content.push_back(String(Stabilized.m3));
-		MotorData.content.push_back(String(Stabilized.m4));
+			Order MotorData;
+			MotorData.type = "MD";
+			MotorData.content.push_back(String(Stabilized.m1));
+			MotorData.content.push_back(String(Stabilized.m2));
+			MotorData.content.push_back(String(Stabilized.m3));
+			MotorData.content.push_back(String(Stabilized.m4));
 
-		Stabilize::last = Stabilized;
+			Stabilize::last = Stabilized;
 
-		SendTimer.addString(MotorData.ToString());
-		//	Order::wifi->println(MotorData.ToString());
-			//Serial.println(MotorData.ToString());
+			SendTimer.addString(MotorData.ToString());
+
+			lastStab = Stabilized;
+			//	Order::wifi->println(MotorData.ToString());
+				//Serial.println(MotorData.ToString());
+		}
 	}
 
 }
