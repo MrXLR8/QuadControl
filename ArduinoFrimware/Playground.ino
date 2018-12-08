@@ -31,7 +31,7 @@ void setup() {
 	mot1.attach(6, MIN_PULSE_LENGTH, MAX_PULSE_LENGTH);
 
 	displayInstructions();
-	digitalWrite(13, LOW);
+
 }
 
 /**
@@ -50,6 +50,18 @@ void loop() {
 				Serial.print("WRITING: ");
 				mot1.writeMicroseconds(data);
 				Serial.println(data);
+			}
+			if (data == 888) {
+				Serial.print("TEST: ");
+				Serial.println(millis());
+				for (int i = 1050; i <= 1100; i++) 
+				{
+					mot1.writeMicroseconds(i);
+					delay(50);
+				}
+				Serial.print("END: ");
+				Serial.println(millis());
+				mot1.writeMicroseconds(1050);
 			}
 		}
 	}

@@ -30,7 +30,7 @@ MPU6050* Order::mpu6050;
 #pragma endregion
 
 F_ESC* Order::ESC;
-F_ESC ESC(6, 3, 9, 5);
+F_ESC ESC(6, 5, 3, 9);
 
 
 #pragma region  Stabilizing_Vars

@@ -45,7 +45,7 @@ namespace ArduinoProject.Shared
             }
             catch(Exception e)
             {
-                Code.FormAction.print("Failed to connect to: " + address + ":" + port);
+                Code.FormAction.printSentData("Failed to connect to: " + address + ":" + port);
                 onConnect?.Invoke(false);
                 return false;
             }
@@ -65,12 +65,13 @@ namespace ArduinoProject.Shared
                 data += Environment.NewLine;
                  byte[] bytes = Encoding.ASCII.GetBytes(data);
 
-                // write to the 'WriteStream' property of the socket client to send data
+   
 
                ClientStream.Write(bytes,0,bytes.Length);
+            Code.FormAction.printSentData(data);
             await ClientStream.FlushAsync();
 
-                // wait a little before sending the next bit of data
+
                 await Task.Delay(TimeSpan.FromMilliseconds(500));
             
         }
@@ -88,7 +89,7 @@ namespace ArduinoProject.Shared
             String decode;
             String result = "";
             byte[] buffer = new byte[1];
-            if (ClientSocket.Connected) Code.FormAction.print("Listener stated");
+            if (ClientSocket.Connected) Code.FormAction.printSentData("Listener stated");
             while (ClientSocket.Connected)
             {
                 try
@@ -111,6 +112,7 @@ namespace ArduinoProject.Shared
                               //  Code.FormAction.print(">>>: " + result);
                                 if (result[0] == '['&&result[3]==']')
                                 {
+                                    Code.FormAction.printRecivedData(result);
                                     new Order(result).Execute();
                                     
                                 }

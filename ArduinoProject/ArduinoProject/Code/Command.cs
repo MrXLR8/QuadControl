@@ -117,7 +117,7 @@ namespace ArduinoProject.Code
         public Ping(Order _sender)
         {
             sender = _sender;
-            if (sender.content[0] == "1") start();
+            if (sender.content[0] == "1"&staticStopCommand==null) start();
             else if (sender.content[0] == "2") staticStopCommand?.Invoke();
         }
 

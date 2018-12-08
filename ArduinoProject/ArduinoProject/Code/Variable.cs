@@ -15,6 +15,7 @@ namespace ArduinoProject.Shared
 
         public static string bluetoothName = "HC-05";
         public static int middlePower = 50;
+        public static bool MotorAllow = false;
     }
     public static class Method
     {

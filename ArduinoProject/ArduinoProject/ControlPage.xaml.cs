@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using ArduinoProject.Shared;
 
 namespace ArduinoProject
 {
@@ -23,7 +24,6 @@ namespace ArduinoProject
 
         static FileImageSource poweredOn = new FileImageSource().File = "powerOn.png";
         static FileImageSource poweredOff = new FileImageSource().File = "powerOff.png";
-        static bool MotorAllow = false;
 
 
         public ControlPage ()
@@ -35,6 +35,8 @@ namespace ArduinoProject
             //pitchImage.Source = ImageSource.FromFile("pitch.png");
             GyroData.gyroFinished = updateGyroFields;
             MotorData.motorFinished = updateMotorSliders;
+
+            updateMotorSliders(0, 0, 0, 0);
         }
 
 
@@ -84,10 +86,10 @@ namespace ArduinoProject
         private void motorPower_Pressed(object sender, EventArgs e)
         {
             Button button = (Button)sender;
-            MotorAllow = !MotorAllow;
-            button.Image = MotorAllow ? poweredOn : poweredOff;
+            Variable.MotorAllow = ! Variable.MotorAllow;
+            button.Image =  Variable.MotorAllow ? poweredOn : poweredOff;
 
-            Order toSend = new Order("MA", new string[] { Convert.ToInt32(MotorAllow).ToString()});
+            Order toSend = new Order("MA", new string[] { Convert.ToInt32( Variable.MotorAllow).ToString()});
             Shared.SocketConnection.write(toSend.ToString());
         }
 

@@ -27,12 +27,15 @@ public:
 
 		9 - M4
 
-		5 - M3
+		5 - M2
 
-		6 - M2 -- problem
+		6 - M1 -- problem
 
-		3 - M1
+		3 - M3
 		*/
+
+
+		
 
 		_m1 = m1pin;
 		_m2 = m2pin;

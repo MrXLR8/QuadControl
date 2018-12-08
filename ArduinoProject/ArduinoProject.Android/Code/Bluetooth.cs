@@ -24,12 +24,12 @@ namespace ArduinoProject.Shared
 
             if (adapter == null)
             {
-                FormAction.print("[ОШИБКА]: Bluetooth не найден");
+                FormAction.printRecivedData("[ОШИБКА]: Bluetooth не найден");
                 return;
             }
             if (!adapter.IsEnabled)
             {
-                FormAction.print("[ОШИБКА]: Bluetooth выключен");
+                FormAction.printRecivedData("[ОШИБКА]: Bluetooth выключен");
                 return;
             }
             await ConnectDevice();
@@ -44,7 +44,7 @@ namespace ArduinoProject.Shared
             {
                 return;
             }
-            FormAction.print("Подключаюсь к устройству");
+            FormAction.printRecivedData("Подключаюсь к устройству");
             BluetoothDevice device =
                 (from bd in adapter.BondedDevices
                  where bd.Name == Variable.bluetoothName
@@ -52,11 +52,11 @@ namespace ArduinoProject.Shared
 
             if (device == null)
             {
-                FormAction.print("[ОШИБКА]: Не удалось подключиться к " + Variable.bluetoothName);
+                FormAction.printRecivedData("[ОШИБКА]: Не удалось подключиться к " + Variable.bluetoothName);
                 return;
             }
             else
-                FormAction.print("Подключилься к " + device.Name); 
+                FormAction.printRecivedData("Подключилься к " + device.Name); 
             _socket = device.CreateRfcommSocketToServiceRecord(Java.Util.UUID.FromString("00001101-0000-1000-8000-00805f9b34fb")); // ID Серийного соединения
             
             adapter.CancelDiscovery();
@@ -66,7 +66,7 @@ namespace ArduinoProject.Shared
             }
             catch (Exception e)
             {
-                FormAction.print("[ОШИБКА]: Неудалось соединиться с утройством. Причина: " + e.Message);
+                FormAction.printRecivedData("[ОШИБКА]: Неудалось соединиться с утройством. Причина: " + e.Message);
                 return;
             }
             return;
@@ -83,8 +83,8 @@ namespace ArduinoProject.Shared
             
 
 
-            FormAction.print("Отправляю число:");
-            FormAction.print("> " + number);
+            FormAction.printRecivedData("Отправляю число:");
+            FormAction.printRecivedData("> " + number);
             if (_socket!=null&&_socket.IsConnected)
             {
 
@@ -95,7 +95,7 @@ namespace ArduinoProject.Shared
             }
             else
             {
-                FormAction.print("[ОШИБКА]: Соеденение не было установлено.");
+                FormAction.printRecivedData("[ОШИБКА]: Соеденение не было установлено.");
                 return;
             }
 

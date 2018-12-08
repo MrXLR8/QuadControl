@@ -12,9 +12,9 @@ namespace ArduinoProject
     //TODO: кнопка ручного подлкючения
 	public partial class MainPage : ContentPage
 	{
-        public static int power = 0;
-        public const int change = 1;
-		public MainPage()
+        private string lastSent = String.Empty;
+
+        public MainPage()
 		{
 
 			InitializeComponent();
@@ -26,7 +26,7 @@ namespace ArduinoProject
 
         public void print(string text)
         {
-             TextField.Text += Environment.NewLine+" "+ text;
+            // TextField.Text += Environment.NewLine+" "+ text;
         }
 
         private void Button_Clicked(object sender, EventArgs e)
@@ -34,60 +34,28 @@ namespace ArduinoProject
             
             var Button = sender as Button;
 
-            if (Button==grnBTN)
-            {
-                
-                SocketConnection.write("asd");
-
-            }
-            else if(Button==yellBTN)
+            if (Button == lastBTN)
             {
 
-            }
-            else if(Button==redTN)
-            {
-                Order command1 =Order.Parse("[GR]1");
-                SocketConnection.write(command1.ToString());
-            }
-            else if(Button==offBTN)
-            {
+                DataField.Text = lastSent;
 
-                Bluetooth.Send(0);
-                
             }
+            else if (Button == maBTN)
+            {
+                Variable.MotorAllow = !Variable.MotorAllow;
+                String result = Variable.MotorAllow ? "1" : "0";
+                SocketConnection.write("[MA]"+result);
+            }
+            else if(Button== clearBTN)
+            {
+                FormAction.inputCounter = 0;
+                FormAction.outputCounter = 0;
+                InputData.Text = String.Empty;
+                OutputData.Text= String.Empty;
+            }
+
         }
 
-        private void Power_Click(object sender, EventArgs e)
-        {
-            print("Power click");
-            var Button = sender as Button;
-            double calc;
-            if(Button==PowerDown)
-            {
-                calc = power - change;
-                if (calc >= 0)
-                {
-                    power -= change;
-                }
-
-            }
-            if(Button==PowerUp)
-            {
-
-                calc = power + change;
-                if (calc<=10)
-                {
-                    power += change;
-                }
-
-            }
-
-            double progress = (double)power / 10;
-            ProgressBarPower.Progress = progress;
-
-            Bluetooth.Send(power * 25);
-           
-        }
 
         private void TextField_Focused(object sender, FocusEventArgs e)
         {
@@ -98,6 +66,7 @@ namespace ArduinoProject
         {
             String text = DataField.Text;
             SocketConnection.write(text);
+            lastSent = text;
             DataField.Text = "";
         }
     }

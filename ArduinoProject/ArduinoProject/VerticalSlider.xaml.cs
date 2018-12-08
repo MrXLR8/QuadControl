@@ -54,6 +54,7 @@ namespace ArduinoProject
 			InitializeComponent ();
             FormSlider.ValueChanged += sliderChanged;
             FormSlider.ClassId = CompName;
+            FormSlider.IsEnabled = false;
 		}
 
         private void sliderChanged(object sender, ValueChangedEventArgs e)

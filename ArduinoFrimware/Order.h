@@ -87,7 +87,7 @@ public:
 				content[0] = "2";
 				Serial.println(this->ToString());
 				
-				content[0] = "1";
+			
 			}
 		}
 	

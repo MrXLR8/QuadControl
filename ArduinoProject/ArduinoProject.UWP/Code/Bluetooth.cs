@@ -37,7 +37,7 @@ namespace ArduinoProject.Shared
         {
             if (!(await GetBluetoothIsEnabledAsync()))
             {
-                FormAction.print("[ОШИБКА] Bluetooth отключён");
+                FormAction.printRecivedData("[ОШИБКА] Bluetooth отключён");
                 return;
             }
             var serviceInfoCollection = await DeviceInformation.FindAllAsync
@@ -68,7 +68,7 @@ namespace ArduinoProject.Shared
         {
             if (device_task == null)
             {
-                FormAction.print("[ОШИБКА]: "+ Variable.bluetoothName + " не сопряжен или не найден");
+                FormAction.printRecivedData("[ОШИБКА]: "+ Variable.bluetoothName + " не сопряжен или не найден");
                 return;
             }
             else
@@ -76,19 +76,19 @@ namespace ArduinoProject.Shared
                 device = await device_task;
             }
             
-            FormAction.print("Bluetooth споряжение найдено для: " + device.Name);
+            FormAction.printRecivedData("Bluetooth споряжение найдено для: " + device.Name);
             RfcommDeviceServicesResult result = await device.GetRfcommServicesForIdAsync(RfcommServiceId.SerialPort, BluetoothCacheMode.Uncached);
 
 
             if(result.Services.Count==0)
             {
-                FormAction.print("[ОШИБКА] Не удалось подключиться к Bluetooth устройству: " + device.Name + "// "+ "или устоойство не поддерживает выбранный сервис");
+                FormAction.printRecivedData("[ОШИБКА] Не удалось подключиться к Bluetooth устройству: " + device.Name + "// "+ "или устоойство не поддерживает выбранный сервис");
                 return;
             }
             _service = result.Services[0];
 
 
-            FormAction.print("Подключение к устройству успешно: " + _service.Device.Name);
+            FormAction.printRecivedData("Подключение к устройству успешно: " + _service.Device.Name);
 
             _socket = new StreamSocket();
             await _socket.ConnectAsync(_service.ConnectionHostName, _service.ConnectionServiceName, SocketProtectionLevel.BluetoothEncryptionAllowNullAuthentication);
@@ -103,8 +103,8 @@ namespace ArduinoProject.Shared
 
             if (_socket != null)
             {
-                FormAction.print("Отправляю строку:");
-                FormAction.print("> " + str);
+                FormAction.printRecivedData("Отправляю строку:");
+                FormAction.printRecivedData("> " + str);
                 byte[] byteArray = Encoding.UTF8.GetBytes(str);
 
                 var writer = new DataWriter(_socket.OutputStream);
@@ -120,7 +120,7 @@ namespace ArduinoProject.Shared
             }
             else
             {
-                FormAction.print("[ОШИБКА]: Соеденение не было установлено.");
+                FormAction.printRecivedData("[ОШИБКА]: Соеденение не было установлено.");
             }
 
         }
@@ -134,7 +134,7 @@ namespace ArduinoProject.Shared
 
             if (_socket != null)
             {
-                FormAction.print("> " + number);
+                FormAction.printRecivedData("> " + number);
 
 
                 var writer = new DataWriter(_socket.OutputStream);
@@ -151,7 +151,7 @@ namespace ArduinoProject.Shared
                 }
                 catch (System.ObjectDisposedException e)
                 {
-                    FormAction.print("[ОШИБКА]: Не удалось отправить " +e.Message);
+                    FormAction.printRecivedData("[ОШИБКА]: Не удалось отправить " +e.Message);
                 }
 
 
@@ -159,7 +159,7 @@ namespace ArduinoProject.Shared
             }
             else
             {
-                FormAction.print("[ОШИБКА]: Соеденение не было установлено.");
+                FormAction.printRecivedData("[ОШИБКА]: Соеденение не было установлено.");
             }
         }
 
@@ -196,14 +196,14 @@ namespace ArduinoProject.Shared
                 }
                 catch (Exception e)
                 {
-                    FormAction.print("[ОШИБКА]: Соеденение закрыто. " +e.Message);
+                    FormAction.printRecivedData("[ОШИБКА]: Соеденение закрыто. " +e.Message);
                 }
                 SocketStatus = Convert.ToBoolean(bytesLoaded);
                 var symbol = rx.ReadByte();
-                FormAction.print("<" + symbol);
+                FormAction.printRecivedData("<" + symbol);
             } while (SocketStatus);
 
-            FormAction.print("[ОШИБКА]: Соеденение закрыто");
+            FormAction.printRecivedData("[ОШИБКА]: Соеденение закрыто");
 
 
         }

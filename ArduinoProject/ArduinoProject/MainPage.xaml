@@ -10,19 +10,32 @@
 
     <Grid x:Name="GlobalGrid">
         <Grid.RowDefinitions>
+            <RowDefinition Height="0.1*" x:Name="LabelsHold" />
             <RowDefinition Height="*" x:Name="ActionHold" />
             <RowDefinition Height="0.2*" x:Name="InputHold" />
-            <RowDefinition  Height="0.1*" x:Name="ProgressHold"/>
             <RowDefinition  Height="0.2*" x:Name="MenuHold"/>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
 
-        <ScrollView x:FieldModifier="public" x:Name="ScrollText">
-            <Editor Focused="TextField_Focused" AutoSize="TextChanges" x:FieldModifier="public"  IsSpellCheckEnabled="False"  x:Name="TextField"/>
+        <Label Grid.Row="0" Grid.Column="0" VerticalOptions="Center" HorizontalOptions="Center" Text="RECIVED"/>
+        <Label Grid.Row="0" Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Center" Text="SENT"/>
+
+        <ScrollView Grid.Row="1" Grid.Column="0" x:FieldModifier="public" x:Name="InputScrollText">
+            <Editor Focused="TextField_Focused" AutoSize="TextChanges" x:FieldModifier="public"  IsSpellCheckEnabled="False"  x:Name="InputData"/>
 
         </ScrollView>       
-        <BoxView Color="Gray" Grid.Row="2"/>
+        <BoxView Color="Gray" Grid.Row="3"/>
+        
+        <ScrollView Grid.Row="1" Grid.Column="1" x:FieldModifier="public" x:Name="OutputScrollText">
+            <Editor Focused="TextField_Focused" AutoSize="TextChanges" x:FieldModifier="public"  IsSpellCheckEnabled="False"  x:Name="OutputData"/>
 
-        <Grid Grid.Row="1" >
+        </ScrollView>
+        <BoxView Color="Gray" Grid.Row="3" Grid.ColumnSpan="2"/>
+
+        <Grid Grid.Row="2" Grid.ColumnSpan="2" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition  Width="0.5*"/>
@@ -32,32 +45,21 @@
         </Grid>
 
 
-        <Grid Grid.Row="2" >
+
+
+        <Grid Grid.Row="3" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
 
-            <Button Grid.Column="0" Text="DOWN" Clicked="Power_Click" x:Name="PowerDown"/>
-            <ProgressBar x:FieldModifier="public" x:Name="ProgressBarPower" Grid.Column="1" />
-            <Button Grid.Column="2" Text="UP" Clicked="Power_Click" x:Name="PowerUp"/>
-        </Grid>
-
-        <Grid Grid.Row="3">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
                 <ColumnDefinition/>
                 
                 
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Column="0" x:Name="grnBTN"  Clicked="Button_Clicked" Text="Green" BackgroundColor="Green" Margin="5" BorderWidth="3" BorderColor="Black"/>
-            <Button Grid.Column="1" x:Name="yellBTN"  Clicked="Button_Clicked" Text="Yellow" TextColor="Black" BackgroundColor="Yellow" Margin="5" BorderWidth="3" BorderColor="Black"/>
-            <Button Grid.Column="2" x:Name="redTN"  Clicked="Button_Clicked" Text="Red"  BackgroundColor="Red" Margin="5" BorderWidth="3" BorderColor="Black"/>
-            <Button Grid.Column="3" x:Name="offBTN" Clicked="Button_Clicked" Text="Off"  BackgroundColor="Gray" Margin="5" BorderWidth="3" BorderColor="Black"/>
+            <Button Grid.Column="0" x:Name="lastBTN"  Clicked="Button_Clicked" Text="Last Command" BackgroundColor="Green" Margin="5" BorderWidth="3" BorderColor="Black"/>
+            <Button Grid.Column="1" x:Name="maBTN"  Clicked="Button_Clicked" Text="Toogle Engines"  BackgroundColor="Red" Margin="5" BorderWidth="3" BorderColor="Black"/>
+            <Button Grid.Column="2" x:Name="clearBTN" Clicked="Button_Clicked" Text="Clear Text"  BackgroundColor="Gray" Margin="5" BorderWidth="3" BorderColor="Black"/>
 
         </Grid>
 

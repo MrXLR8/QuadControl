@@ -16,7 +16,8 @@ using namespace std;
 #pragma once
 
 
-//WP - PING 1 req 2 resp
+//
+- PING 1 req 2 resp
 class Order
 {
 public:
@@ -76,9 +77,8 @@ public:
 		{
 			if (content[0] == "1")
 			{
-				content[0] = "2";
-				wifi->write(this->ToString().c_str());
-				content[0] = "1";
+				wifi->write("[WP]2");
+
 			}
 		}
 	}
