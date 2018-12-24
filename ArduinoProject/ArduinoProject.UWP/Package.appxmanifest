@@ -7,23 +7,23 @@
 
  Дополнительные сведения о файлах манифестов приложений см. по адресу http://go.microsoft.com/fwlink/?LinkID=241727
   -->
-  <Identity Name="5af050ca-7baf-40d4-bdfd-fd502e7574b7" Publisher="CN=7de0a828-8c2a-4613-a15e-d4b8ed60b178" Version="1.0.0.0" ProcessorArchitecture="x86" />
+  <Identity Name="5af050ca-7baf-40d4-bdfd-fd502e7574b7" Publisher="CN=7de0a828-8c2a-4613-a15e-d4b8ed60b178" Version="1.0.3.0" ProcessorArchitecture="x86" />
   <mp:PhoneIdentity PhoneProductId="ec0cc741-fd3e-485c-81be-68815c480690" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>ArduinoProject.UWP</DisplayName>
+    <DisplayName>QuadControl UWP</DisplayName>
     <PublisherDisplayName>7de0a828-8c2a-4613-a15e-d4b8ed60b178</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Dependencies>
     <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.16299.0" MaxVersionTested="10.0.16299.0" />
-    <PackageDependency Name="Microsoft.NET.CoreRuntime.2.1" MinVersion="2.1.25801.2" Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US" />
   </Dependencies>
   <Resources>
     <Resource Language="EN-US" />
   </Resources>
   <Applications>
-    <Application Id="App" Executable="ArduinoProject.UWP.exe" EntryPoint="ArduinoProject.UWP.App">
-      <uap:VisualElements DisplayName="ArduinoProject.UWP" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="BluetoothTest.UWP" BackgroundColor="transparent">
+    <Application Id="App" Executable="QuadControl.UWP.exe" EntryPoint="ArduinoProject.UWP.App">
+      <uap:VisualElements DisplayName="QuadControl" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="Andrey Fedorov project for  master's degree. In DUIT University 2018 year" BackgroundColor="transparent">
+        <uap:LockScreen Notification="badge" BadgeLogo="Assets\BadgeLogo.png" />
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" Square310x310Logo="Assets\LargeTile.png" Square71x71Logo="Assets\SmallTile.png">
           <uap:ShowNameOnTiles>
             <uap:ShowOn Tile="square150x150Logo" />
@@ -32,6 +32,9 @@
           </uap:ShowNameOnTiles>
         </uap:DefaultTile>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
+        <uap:InitialRotationPreference>
+          <uap:Rotation Preference="landscape" />
+        </uap:InitialRotationPreference>
       </uap:VisualElements>
     </Application>
   </Applications>
@@ -39,7 +42,6 @@
     <Capability Name="internetClient" />
     <Capability Name="internetClientServer" />
     <Capability Name="privateNetworkClientServer" />
-    <DeviceCapability Name="bluetooth" />
     <DeviceCapability Name="serialcommunication" />
     <DeviceCapability Name="bluetooth.rfcomm">
       <Device Id="any">

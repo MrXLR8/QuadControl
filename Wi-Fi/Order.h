@@ -16,8 +16,7 @@ using namespace std;
 #pragma once
 
 
-//
-- PING 1 req 2 resp
+// PING 1 req 2 resp
 class Order
 {
 public:

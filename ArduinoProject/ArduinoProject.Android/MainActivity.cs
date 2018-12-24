@@ -9,7 +9,7 @@ using Android.OS;
 namespace ArduinoProject.Droid
 {
 
-    [Activity(Label = "ArduinoProject", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Label = "QuadControl", Icon = "@drawable/logo512", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
    
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {

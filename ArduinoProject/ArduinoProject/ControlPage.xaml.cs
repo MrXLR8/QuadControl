@@ -78,7 +78,6 @@ namespace ArduinoProject
                     break;
 
             }
-
             sendControlData();
         }
 

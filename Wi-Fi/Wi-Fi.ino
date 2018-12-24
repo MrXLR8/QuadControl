@@ -124,13 +124,9 @@ void loop()
 			serialRead = (char)0;
 			while (client.available() > 0)
 			{
-
-
 				serialRead = client.read();
 
 				Serial.write(serialRead);  // то что пришло по вайфаю отправить по серийнику
-
-				//client.write(c); отправить обратно
 			}
 			delay(10);
 		}

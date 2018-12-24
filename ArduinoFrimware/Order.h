@@ -58,7 +58,7 @@ public:
 
 	}
 
-	String ToString()
+	
 	{
 		String result = "[" + type + "]";
 		for (String s : content)

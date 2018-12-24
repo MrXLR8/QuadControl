@@ -1,8 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.companyname.ArduinoProject.Android" android:installLocation="internalOnly">
-	<uses-sdk />
-	<uses-permission android:name="android.permission.BLUETOOTH" />
-	<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-	<uses-permission android:name="android.permission.BLUETOOTH_PRIVILEGED" />
-	<application android:label="ArduinoProject"></application>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.xlr8.quadcontrol" android:installLocation="internalOnly">
+	<uses-sdk android:targetSdkVersion="27" android:minSdkVersion="19" />
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+	<application android:label="QuadControl" android:icon="@drawable/logo512"></application>
 </manifest>
