@@ -23,20 +23,7 @@ public:
 
 	F_ESC(int m1pin, int m2pin, int m3pin, int m4pin) 
 	{
-		/*
-
-		9 - M4
-
-		5 - M2
-
-		6 - M1 -- problem
-
-		3 - M3
-		*/
-
-
 		
-
 		_m1 = m1pin;
 		_m2 = m2pin;
 		_m3 = m3pin;
@@ -46,7 +33,7 @@ public:
 	void Attach() 
 	{
 		Serial.println("Attaching ESC motors");
-		motor[0].attach(_m1, MIN_POWER, MAX_POWER); // настроены так как подписаны на еск
+		motor[0].attach(_m1, MIN_POWER, MAX_POWER); 
 		motor[1].attach(_m2, MIN_POWER, MAX_POWER);
 		motor[2].attach(_m3, MIN_POWER, MAX_POWER);
 		motor[3].attach(_m4, MIN_POWER, MAX_POWER);
